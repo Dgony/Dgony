@@ -1,0 +1,17 @@
+
+기존 최근 날씨 api
+https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=fa47d5a061ea10879d3d15e8a34f7830
+
+
+금천구청역 최근 날씨 api
+https://api.openweathermap.org/data/2.5/weather?lat=37.455645&lon=126.894003&appid=fa47d5a061ea10879d3d15e8a34f7830
+
+
+https://www.google.co.kr/maps/place/%EA%B8%88%EC%B2%9C%EA%B5%AC%EC%B2%AD%EC%97%AD/data=!4m10!1m2!2m1!1z6riI7LKc6rWs7LKt7Jet!3m6!1s0x357b61bedb8e3423:0x1de0f01d1e199f23!8m2!
+
+3d 37.455645   ! -- 위도  ==> lat에 대신 집어넣기
+
+4d 126.894003   -- 경도  ==> lon에 대신 집어넣기
+
+
+!15sCg_quIjsspzqtazssq3sl62SARdsb2dpY2FsX3RyYW5zaXRfc3RhdGlvbuABAA!16s%2Fm%2F03c_6d6?hl=ko&entry=ttu
