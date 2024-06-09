@@ -14,7 +14,7 @@
 [SERVLET](#servlet)  
 [JSP](#JSP)  
 [SNIPPET](#snippet)  
-[JQUERY](#jqeury)  
+[JQUERY](#jquery)  
 [DOM TREE](#dom-tree)  
 [OOP](#oop)  
 [Cookie](#cookie)
@@ -23,6 +23,9 @@
 [Compile](#compile)
 [Run](#run)
 [Interpreter Language](#interpreter-language)
+[AJAX](#ajax)
+[JSON](#json)
+
 
 [](#)
 
@@ -177,11 +180,13 @@ a:nth-child(2n+1) ==> 홀수 번째의 상태를 가지는 a태그를 선택
 
 ### JavaScript의 주요 객체(object)
 1. window : 브라우저 전체에 영향, 기본값  
-alert, prompt, confirm() 등  
+alert(), prompt(), confirm() 등  
 window 객체는 기본적으로 상속되어 있기때문에 생략하고 사용할 수 있다.
 2. history : 사이트의 기록
-3. location : 클라이언트가 요청한 주소
-4. document : body 태그 안의 내용
+3. location : 클라이언트가 요청한 주소  
+if문 등에서 .href와 함께 사용하면 조건이 만족되었을 때 바로 이동하게 설정할 수 있다.
+4. document : body 태그 안의 내용  
+write() ==> 덮어씌워짐,getElementById().value ==> id의 값을 가져옴
 
 ### 데이터 
 <u>RAM에 저장되고, 저장공간(변수)에 생긴 이름(변수명)</u>  
@@ -206,11 +211,11 @@ object(객체), String(문자열)
 ### 연산자
 <u>데이터를 비교하기 위한 문법, cpu가 ram에 저장된 데이터를 꺼내서 처리하기 위함</u>  
 1. 기본데이터 연산자
-산술 : +, -, *, /, %, ++, --, =, +=, -=, *=, /=, %=
-비교 : ==, !=, ===, <, >, <=, >=
-대입  
-연결  
-논리 : &&(and), ||(or), !(not)
+산술 : +, -, *, /, %, ++, --, =, +=, -=, *=, /=, %=  
+비교 : ==, !=, ===, <, >, <=, >=  
+대입    
+연결    
+논리 : &&(and), ||(or), !(not)  
 2. String ==> 기본 데이터는 아닌데 기본데이터처럼 연산에 사용할 수 있음.
 
 ### 제어문
@@ -226,7 +231,7 @@ object(객체), String(문자열)
 ### JavaScript의 함수
 1. 함수가 어떤 기능만 담당한다면 return이 붙지 않는다.   
 만약 함수로 어떤 값을 얻어내야한다면 return을 붙여야 한다.
-2. 
+2. 버튼 하나당 함수 하나
 
 ## HTTP
 * **Hyper Text Transfer Protocol**  
@@ -314,11 +319,25 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 <br>  
 1. 
 
-## JQEURY 
+## JQuery 
 * <u>JS를 더 짧은 길이로 이용할 수 있도록 간략화한 방법  
 JS를 더 잘 이용하기 위한 방법으로, 모두가 이해할 수 있는 준말 정도로 말할 수 있다.</u>
 <br>
-1. 
+1. http://jquery.com/download 여기서 받을 수 있다.  
+jquery는 미리 저장하지 않아도 https://code.jquery.com/jquery-3.6.0.min.js 이 링크만 연결하면 사용할 수 있다.
+2. external로 js를 사용하는 상황에서 jquery를 쓰려면, js를 불러오는 html이나 jsp 파일에서 jquery를 로드하면 된다.  
+out.js에서 jquery를 로드하는 방법도 있지만, 추천되지 않는다.
+3. js의 동적인 처리 부분을 미리 짜놓았다.
+4. jquery를 이해하고 있어야 공공 API나 구글 API가 제공하는 JSON을 원활하게 다룰 수 있다.
+
+
+### JQuery 주요 문법
+1. $(document).ready();  
+HTML의 프로그래밍 인터페이스인 DOM이 준비되면 ready()의 내용을 실행, 함수와 함께 사용할 수 있다.
+JS의 script는 body에 앞서 실행되게 된다. body에서 class나 id를 찾는 함수의 경우 DOM이 준비된 상태가 아니면 해당 태그에 접근할 수 없기 떄문에 이 객체와 함께 사용하는 것이 필수적일 수 있다.
+2. $(#id이름).html(변수);    
+변수 내용을 html 스크립트로 바꿔서 body의 id를 찾아 할당한다. 클래스는 css와 같이 .을 통해 사용할 수 있다.  
+html을 생성하는 방식으로 innerHTML을 사용하는 방식도 있는데, 이 방식에 비하면 코드가 간결한 반면 성능이 떨어지는 방법이다. 
 
 ## DOM Tree
 * **Document Object Model Tree**  
@@ -327,7 +346,31 @@ JS를 더 잘 이용하기 위한 방법으로, 모두가 이해할 수 있는 �
 <br>  
 1. 문서 구조가 뻗어나가는 모양을 나무에 비유해서 설명한 방법이다.  
 2. html 문서의 경우 태그와 자손태그를 설명하는 방법으로 dom tree를 들 수 있다.  
+3. DOM은 HTML, XML 문서의 프로그래밍 인터페이스이다. 문서의 구조화된 표현을 제공하여 프로그래밍 언어가 접근하고 변경할 수 있도록 한다.  
+프로그래밍 인터페이스를 동해 프로그래머가 웹 페이지의 구조와 내용을 동적으로 조작할 수 있게 한다.
+4. 'DOM을 사용한다'는 JS만 가능하지만, python이나 java도 JS와는 다른방법으로 DOM에 접근하여 조작할 수 있다.  
+그렇기 때문에 다른 언어도 DOM에 접근하여 사용할 수 있지만, JS가 조작하는 방식과는 구별된다.
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example</title>
+</head>
+<body>
+    <p id="example">Hello, world!</p>
+</body>
+</html>
+```
+위 html문서의 DOM이 아래와 같다고 말할 수 있다.
 
+```
+// 'example'이라는 id를 가진 요소를 선택
+var paragraph = document.getElementById('example');
+
+// 해당 요소의 텍스트를 변경
+paragraph.innerHTML = 'Hello, DOM!';
+```
+javascript의 경우는 위와 같은 프로그래밍 인터페이스로 html문서의 특정 요소에 접근해서 사용할 수 있다.
 
 ## OOP
 * **Object-Oriented Programming**   
@@ -371,7 +414,7 @@ IaaS, PaaS, SaaS
 5. 소프트웨어 등
 
 ### IaaS
-* **Infrastructure as a Service**
+* **Infrastructure as a Service**  
 <u>가상의 하드웨어(컴퓨팅 자원)만 빌려서 사용하는 것으로, 운영체제와 서버, 소프트웨어 전부 직접 구축하고 사용해야 한다.</u>
 <br> 
 1. 유연성: 필요에 따라 컴퓨팅 자원을 추가하거나 제거할 수 있다.
@@ -382,7 +425,7 @@ IaaS, PaaS, SaaS
 즉, 사용자가 가상의 인프라를 운영체제부터 서버, 소프트웨어까지 전부 직접 관리해서 사용해야 한다.
 
 ### PaaS
-* **Platform as a Service**
+* **Platform as a Service**  
 <u>플랫폼을 제공하는 서비스로, IaaS + 운영체제, 미들웨어, 런타임 환경까지 관리해주고,  
 개발자는 개발만 집중 가능</u>
 <br>  
@@ -394,7 +437,7 @@ IaaS, PaaS, SaaS
 즉 사용자가 애플리케이션 개발에만 집중할 수 있도록 인프라와 운영체제 관리를 전부 해준다.
 
 ### SaaS
-* **Software as a Service**
+* **Software as a Service**  
 <u>소프트웨어를 서비스로 제공하는 모델로, 완전한 소프트웨어를 제공하면 사용자는 이를 구독해서 사용한다.</u>
 <br>  
 1. 접근성: 인터넷 연결만 있으면 언제 어디서나 소프트웨어를 사용할 수 있습니다.
@@ -437,13 +480,38 @@ IaaS, PaaS, SaaS
 그래서 compile을 진행하는 언어는 compile - run으로 실행과정이 분리되어 있다. complie과 대비되는 개념이다. 
 
 
+## AJAX
+* **Asynchronous JavaScript and XML**<br>
+<u>JavaSCript와 XML을 이용한 비동기적 정보 교환을 이르는 말이다.</u>
+<br>  
+1. 웹 페이지의 비동기 통신에 이용된다.
+
+
+## JSON
+* **JavaScript Object Notation**<br>
+<u>자바스크립트의 객체 문법으로 구조화된 데이터를 표기하는 방법.  
+```{key : value}```의 형태로 저장한다.</u>
+<br>  
+1. ㄷ
+
+## XML
+* **eXtensible Markup Language**<br>
+<u>W3c에서 개발되어 다른 특수한 목적을 갖는 마크업 언어를 만드는데 사용하도록 권장하는 다목적 마크업 언어  
+```<key>value</key>```의 형태로 저장한다.</u>
+<br>  
+1. JSON과 마찬가지로 주로 데이터를 전달하는 목적으로 사용된다.
+
+
+
 ## 
 * ****<br>
 <u></u>
 <br>  
 1. 
 
-용정
+
+
+용어정리
 
 
 
@@ -517,7 +585,8 @@ DB는 SQL문대로 데이터를 Resultset이라는 방법으로 반환하고, WA
 <h>html, css, js로 이루어진 웹이 클라이언트에 대해 어떻게 반응하는가?</h>
 정적 웹 ==> 외부 환경에 관계 없이 클라이언트에게 동일한 페이지를 보여줌  
 동적 웹 ==> 외부환경이 달라짐에 따라(클라이언트의 로그인 등) 달라지는 페이지를 보여줌  
-DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.  
+DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.    
+또한 동기통신 vs 비동기통신의 구분과 헷갈리지 않아야 한다.  
 
 ### 웹개발에서 프론트엔드와 백엔드의 구분
 웹개발을 프론트엔드와 백엔드로 나누려 하면, 프론트엔드 - 클라이언트, 웹서버 일부 / 백엔드 - 나머지 로 나눌 수 있다. 하지만 어느 한쪽을 모르고 웹 개발을 안다고 말할 수 없다고 배웠기 때문에 웹 개발을 목표로 한다면 어쩔 수 없이 풀스택적인 면모를 가지게 될 것이라고 생각한다.  
@@ -547,11 +616,14 @@ DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.
 
 ## 알고리즘 = 시간복잡도?
 
+## 동기통신 vs 비동기통신
+
 
 ##
 ##
 ##
-##
+
+맨밑
 
 ## TDD 방법론
 
@@ -578,4 +650,7 @@ JS를 이용한 간단한
 16. www는 word wide web
 17. 인터넷이 생기던 초기엔 운영체제의 힘으로 인터넷 익스플로러가 많은 이용자를 확보했었는데, 시간이 지날수록 성능차이로 인해 크롬이 득세하게 되어 현재 가장 많은 이용자를 확보한 브라우저는 크롬이 되게 되었다.
 18. mvc웹프로젝트로 만든 spring 프로젝트는 경로에 띄어쓰기가 들어가면 안된다. 앵간하면 모든 프로그래밍에선 띄어쓰기 대신 _ 나 다른 방식 등으로 표시하는 것이 좋을 것 같다.
-
+19. 어떤 언어이든 "버튼 하나당 함수 하나", 이렇게 작성해야 헷갈리지 않는다.
+20 .구글차트라고해서 부트스트랩처럼 구글이 제공하는 각종 형태의 그래프를 가져다 쓸 수 있다.  
+https://developers.google.com/chart?hl=ko
+21. 
