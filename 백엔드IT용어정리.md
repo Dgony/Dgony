@@ -25,6 +25,9 @@
 [Interpreter Language](#interpreter-language)
 [AJAX](#ajax)
 [JSON](#json)
+[XML](#xml)
+[CDN](#cdn)
+
 
 
 [](#)
@@ -324,7 +327,8 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 JS를 더 잘 이용하기 위한 방법으로, 모두가 이해할 수 있는 준말 정도로 말할 수 있다.</u>
 <br>
 1. http://jquery.com/download 여기서 받을 수 있다.  
-jquery는 미리 저장하지 않아도 https://code.jquery.com/jquery-3.6.0.min.js 이 링크만 연결하면 사용할 수 있다.
+jquery는 미리 저장하지 않아도 https://code.jquery.com/jquery-3.6.0.min.js 이 링크만 연결하면 사용할 수 있다.  
+(CDN)
 2. external로 js를 사용하는 상황에서 jquery를 쓰려면, js를 불러오는 html이나 jsp 파일에서 jquery를 로드하면 된다.  
 out.js에서 jquery를 로드하는 방법도 있지만, 추천되지 않는다.
 3. js의 동적인 처리 부분을 미리 짜놓았다.
@@ -500,6 +504,28 @@ IaaS, PaaS, SaaS
 ```<key>value</key>```의 형태로 저장한다.</u>
 <br>  
 1. JSON과 마찬가지로 주로 데이터를 전달하는 목적으로 사용된다.
+
+## CDN
+* **Content Delivery Network**<br>
+<u>콘텐츠 전송 네트워크  
+지리적으로 분산된 여러개의 서버로, 서버와 사용자의 물리적인 거리를 줄여 콘텐츠 로딩 속도를 최적화한다.</u>
+<br>  
+1. 웹사이트 로딩 속도 개선, 인터넷 회선 비용 절감, 트래픽 절약의 효과가 있다.
+2. 웹서버와 클라이언트 사이에 중간 서버를 두어 효율성을 높인다.   
+중간서버를 지리적으로 분산시켜, 클라이언트의 요청이 들어오면 가장 가까운 위치의 중간서버가 응답하도록 한다.
+이를 통해 웹 트래픽과 대역폭 소비를 줄인다.  
+3. 웹사이트의 정적콘텐츠(이미지, css, js 등)를 여러 위치에 저장한다. 이 위치를 PoP(Point of Presence)라고 한다.
+4. CDN은 DDoS 공격 방지, SSL/TLS 암호화, 웹 애플리케이션 방화벽(WAF) 등의 보안 기능도 제공한다.
+5. Cloudflare, Akamai, Amazon CloudFront ==> 대표적인 CDN 제공 업체들
+6. html문서의 script나 js파일에서   
+```https://code.jquery.com/jquery-3.6.0.min.js```
+이런 형식으로 jquery를 로드할때도 CDN 주소를 이용한다고 할 수 있다.
+
+## Proxy server
+* <u>서버보다 앞단에 위치에 로깅, 캐싱, 데이터 분석을 서버보다 먼저 하는 서버</u>
+<br>  
+1. 클라이언트가 프록시 서버를 거쳐 다른 네트워크에 접속할 수 있도록 대리해주는 서버이다.
+2. 프록시 서버는 포트번호를 바꾸기 떄문에 접속하는 사람의 IP를 숨길 수 있다.
 
 
 
