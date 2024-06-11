@@ -2,7 +2,7 @@
 <details>
 <summary>키워드로 찾아가기</summary>
 
-[HTML](#html)  
+[HTML](#html)
 [CSS](#css)  
 [JS](#js)  
 [HTTP](#http)  
@@ -14,19 +14,20 @@
 [SERVLET](#servlet)  
 [JSP](#JSP)  
 [SNIPPET](#snippet)  
-[JQUERY](#jquery)  
+[jQuery](#jquery)  
 [DOM TREE](#dom-tree)  
 [OOP](#oop)  
-[Cookie](#cookie)
-[Session](#session)
-[클라우드 컴퓨팅](#클라우드-컴퓨팅)
-[Compile](#compile)
-[Run](#run)
-[Interpreter Language](#interpreter-language)
-[AJAX](#ajax)
-[JSON](#json)
-[XML](#xml)
-[CDN](#cdn)
+[Cookie](#cookie)<br>
+[Session](#session)<br>
+[클라우드 컴퓨팅](#클라우드-컴퓨팅)<br>
+[Compile](#compile)<br>
+[Run](#run)<br>
+[Interpreter Language](#interpreter-language)<br>
+[AJAX](#ajax)<br>
+[JSON](#json)<br>
+[XML](#xml)<br>
+[CDN](#cdn)<br>
+[Proxy server](#proxy-server)<br>
 
 
 
@@ -161,7 +162,7 @@ a:nth-child(2n+1) ==> 홀수 번째의 상태를 가지는 a태그를 선택
 <u>HTML의 구조를 CSS의 특성대로 구성한 페이지의 데이터 전달이나 각종 기능을 맡는다.</u>    
 <br>
 1. JAVA와 흡사한 부분이 많고 JAVA에 비해 더 나중에 만들어진 언어이다. 그래서 욕을 좀 먹었다고 들었다.  
-2. JAVA에 비해 허술한 부분이 있지만, JQuery와 es6등의 문법으로 많이 발전했다.  
+2. JAVA에 비해 허술한 부분이 있지만, jQuery와 es6등의 문법으로 많이 발전했다.  
 3. 또한 크롬 브라우저에서 가장 빠른 속도를 가진 언어이자, 가장 오래 쓰인 언어이기 때문에 점유율도 높다. 웹 개발에서 4. 빼놓고 말할 수 없는 언어인 것이다.  
 5. JS를 위한 framework는 reac, vue, angular, bootstrap 등이 있다.
 6. Interpreter Language(인터프리터 언어)에 해당한다.
@@ -322,26 +323,46 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 <br>  
 1. 
 
-## JQuery 
+## jQuery 
 * <u>JS를 더 짧은 길이로 이용할 수 있도록 간략화한 방법  
 JS를 더 잘 이용하기 위한 방법으로, 모두가 이해할 수 있는 준말 정도로 말할 수 있다.</u>
 <br>
 1. http://jquery.com/download 여기서 받을 수 있다.  
-jquery는 미리 저장하지 않아도 https://code.jquery.com/jquery-3.6.0.min.js 이 링크만 연결하면 사용할 수 있다.  
+jQuery는 미리 저장하지 않아도 https://code.jquery.com/jquery-3.6.0.min.js 이 링크만 연결하면 사용할 수 있다.  
 (CDN)
-2. external로 js를 사용하는 상황에서 jquery를 쓰려면, js를 불러오는 html이나 jsp 파일에서 jquery를 로드하면 된다.  
-out.js에서 jquery를 로드하는 방법도 있지만, 추천되지 않는다.
+2. external로 js를 사용하는 상황에서 jQuery를 쓰려면, js를 불러오는 html이나 jsp 파일에서 jQuery를 로드하면 된다.  
+out.js에서 jQuery를 로드하는 방법도 있지만, 추천되지 않는다.
 3. js의 동적인 처리 부분을 미리 짜놓았다.
-4. jquery를 이해하고 있어야 공공 API나 구글 API가 제공하는 JSON을 원활하게 다룰 수 있다.
+4. jQuery를 이해하고 있어야 공공 API나 구글 API가 제공하는 JSON을 원활하게 다룰 수 있다.
+5. jQuery는 $(달러 표기법)으로 사용할 수 있다. jQuery에서 $는 jQuery의 줄임말로, 대신 jQuery를 쓸 수도 있다.  
+즉 ```$(document).ready();``` == ```jQuery(document).ready();``` == ```$();```
 
 
-### JQuery 주요 문법
-1. $(document).ready();  
+### jQuery 주요 문법
+1. ```$(document).ready();```  
+Document ready event (문서준비 이벤트) 를 준비하는 DOM ready Function (DOM 준비 함수)
+```$(function () {// 코드});```  
+DOM ready 함수와 완전히 같은 함수로, 더 짧게 쓸 수 있는 단축문법이다.  
 HTML의 프로그래밍 인터페이스인 DOM이 준비되면 ready()의 내용을 실행, 함수와 함께 사용할 수 있다.
-JS의 script는 body에 앞서 실행되게 된다. body에서 class나 id를 찾는 함수의 경우 DOM이 준비된 상태가 아니면 해당 태그에 접근할 수 없기 떄문에 이 객체와 함께 사용하는 것이 필수적일 수 있다.
-2. $(#id이름).html(변수);    
+DOM의 준비와 JS의 실행 순서는 JS의 interpreter 언어적 특성과 관련이 있다.
+JS의 DOM을 준비하는 도중 실행된다. body에서 class나 id를 찾는 함수의 경우 DOM이 준비된 상태가 아니면 해당 태그에 접근할 수 없기 떄문에 이 객체와 함께 사용하는 것이 필수적일 수 있다.
+2. ```$(#id이름).html(변수);```    
 변수 내용을 html 스크립트로 바꿔서 body의 id를 찾아 할당한다. 클래스는 css와 같이 .을 통해 사용할 수 있다.  
 html을 생성하는 방식으로 innerHTML을 사용하는 방식도 있는데, 이 방식에 비하면 코드가 간결한 반면 성능이 떨어지는 방법이다. 
+3. ```$('선택자').text(결과);```  
+선택자 태그의 texy를 가져오는 코드. (결과)를 입력하면 값 수정 가능
+3. ```$('input').val();```    
+input 태그의 val값을 수정하는 코드. 마찬가지로 val을 입력하면 값 수정 가능
+3. ```$('input이와').attr();```  
+input을 제외한 나머지 태그의 속성을 가져오는 코드 
+
+### jQuery 이벤트 처리 방식
+1. jQuery를 쓰지 않는 순정 js방식으로 버튼 함수를 활용하려면, 버튼 태그에서 inline방식으로 onlcick 속성으로 설정해야 한다. 즉 함수는 js scirpt부분에 작성하고, 함수를 사용하는 처리는 button태그에 inline으로 해야한다.
+<img src = "img/js_onclick_function.png">  
+<br>
+반면 jQuery는 button태그를 script에서 지정하여 처리 부분을 inline에서 script로 옮겨 더 간단하게 처리할 수 있다. 
+<img src = "img/js_jquery_function.png">  
+
 
 ## DOM Tree
 * **Document Object Model Tree**  
@@ -449,13 +470,14 @@ IaaS, PaaS, SaaS
 3. 비용 효율성: 구독 모델을 통해 초기 비용을 낮출 수 있고, 필요에 따라 사용량을 조절할 수 있습니다.
 4. 예시: Google Workspace (Gmail, Google Docs), Microsoft Office 365, Salesforce, Slack.
 
-### Compile 
+## Compile 
 * <u>프로그래밍 언어로 작성한 코드, 프로그램을 컴퓨터가 알아들을 수 있는 언어로 번역해주는 과정.</u>
 <br>
-1. 컴파일러라는 프로그램에 의해 실행된다. c언어는 gcc, java는 javac등의 컴파일러를 사용한다.   
-2. 컴파일 오류가 이 과정에서 생기는 오류, 구문 오류를 검출할 수 있다.
-3. 컴파일 오류는 개발자가 프로그램을 만드는 과정에서 구문이나 논리 오류를 찾아 방지 가능
-4. 컴파일된 파일은 .exe나 .out 같은 실행 가능한 파일이 된다.
+1. Interpreter와 더불어 프로그래밍 언어를 실행하는 두가지 방법 중 하나이다.
+2. 컴파일러라는 프로그램에 의해 실행된다. c언어는 gcc, java는 javac등의 컴파일러를 사용한다.   
+3. 컴파일을 하면 문법적 오류를 발견할 수 있기 떄문에, 실행 전 오류를 수정할 수 있다.
+4. 컴파일 오류는 개발자가 프로그램을 만드는 과정에서 구문이나 논리 오류를 찾아 방지 가능
+5. 컴파일된 파일은 .exe나 .out 같은 실행 가능한 파일이 된다.
 <ul>STS에서 컴파일러를 사용하는 과정은 다음과 같다.
 <li>java 소스 파일을 작성</li>
 <li>내부의 eclipse 컴파일러를 호출하여 바이트 코드로 변환 후 .class 파일 생상</li>
@@ -463,7 +485,7 @@ IaaS, PaaS, SaaS
 <li>런타임 환경 설정 후 애플리케이션 실행</li>
 </ul>
 
-### Run
+## Run
 * <u>컴파일 된 코드를 컴퓨터가 실행할 때 생기는 오류</u>
 <br>
 1. 런타임 오류가 이 과정에서 생기는 오류다.
@@ -480,8 +502,13 @@ IaaS, PaaS, SaaS
 ## Interpreter Language
 * <u>프로그래밍 언어로 만든 코드를 바로 실행하는 언어 또는 프로그램 환경. 번역과 실행이 동시에 이루어진다. </u>
 <br>  
-1. 컴파일러는 프로그래밍 언어로 만든 코드를 번역해서 기계어로 된 실행파일을 만든다.   
-그래서 compile을 진행하는 언어는 compile - run으로 실행과정이 분리되어 있다. complie과 대비되는 개념이다. 
+1. 해석기라는 의미로, 소스 코드를 한줄 읽고, 즉시 실행한다.
+2. Interpreter와 반대로 컴파일러는 프로그래밍 언어로 만든 코드를 번역해서 기계어로 된 실행파일을 만든다.   
+그래서 compile을 진행하는 언어는 compile - run으로 실행과정이 분리되어 있다. 
+3. 인터프리터는 스크립트 언어와 같이 빠른 개발이 필요한 곳에 유리, 컴파일러는 고성능이 요구되는 애플리케이션에 유리.
+4. 브라우저는 HTMl문서를 해석하면서 JS를 만날 떄마다 즉시 실행한다.   
+즉 JS가 HTML의 어떤 태그를 지정했고, 그 소스 코드가 실행되었는데 정작 지정한 HTMl의 태그는 준비되지 않은 상태라 아무런 결과도 발생하지 않는 경우가 생길 수 있다.  
+그렇기 때문에 JS의 어떤 소스 코드들은 DOM문서가 준비된 이후 실행할 수 있게 jQuery의 ```$(document).ready()``` 객체와 함께 사용하는 경우가 있다. 
 
 
 ## AJAX
@@ -496,7 +523,7 @@ IaaS, PaaS, SaaS
 <u>자바스크립트의 객체 문법으로 구조화된 데이터를 표기하는 방법.  
 ```{key : value}```의 형태로 저장한다.</u>
 <br>  
-1. ㄷ
+1. 주로 데이터를 전달하는 목적으로 사용된다.
 
 ## XML
 * **eXtensible Markup Language**<br>
@@ -518,8 +545,15 @@ IaaS, PaaS, SaaS
 4. CDN은 DDoS 공격 방지, SSL/TLS 암호화, 웹 애플리케이션 방화벽(WAF) 등의 보안 기능도 제공한다.
 5. Cloudflare, Akamai, Amazon CloudFront ==> 대표적인 CDN 제공 업체들
 6. html문서의 script나 js파일에서   
-```https://code.jquery.com/jquery-3.6.0.min.js```
-이런 형식으로 jquery를 로드할때도 CDN 주소를 이용한다고 할 수 있다.
+```https://code.jquery.com/jquery-3.6.0.min.js```  
+이런 형식으로 jQuery를 로드할때도 CDN 주소를 이용한다고 할 수 있다.
+7. 반면 이것은 CDN이 아니다.     
+```<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>```    
+CDN은 웹 컨텐츠 중 정적 콘텐츠를 전송하기 위함이 목적이다. 이미지, css, js등  
+이 URI는 JSTL 코어 태그의 라이브러리 위치를 나타내는데, 이는 웹서버측을 위한 라이브러리이다.  
+즉 웹서버측의 java코드를 지원하기 위한 라이브러리이기 떄문에 클라이언트에게 정적 파일을 효율적으로 전송하기 위한 CDN과는 다르다고 말할 수 있다.
+
+
 
 ## Proxy server
 * <u>서버보다 앞단에 위치에 로깅, 캐싱, 데이터 분석을 서버보다 먼저 하는 서버</u>
@@ -638,6 +672,22 @@ DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.
 6. y = 100; ==> 데이터 타입 int로 자동 설정
 7. y = "100", y = "감사합니다" ==> 데이터 타입 string으로 선언 혹은 변경
 
+## JSP 파일의 Path 기준 경로 설정
+웹페이지를 열기위해 웹 애플리케이션이 WAR 파일로 패키징되고 웹서버에 배포된다.  
+이때 웹서버는 웹 애플리케이션마다 각각의 고유한 컨텍스트 경로를 배정한다.  
+예를 들어, 웹 애플리케이션이 다음과 같은 URL에 배치되었다고 가정한다.
+<li>웹 애플리케이션 이름: myapp</li>
+<li>웹 애플리케이션 컨텍스트 경로: /myapp</li>
+<li>이 경우, 웹 애플리케이션은 다음과 같은 URL에서 접근할 수 있다. ==> http://localhost:8080/myapp/</li><br>
+이 URL에서 /myapp/가 웹 애플리케이션의 컨텍스트 경로이다.<br>
+이 경로는 웹 서버가 요청을 해당 웹 애플리케이션으로 라우팅하는 데 사용된다.<br>
+jsp에서 이 컨텍스트 경로를 쉽게 사용하기위해 아래의 JSTL을 이용할 수 있다. CDN과 변수를 이용한다.
+
+1. ```<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>```   
+JSTL 코어 태그를 사용하기 위함(c타입 반복문 등)
+2. ```<c:set var="path" value="${pageContext.request.contextPath}"/>```  
+Path 기준경로 설정 방법이다. JSTL 코어 태그를 사용할 수 있어야 설정할 수 있는 방식이다.  
+
 ## 자료구조 = 공간복잡도?
 
 ## 알고리즘 = 시간복잡도?
@@ -645,7 +695,7 @@ DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.
 ## 동기통신 vs 비동기통신
 
 
-##
+
 ##
 ##
 
@@ -658,8 +708,8 @@ DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.
 w3schools는 주로 웹 개발에 필요한 프로그래밍 언어로 만든 오브젝트를 가져다 쓸 수 있도록 만든 사이트
 2. 윈도우에는 리눅스가 비활성화 된 상태로 들어있다.
 3. 이 과정에서 가장 집중해야 할 곳은 웹서버와 데이터베이스 부분
-4. 백엔드를 주로 공부했어도 프론트엔드어세도 JS와 Jquery까지 알아두면 좋다.   
-여러 클라이언트가 동시에 이용해야 될 수도 있는 웹서버가 많은 부하를 받게 되면 결국 속도가 느려질 수 밖에 없다. 이 때 브라우저의 JS가 부담을 줄여줄 수 있는데, jquery뿐만아니라 jstl, ajax등까지 이용하면 더 좋은 결과를 낼 수도 있다.
+4. 백엔드를 주로 공부했어도 프론트엔드어세도 JS와 jQuery까지 알아두면 좋다.   
+여러 클라이언트가 동시에 이용해야 될 수도 있는 웹서버가 많은 부하를 받게 되면 결국 속도가 느려질 수 밖에 없다. 이 때 브라우저의 JS가 부담을 줄여줄 수 있는데, jQuery뿐만아니라 jstl, ajax등까지 이용하면 더 좋은 결과를 낼 수도 있다.
 5. 내 저장소의 경로를 확인하는 방법  
 저장된 파일이나 폴더 등의 위치를 브라우저에 찍어본다. 제대로 표시되거나 경로가 잡히면 올바른 경로, 파일에 엑세스할 수 없음이나 기타 등등이면 올바르지 못한 경로
 6. 아주 간단한 코드가 아니라면 만들어진 기능에 주석을 쓰는 버릇을 들여야 한다. 일을 하게 되면 여러 사람들과 협업해야 할 일이 생길텐데, 복잡한 프로그램을 만들게 되면 같이 협업하는 사람들도 쉽게 이해하고 일을 진행할 수 있게 주석을 달아두어야 한다. 
@@ -679,4 +729,4 @@ JS를 이용한 간단한
 19. 어떤 언어이든 "버튼 하나당 함수 하나", 이렇게 작성해야 헷갈리지 않는다.
 20 .구글차트라고해서 부트스트랩처럼 구글이 제공하는 각종 형태의 그래프를 가져다 쓸 수 있다.  
 https://developers.google.com/chart?hl=ko
-21. 
+
