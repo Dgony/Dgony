@@ -298,6 +298,7 @@ pc애플리케이션, web 애플리케이션, 안드로이드 애플리케이션
 4. JS와 유사점이 많다. 연산자, 데이터 타입, 기본 문법 등
 5. JAVA는 다른 언어에 비해 문법을 지키는 것에 비교적 엄격한 문법이다. (; 사용 , 데이터 타입 선언 등)
 6. JAVA 프로그래밍에서 클래스 이름과 camelCase의 경우만 대문자로 표기한다. 나머지는 소문자로 시작
+7. JAVA를 포함한 프로그래밍을 할 때 항상 psuedo 코드를 작성하는 습관을 들여야 한다.
 
 
 ### JAVA의 장점
@@ -358,6 +359,7 @@ JAVA의 변수 재할당은 같은 데이터 타입으로만 가능하다.
 <img src ="img/java_variable.png">
 
 ### JAVA 기본 문법
+모든 문법은 CPU가 RAM의 데이터를 어떻게 꺼내서 어떻게 사용하는지에 대한 방법을 만들어 놓은 것  
 1. ```Integer``` ==> 정수 값을 다루기 위한 클래스  
 .parseInt - 문자열을 정수로 바꾸기 위한 메서드  
 
@@ -379,13 +381,56 @@ Scaneer 클래스로 만든 인스턴스 sc의 메서드, .nextInt();를 활용�
 .nextline(); - next()와 같지만, 여러 단어나 문장으로 구성된 입력에 주로 사용  
 .nextInt(); - 입력값을 int로 받기  
 .nextDouble(); - 입력값을 double로 받기   
-.close(); - scanner는 사용하면 열린상태가 된다. scanner를 닫아주는 메서드
+.close(); - scanner는 사용하면 열린상태가 된다. scanner를 닫아주는 메서드  
 
-7. ```Math``` ==> 정수나 실수 계산에 관련된 여러 메소드를 제공하는 자바 기본라이브러리 클래스
+Scanner의 입력장치가 결정되고, 입력값이 들어올 때 버퍼는 입력 스트림을(System.in의 키보드 입력) 읽어 들여 데이터를 임시 저장하는 곳이다. 사용자가 '엔터'를 누를때까지의 데이터가 버퍼에 임시 저장된다.  
+Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 메서드들은 데이터를 읽어 들일 때 공백(스페이스, 줄바꿈-"\n" 등)을 구분자로 두어서 데이터를 구분한다. nextline()을 제외한 메서드들은 데이터를 읽어들일 때 이 구분자를 처리하지 않고 버퍼에 남겨두게 된다.   
+.nextline()메서드는 엔터키를 누르는 순간, 즉 "\n"을 만날때까지의 데이터를 읽기 때문에, 다른 메서드들을 사용할 때 엔터를 통해 데이터 입력을 구분했다면 이후 nextline()을 사용하게 되었을 때 버퍼에 남아있는 "\n"을 만나게 되면서 데이터를 입력할 새도 없이 즉시 종료된다.    
+만약 다른 메서드들을 사용한 이후 nextline()메서드를 사용해야 할 상황이 발생한다면 nextline()메서드를 미리 하나 입력해서 버퍼에 남겨진 "\n"을 지우고 데이터를 입력할 수 있다.  
 
-8. ```JOptionPane``` ==> JAVA의 알림창을 띄우는 클래스, 추가로 j시리즈는 java에서 입력화면을 만드는 시리즈  
-.showMessageDialog - 그냥 알림창만 띄우는 메서드  
-.showInputDialog - 알림창으로 입력받기  
+7. ```Math``` ==> 정수나 실수 계산에 관련된 여러 메소드를 제공하는 자바 기본라이브러리 클래스  
+.pow(x, y) - x를 y제곱한 값을 반환하는 메서드  
+
+### JAVA의 GUI, java.swing 라이브러리 클래스 문법
+코드의 가독성을 위해 컴포넌트 생성 - 컴포넌트 설정 - 컴포넌트 추가 의 단계로 나눌 수 있다.  
+1.  ```JFrame``` ==> java.swing(GUI 라이브러리)을 이용해서 GUI를 구성하는 윈도우 창을 만드는 클래스    '
+java.awt.jframe 으로, awt를 상속받아서 awt의 각종 클래스 상속 가능(Color, Font, FlowLayout 등)
+```JPanel contentPane = (JPanel) JFrame.getContentPane();```  
+JFrame의 메서드인 .getContentPane()는 JPanel 클래스의 객체로 만들 수 있기도 하다.  
+즉 ```JPanel == .getContentPane()``` 라고 볼 수 있다.   
+JPanel은 swing의 컴포넌트(GUI를 만드는 클래스들)로, 다른 컴포넌트들을 배치할 수 있는 컨테이너 역할을 한다.  
+```JFrame.getContentPane().setBackground(Color.white);``` - 이렇게 JFrame의 배경색을 바꾸는 방법에 이용하거나,  
+```JFrame.getContentPane().setLayout(flow);``` - 이렇게 요소를 물흐르듯 배치하기 위한 메서드에도 사용할 수 있다.
+JFrame의 설정이 들어가는 경우 코드의 가독성을 위해 .getcontentpane을 JPanel 객체로 만들지 않는 선택지도 있다  
+```JFrame.getContentPane().add();``` == ```JFrame.add();``` (JAVA 5 이후)       
+
+2. ```JOptionPane``` ==> JAVA의 알림창을 띄우는 클래스, 추가로 j시리즈는 java에서 입력화면을 만드는 시리즈  
+.showMessageDialog(위치설정(null 혹은 JFrame등), 표시문구) - 그냥 알림창만 띄우는 메서드  
+.showInputDialog(표시문구) - 알림창으로 입력받기     
+
+3. ```JButton``` ==> jframe에 올라가는 버튼을 만들어주는 클래스        
+
+4. ```FlowLayout``` ==> .setLayout()의 매개변수에서 정하는 요소의 배치 유형을 정하는 레이아웃 매니저        
+jfame.getContentPane().setLayout(FlowLayout변수); 의 형태로 만들 수 있다.       
+Flow를 비롯해 Border, Grid, Box, GridBag 등의 Layout 매니저들이 있다.  
+FlowLayout같은 레이아웃 매니저를 사용하면 .setsize(); 메서드 등은 잘 적용되지 않는다.  
+그렇기 떄문에 awt의 클래스를 이용해 설정 객체를 따로 만들어서(Font, Color 등) 설정을 적용할 수 있다. 
+
+5. ```JTextField``` ==> 한 줄 입력창을 만드는 클래스. js에선 ```<input type = text>``` 와 같다.    
+```JTextArea``` ==> 여러 줄 입력창을 만드는 클래스.   
+
+6. ```f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);``` ==> JFrame 창이 닫힐 때를 설정하는 컴포넌트  
+매개변수에 해당하는 위치에 들어가는 메서드는 어떤 숫자를 상수 값을 담당한다. 메서드 혹은 상수 값으로 설정 가능  
+JFrame.EXIT_ON_CLOSE == 3 - 창을 닫을 때 프로그램이 종료된다.  
+JFrame.DISPOSE_ON_CLOSE == 2 - 창을 메모리에서 제외하고, 프로램은 계속 실행한다.  
+JFrame.HIDE_ON_CLOSE == 1 - 창을 닫을 때 창이 숨겨진다. 창은 메모리에서 해제되지 않는다.   
+JFrame.DO_NOTHING_ON_CLOSE == 0 - 창을 닫아도 아무 이벤트도 생기지 않는다. 개발자가 창 닫기 이벤트를 만들어야 함
+
+7. ```Font(글꼴, 굵기, 글자크기)``` ==> awt(Abstract Window Toolkit)의 클래스로, GUI의 설정 조정 가능  
+```Color.색상``` ==> awt를 상속받는 클래스(swing 등)에서 색상을 객체에 담아 사용하기 위함  
+FlowtLayout을 적용하면 컴포넌트의 크기 조정이 어려워진다.  
+Font를 비롯한 awt의 클래스들로 미리 설정값을 담은 객체를 만들어 설정에 적용 가능  
+
 
 ### JAVA의 Class
 1. JAVA의 클래스로 만든 객체(Scanner sc = new Scanner(System.in);에서 sc)들을 '인스턴스' 라고 부른다.
@@ -893,6 +938,15 @@ IDE는 다음과 같은 기능을 가진다.
 4. 빌드 자동화 도구: 빌드 스크립트 작성 및 실행을 돕는 도구.
 5. 버전 관리 시스템 통합: Git, SVN 등과 같은 버전 관리 시스템과의 통합.
 6. 프로젝트 관리 도구: 파일 및 디렉토리 구조 관리, 프로젝트 설정 등을 도와주는 도구.
+
+## GUI
+* **Graphical User Interface**<br>
+<u>사용자가 컴퓨터와 상호작용할 수 있도록 도와주는 시각적 인터페이스</u>
+<br>  
+1. 텍스트 기반의 인터페이스보다 직관적이고 사용하기 쉽다.  
+2. 다만 그래픽을 사용하기 떄문에 시스템 리소스를 소모한다는 점이 있다. 
+3. JAVA는 java.swing 라이브러리로 GUI를 만들 수 있다.  
+주로 사용하는 클래스로 JFrame, JButton, JLabel, JTextField, JPanel 등이 있다.  
 
 ## 
 * ****<br>
