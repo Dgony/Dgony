@@ -395,7 +395,9 @@ JAVA의 변수 재할당은 같은 데이터 타입으로만 가능하다.
 ### JAVA 기본 문법
 모든 문법은 CPU가 RAM의 데이터를 어떻게 꺼내서 어떻게 사용하는지에 대한 방법을 만들어 놓은 것   
 (double)같은 기본 형변환, Integer, Math 등의 클래스는 java.lang을 상속받는데, 이는 자바 파일 모두가 해당하는 기본 상속이다.  
-import를 통해 기져오는 클래스는 대부분 java.util 에 해당하는 클래스를 상속받는다.    
+다양한 클래스들이 상속으로 이루어지는데, util이 가장 큰 자리를 차지한다.  
+클레스의 내부 함수인 메서드는 파괴함수와 비파괴함수로 나뉜다.   
+비파괴함수는 객체의 상태를 바꾸지 않고 파괴 함수는 객체의 상태를 바꾸게 된다.  
 1. ```Integer``` ==> 정수 값을 다루기 위한 클래스  
 .parseInt - 문자열을 정수로 바꾸기 위한 메서드  
 
@@ -445,7 +447,20 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 10. ```Character.toString(char변수)``` ==> char 변수를 String으로 변환하는 메서드  
 ```String변수.toCharArray()``` ==> String 변수를 char[] 배열로 변환하는 메서드  
 String은 기본 데이터 타입이 아니기 때문에 이런 방식의 형변환을 사용한다.  
-String은 char[] 배열을 내부적으로 가지고 문자열을 만들기 때문에 char[] 배열을 이용함.  
+String은 char[] 배열을 내부적으로 가지고 문자열을 만들기 때문에 char[] 배열을 이용함. 
+s1.concat(s2); ==> s1 + s2;와 같은 문자열 결합 메서드  
+s1.charAt(1); // 1글자 추출  
+s1.endsWith("야"); // 특정 글자로 끝나는지 확인  
+s1.substring(3); // index 2 이후 전부 출력  
+s1.substring(3, 8); // index 3~7 출력  
+s1.contains(s2); // 문자열 포함 확인  
+s1.lastIndexOf("프"); // 특정 글자의 위치(겹치면 마지막)  
+s1.toUpperCase(); // 대문자로  
+s1.toLowerCase(); // 소문자로  
+s1.length(); // 글자수 체크  
+s1.replace("나", "너"); // 왼쪽항을 오른쪽항으로 교체  
+s1.indexOf("나"); // 특정 글자의 인덱스를 찾아주는 메서드  
+s1.split(""); // 문자열을 특정 단어 기준으로 해서 배열로 분리하는 방법  
 
 ### JAVA 배열 문법
 배열을 사용하는 이유? ==> 많은 양의 데이터를 처리하기 위함.  
@@ -463,13 +478,15 @@ String은 char[] 배열을 내부적으로 가지고 문자열을 만들기 때�
 s주소는 8바이트의 크기를 차지하고, 배열의 요소는 4+4+4+4 + 4(메타데이터 length) = 20 바이트의 크기를 차지한다.  
 4. 배열은 초기화 할 필요가 없다. JAVA의 변수는 선언하고 초기화하지 않으면 쓰레기값이 생겨 CPU의 연산에 방해를 주게 되는데, 배열은 선언한 데이터 타입의 기본값으로 초기화 되어 있다.  
 정수 - 0 / 실수 - 0.0 / 문자 - "" / String(을 비롯한 참조형) - null / Boolean - false
-5. ```Arrays.toString(arr)``` ==> 배열의 내용을 String으로 변환하는 메서드. 배열값 확인용으로 많이 씀.  
+5. ```Arrays.toString(arr)``` ==> 배열의 내용을 String으로 변환하는 메서드. 배열값 확인용으로 많이 씀.    
+6. ```Arrays.sort(배열)``` ==> 배열을 오름차순으로 정렬해주는 메서드, 파괴함수
 
 ### JAVA의 GUI, javax.swing 라이브러리 클래스 문법
 코드의 가독성을 위해 컴포넌트 생성 - 컴포넌트 설정 - 컴포넌트 추가 의 단계로 나눌 수 있다.  
 1.  ```JFrame``` ==> javax.swing(GUI 라이브러리)을 이용해서 GUI를 구성하는 윈도우 창을 만드는 클래스    
 java.awt.jframe 으로, awt를 상속받아서 awt의 각종 클래스 상속 가능(Color, Font, FlowLayout 등)
 ```JPanel contentPane = (JPanel) JFrame.getContentPane();```  
+JFrame에는 ContentPane이라는 컴포넌트를 다루기 위한 영역이 있다. 그걸 위한 메서드이다.  
 JFrame의 메서드인 .getContentPane()는 JPanel 클래스의 객체로 만들 수 있기도 하다.  
 즉 ```JPanel == .getContentPane()``` 라고 볼 수 있다.   
 JPanel은 swing의 컴포넌트(GUI를 만드는 클래스들)로, 다른 컴포넌트들을 배치할 수 있는 컨테이너 역할을 한다.  
@@ -505,8 +522,15 @@ JFrame.DO_NOTHING_ON_CLOSE == 0 - 창을 닫아도 아무 이벤트도 생기지
 FlowtLayout을 적용하면 컴포넌트의 크기 조정이 어려워진다.  
 Font를 비롯한 awt의 클래스들로 미리 설정값을 담은 객체를 만들어 설정에 적용 가능  
 
+8. ```public void actionPerformed(ActionEvent e) {String s = e.getActionCommand();}```  
+swing에서 e라는 액션이벤트를 집어넣을 때 쓰는 메서드로, 외부 전역변수가 안쪽에서 사용할 수 없기 때문에 e를 발생시키는 변수의 text를 가져오는 메서드. 
+9. ```ImageIcon img1 = new ImageIcon();``` ==> swing에서 img를 가져오기 위한 인스턴스    
+```JLabel l1 = new JLabel(); ==> l1.setIcon(img1);``` imageicon은 이렇게 JLabel의 인스턴스에 얹어서 사용한다. 
 
-### JAVA의 Class
+
+### JAVA의 Class  
+JAVA로 개발하다 보면 다양한 클래스를 사용하게 된다. 
+이 클래스들은 JDK의 4500개중 고르거나, mvnrepository에서 다운받거나, 직접 만들어서 사용할 수 있다.  
 1. JAVA의 클래스로 정의된 객체(Scanner sc = new Scanner(System.in);에서 sc)의 복사본들을 '인스턴스' 라고 부른다.  
 2. 인스턴스 sc의 메서드 .nextInt();로 입력값을 int로 받을 수 있다. 다양한 인스턴스들의 동작방식 과 비슷하다.
 3. class 내부에 정의된 함수 ==> 메서드라고 부를 수 있다.
