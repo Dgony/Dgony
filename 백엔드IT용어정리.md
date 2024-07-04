@@ -41,6 +41,11 @@
 [Regular Expression](#regular-expression)<br>
 [UML](#uml)<br>
 [Thread](#thread)<br>
+[네트워크 용어](#네트워크-용어)<br>
+[DBMS](#dbms)<br>
+[RDBMS](#rdbms)<br>
+[SQL](#sql)<br>
+
 
 
 
@@ -618,7 +623,8 @@ put(key(object) : value(object)), remove(key)
 한 데이터 타입만 사용하는 경우 제너릭으로 미리 타입 지정을 하면 구문 오류와 불필요한 캐스팅을 방지할 수 있다.
 
 ### JAVA의 GUI, javax.swing 라이브러리 클래스 문법
-코드의 가독성을 위해 컴포넌트 생성 - 컴포넌트 설정 - 컴포넌트 추가 의 단계로 나눌 수 있다.  
+코드의 가독성을 위해 컴포넌트 생성 - 컴포넌트 설정 - 컴포넌트 추가 의 단계로 나눌 수 있다.      
+스프링 프로젝트의 인터페이스 - GUI의이벤트처리를 참고해 인터페이스를 통한 이벤트처리 분리가 가능  
 1.  ```JFrame``` ==> javax.swing(GUI 라이브러리)을 이용해서 GUI를 구성하는 윈도우 창을 만드는 클래스    
 java.awt.jframe 으로, awt를 상속받아서 awt의 각종 클래스 상속 가능(Color, Font, FlowLayout 등)
 ```JPanel contentPane = (JPanel) JFrame.getContentPane();```  
@@ -809,9 +815,65 @@ public class 특정파일형태로저장하기 {
 			}
 	}
 }
+``` 
+
+### JAVA의 Interface
+인터페이스는 클래스가 구현해야 하는 메서드의 집합을 정의하는 일종의 '계약'       
+인터페이스 자체는 메서드의 선언부만 포함하고, 구현부는 포함하지 않는 추상 메서드만 가진다.    
+
+C타입 충전기(인터페이스를 상속하는 클래스)가 다양한 기기에 연결(어떤 매커니즘 실행)되는 것처럼,    
+어떤 규격을 정하고 따르기 위함. ==> 여러 클래스가 동일한 방식(인터페이스)으로 작동됨   
+
+java.swing에서 기능을 담당해주는 addactionListener도 이런 방식임  
+```java
+// 인터페이스 정의
+interface Animal {
+    void eat();  // 메서드의 내용이 보이지 않는 추상 메서드
+    void sleep(); // 인터페이스 Animal을 받는 클래스가 정의해서 사용
+}
+``` 
+
+상속의 ```extends```위치에 ```implements```로 인터페이스를 받아서 사용 가능하다.  
+List, Set, Queue, Map 등의 클래스들은 ```Collection```이라는 인터페이스를 상속받는 것이다.  
+```java
+// 인터페이스 구현
+class Dog implements Animal { // extends 처럼 상속
+    @Override
+    public void eat() {
+        System.out.println("Dog is eating");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Dog is sleeping");
+    }
+}
 ```
+* 인터페이스 사용법
+1. 위 코드처럼 상속과 같은 형태로 인터페이스를 구현한 클래스를 객체로 만들어 사용하기
+2. 인터페이스를 구현하는 클래스와 해당 클래스를 사용하는 클래스를 한 파일에 만들어 사용하기
+3. 이벤트처리할 때마다 인터페이스가 익명클래스가 되게 만들어 메서드 재정의하기(addActionListener)
+    
+<br>
 
+* 인터페이스의 특징을 정리하면
+1. 클래스의 상속과 다르게 다중 상속이 가능하다. - implements a, b, c    
+클래스가 다중 상속을 사용하려면  다중 상속을 받은 인터페이스를 상속 받아서 다중 상속을 받을 수 있다.
+2. 추상 메서드만 가질 수 있다.
+3. 변수는 기본적으로 ```public static final``` 로 간주된다.      
+인터페이스의 메서드와 변수는 ```public```으로 취급된다.  
+4. 클래스 간의 계약을 정의하고, 다형성, 유지보수성, 유연성을 높인다.     
+5. 인터페이스는 클래스와 다르게 객체 생성 불가능  
+<br>
 
+* 굳이 클래스 대신 인터페이스를 쓰는 이유?  
+1. 유연한 설계 ==> 단일 상속 대신 다중 상속, 다형성
+2. 계약(Contract) ==> 정의된 메서드를 반드시 구현해야 함.
+
+### JAVA의 Abstracy class(추상클래스)
+Interface와 연계해서 생각할 수 있는 개념   
+클래스가 추상 메서드를 하나라도 가지고 있으면 무조건 추상 클래스이다.  
+추상 메서드, 추상 클래스 모두 다른 클래스가 이를 받아서 무조건 정의하도로 하는 것에 의미가 있다.  
 
 
 
@@ -1404,14 +1466,51 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 4. main이 스레드의 자리를 차지하기 떄문에 스레드를 사용할 때 항상 main이 스레드 + 1 을 해주고 있다고 생각해야 한다.
 
 
+## 네트워크 용어
+1. Client - 서버에게 서비를 요청해서 사용하는 컴퓨터
+2. Server - 사용자들에게 서비스를 제공하는 컴퓨터
+3. IP 주소 - 인터넷 상에서 컴퓨터의 주소
+4. Protocol - 통신을 하기 위한 약속
+5. port - 가상적인 통신 선로
+6. DNS(Domian Name System) - 숫자 대신 기호를 사용하는 주소
+7. DNS 서버 - 기호 주소를 숫자 주소가 변환해주는 서버
+8. URL(Uniform Resource Locator) - 인터넷 상의 자원을 나타내는 약속    
+데이터베이스 같은 곳에 자원의 주소를 지정하는 방법 
+
+## DBMS
+* **DataBase Management System**<br>
+<u>db와 관련된 일련적인 작업을 할 수 있도록 하는 프로그램.(하드웨어적인 개념 포함)</u>
+<br>  
+DBMS의 대표적인 특징
+1. 실시간 접근성
+2. 계속적인 변환 - 최근 데이터 갱신
+3. 여러 사용자가 동시에 공유
+4. 내용에 의한 참조 - 주소 같은 위치가 아닌 내용으로 참조
+
+## RDBMS
+* **Relational DataBase Management System**<br>
+<u>관계형 DB에 관련된 작업을 할 수 있는 프로그램. RDB - 여러 테이블이 서로 관련되어 있음</u>
+<br>  
+1. 
+
+## SQL
+* **Structured Query Language**<br>
+<u>체계적으로 정리된 명령어 모음 언어</u>
+<br>  
+
+
+
+
+
+
+
+
+
 
 ## 
 * ****<br>
 <u></u>
 <br>  
-1. 
-
-
 
 용어정리
 
