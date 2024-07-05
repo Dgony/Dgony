@@ -45,6 +45,9 @@
 [DBMS](#dbms)<br>
 [RDBMS](#rdbms)<br>
 [SQL](#sql)<br>
+[TCP](#tcp)<br>
+[UDP](#udp)<br>
+[Socket](#socket)<br>
 
 
 
@@ -1469,13 +1472,15 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 ## 네트워크 용어
 1. Client - 서버에게 서비를 요청해서 사용하는 컴퓨터
 2. Server - 사용자들에게 서비스를 제공하는 컴퓨터
-3. IP 주소 - 인터넷 상에서 컴퓨터의 주소
+3. IP(Internet Protocol) 주소 - 인터넷 상에서 컴퓨터의 주소
 4. Protocol - 통신을 하기 위한 약속
 5. port - 가상적인 통신 선로
 6. DNS(Domian Name System) - 숫자 대신 기호를 사용하는 주소
 7. DNS 서버 - 기호 주소를 숫자 주소가 변환해주는 서버
-8. URL(Uniform Resource Locator) - 인터넷 상의 자원을 나타내는 약속    
+8. URL(Uniform Resource  Locator) - 인터넷 상의 자원을 나타내는 약속    
 데이터베이스 같은 곳에 자원의 주소를 지정하는 방법 
+9. TCP(Transmisson Control Protocol) - 네트워크 연결 방식 중 하나, 후술
+10. UDP(User Diagram Protocol) - 네트워크 연결 방식 중 하나, 후술
 
 ## DBMS
 * **DataBase Management System**<br>
@@ -1487,23 +1492,82 @@ DBMS의 대표적인 특징
 3. 여러 사용자가 동시에 공유
 4. 내용에 의한 참조 - 주소 같은 위치가 아닌 내용으로 참조
 
+db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세  
+고로 더 중요하게 봐야 할 것은 RDBMS
+
 ## RDBMS
 * **Relational DataBase Management System**<br>
 <u>관계형 DB에 관련된 작업을 할 수 있는 프로그램. RDB - 여러 테이블이 서로 관련되어 있음</u>
 <br>  
-1. 
+수업에 배운 db는 mySQL, db 클라이언트 프로그램은 자바로 만들어진 DBeaver   
+1. entity - db에 저장할 대상
+2. table - entity를 저장하는 곳
+3. table의 열 - item, field, attribute, property
+4. schema - db에서 데이터를 저장하기 위한 틀 + Constraints(제약조건, Unique, pk, fk 등)
+5. instance - 실제로 table에 저장하는 데이터 (instance라고도 불리는 java의 객체와 구분)
+6. insert를 실시하면? - 행단위로 처리(추가)됨
+7. Primary key - 개체 무결성
+8. Foreign key - 참조 무결성
 
 ## SQL
 * **Structured Query Language**<br>
-<u>체계적으로 정리된 명령어 모음 언어</u>
+<u>데이터베이스를 관리 및 조작하기 위해 설계된 특수 목적의 프로그래밍 언어, RDBMS를 다루기 위함</u>
 <br>  
+1. SQL은 ISO 및 ANSI 표준에 의해 정의되어 있어 대부분의 RDBMS에서 유사한 형태로 사용된다.
+2. 비교적 읽고 쓰기 쉬운 구문을 가져서 접근성이 높다.  
+3. 복잡한 쿼리를 통해 다양한 데이터를 관리할 수 있다.  
+
+### SQL의 분류
+### DDL
+**Data Definition Language** - 데이터 정의, Schema Design
+1. CREATE - 새로운 DB 객체(테이블, 인덱스) 생성
+2. ALTER - DB 객체 수정
+3. DROP - DB 객체 삭제
+
+### DML (CRUD 중요)
+**Data Manipulation Language** - 데이터 조작, CRUD
+1. INSERT - DB에 새 데이터 삽입 (CREATE)    
+2. SELECT - DB에서 데이터 검색 (READ)
+3. UPDATE - DB의 데이터 수정 (UPDATE)
+4. DELETE - DB의 데이터 삭제 (DELETE)
+
+### DCL
+**Data Control Language** - DBMS 제어
+1. GRANT - 사용자에게 DB의 권한 부여
+2. REVOKE - DB 권한 회수
+
+### TCL
+**Transaction Control Language** - 트랜잭션 제어
+1. COMMIT: 모든 변경 사항을 저장하고 트랜잭션을 종료
+2. ROLLBACK: 트랜잭션을 취소하고 변경 사항을 되돌림
+3. SAVEPOINT: 트랜잭션 내에서 중간 저장점을 설정
 
 
+## TCP
+* **Transmisson Control Protocol**<br>
+<u>네트워크 연결 방식, 신뢰성 있는 통신을 위해 '연결을 먼저 설정'하고 그 통로로 데이터를 주고 받는 방식</u>  
+<br> 
+한 경로로만 패킷에 주소를 붙여 전송되며 수신측에서 패킷을 받으면 송신측에 같은 경로로 잘 받았음을 회신한다.
+<img src = "img/TCP.png">
 
+## UDP
+* **User Datagram Protocol**<br>
+<u>네트워크 연결 방식, 전송할 데이터를 다이어그램 이라고 불리는 고정 길이의 패킷으로 분할해서 전송하는 방식</u>  
+<br>  
+패킷에 주소를 붙여 전송되며 여러 경로를 거치게 된다. 패킷이 분실될 수 있다.
+<img src = "img/UDP.png">
 
+## Socket
+* **네트워크 상의 응용 프로그램끼리 통신을 위한 연결 끝점(end poinrt)**<br>
+<u></u>
+<br>  
+<img src = "img/Socket.png">
 
-
-
+## WebServer
+* **클라이언트가 요청하면 응답을 해주는 서버**<br>
+<br>  
+현재 사용 중인 개발 과정에선 tomcat으로 서버를 대신함
+1. 
 
 
 
@@ -1543,6 +1607,11 @@ DBMS의 대표적인 특징
 
 ## 각종 개발환경 및 프로그램 초기 환경 셋팅 
 
+### 공통적으로 체크해야 하는 부분
+1. 프로그램을 설치할 때 특정 사용자만 vs 모든 사용자 고르는 부분 모든 사용자 고르기(보편적으로)
+2. 한글을 써야 할 일이 있는 프로그램을 사용중이라면 UTF-8 인코딩 설정을 확인하기
+3. 
+
 ### VSCode  
 1. 인터넷에 Visual Studio Code검색해서 설치하면 됨.
 2. 각종기능을 플러그인을 통해 설치 가능 (자바 개발 환경, live server, open default browser 등)
@@ -1563,6 +1632,27 @@ project 탭 혹은 프로젝트 우클릭 - properties - proeject facets - java 
 6. window - preferences - general - show heap status 체크 (IDE 최하단에 heap 영역 사용량 표시)
 7. window - preferences - general - workspace - other : UTF-8 선택 (한글 인코딩용)
 8. help - eclipse marketplace에서 각종 편의성을 위한 플러그인 인스톨 가능, snippet, 시력 보호 프로그램 등
+
+### mySQL 설치
+1. https://dev.mysql.com/downloads/mysql/
+2. 8.0.34 - go to download page - Windows (x86, 32-bit), MSI Installer	8.0.34 다운로드(아래꺼)
+3. No thanks, just start my download.클릭
+4. 인스톨러 실행 
+5. server only
+6. execute
+7. 전부 next
+8. 비밀번호만 1234 비밀번호 확인도 1234
+
+### DBeaver 설치
+1. https://dbeaver.io/download/
+2. windows(installer) 다운
+3. For anyone who use this computer 만 체크후 쭈욱 완료
+4. 자동으로 켜지는 창에서 mySQL 선택 후 id root 와 함께 mySQL 비밀번호 입력 후 필요한 거 다운로드 
+5. 오류 발생하면 Driver properties 탭에 allowPublicKeyRetrieval의 Value를 true로 바꾸기 
+6. Test connection 클릭 
+7. 그럼 다운로드 드라이버가 오류 안발생함 
+8. 이게 데이터베이스를 연결하는 방식, 새 데이터베이스를 열려면 탭에 코드+ 모양 누르면 됨.
+9. 비밀 번호 등이 바뀌면 localhost 등을 우클릭 - Edit connection을 통해 연결 정보를 바꿔줄 수 있다.
 
 ## 웹 페이지가 동작하는 방식
 1. 클라이언트에서 브라우저 실행  
