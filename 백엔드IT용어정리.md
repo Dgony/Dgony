@@ -48,6 +48,9 @@
 [TCP](#tcp)<br>
 [UDP](#udp)<br>
 [Socket](#socket)<br>
+[WebServer](#webserver)<br>
+[CSV](#csv)<br>
+
 
 
 
@@ -1500,14 +1503,23 @@ db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세
 <u>관계형 DB에 관련된 작업을 할 수 있는 프로그램. RDB - 여러 테이블이 서로 관련되어 있음</u>
 <br>  
 수업에 배운 db는 mySQL, db 클라이언트 프로그램은 자바로 만들어진 DBeaver   
-1. entity - db에 저장할 대상
+DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크에도 좋고 변경사항을 db에 반영시키면서 진행해야 함  
+1. entity - db에 저장할 데이터의 종류 혹은 카테고리(로그인에 필요한 개인정보, 한 사람의 시험 점수 등)  
 2. table - entity를 저장하는 곳
-3. table의 열 - item, field, attribute, property
-4. schema - db에서 데이터를 저장하기 위한 틀 + Constraints(제약조건, Unique, pk, fk 등)
-5. instance - 실제로 table에 저장하는 데이터 (instance라고도 불리는 java의 객체와 구분)
-6. insert를 실시하면? - 행단위로 처리(추가)됨
-7. Primary key - 개체 무결성
-8. Foreign key - 참조 무결성
+3. table의 행 - column (로그인이라 치면, id, 비밀번호, 이메일 등의 데이터 구분 용)
+4. table의 열 - row, item, field, attribute, property
+5. schema - db에서 데이터를 저장하기 위한 틀 + Constraints(제약조건, Unique, pk, fk 등)
+6. instance - 실제로 table에 저장하는 구체적인 데이터 (row로 구분, java의 instance와 구분)
+7. insert를 실시하면? - 행단위로 처리(추가)됨
+8. Primary key, 기본키   
+테이블 중 유일하고 중요한 값을 가지는 어떤 후보를 정하여 기본키를 만들게 됨.    
+검색 or 다른 테이블과의 join을 하기 위해 만들어짐.    
+값이 유일하며(unique), 비어 있으면 안됨(not null) ==> **개체 무결성**
+9. Foreign key, 왜래키  
+다른 테이블에서 PK를 포함하는 유일한 key를 참조하여 사용         
+값의 범위를 체크 ==> FK에 존재하지 않는 데이터를 넣으면 오류 ==> 결점이 없는 데이터만 넣을 수 있음 ==> **참조 무결성**  
+10. ERD - Entity Relationship Diagram, 엔티티관계도, 다음과 같은 형식으로 표시된다.
+<img src = "img/ERD.png">
 
 ## SQL
 * **Structured Query Language**<br>
@@ -1519,17 +1531,71 @@ db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세
 
 ### SQL의 분류
 ### DDL
-**Data Definition Language** - 데이터 정의, Schema Design
+**Data Definition Language** - 데이터 정의, Schema Design   
+use db_name ==> 해당 db를 선택하기  
+**다음 DDL, DML, DCL 등의 명령어는 db를 지정한 상태에서 이루어진다는 것을 가정한다**    
+**만약 지정하지 않았다면, db_name.table_name 이런식으로 따로 지정해야 한다.**   
+
 1. CREATE - 새로운 DB 객체(테이블, 인덱스) 생성
+```sql
+create database db_name;
+
+create table table_name ( /* table을 coumn과 함께 만들 수 있다*/
+column_name data_type default null, /* 제약조건도 함께 만들 수 있는 모습 */
+column_name data_type default null, 
+column_name data_type default null) 
+```
 2. ALTER - DB 객체 수정
+```sql
+alter table table_name /* table이 만들어진 이후 column을 추가하는 방법 */ 
+add column_name data_type default String not null;
+
+alter table table_name  /* pk를 설정하는 등 제약 조건을 추가하는 것도 가능 */
+add constraint pk_name(새로 써야함) 
+primary key(column_name);
+
+alter table table_name 
+add constraint pk_name  
+foreign key(column_name)  /* fk를 설정하는 방법, 여기 잘 보기 */ 
+references table_name(column_name); /* 참조할 다른 테이블의 key를 가져오는 모습 */
+```
+
 3. DROP - DB 객체 삭제
+```sql
+drop database db_name; /* db 삭제 */
+
+drop table table_name; /* table 삭젝 */
+```
 
 ### DML (CRUD 중요)
 **Data Manipulation Language** - 데이터 조작, CRUD
-1. INSERT - DB에 새 데이터 삽입 (CREATE)    
+1. INSERT - DB에 새 데이터 삽입 (CREATE)      
+```sql
+insert into table_name (column_name) /*모든 column의 데이터를 집어넣는다면 column_name 생략 가능*/
+values (column_row);  /*테이블에 값을 집어넣는 방법, 각 column의 제약조건에 따라 다른 데이터 삽입*/
+```
 2. SELECT - DB에서 데이터 검색 (READ)
+```sql
+select column_name 
+from table_name 
+where colum_name = column_row /*조건을 붙여 해당 column의 row 가져오기*/
+```
+<img src = "img/crud_read.png">
+
 3. UPDATE - DB의 데이터 수정 (UPDATE)
+```sql
+update table_name 
+set column_name = column_row;; /* 전체 수정 */
+
+update table_name
+set column_name = column_row;
+where column_name = column_row;; /* 조건에 맞는 일부 row만 수정 */
+```
 4. DELETE - DB의 데이터 삭제 (DELETE)
+```sql
+delete from table_name
+where column_name = column_row; /* 조건에 해당하는 row를 제거하는 delete문 */
+```
 
 ### DCL
 **Data Control Language** - DBMS 제어
@@ -1569,7 +1635,11 @@ db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세
 현재 사용 중인 개발 과정에선 tomcat으로 서버를 대신함
 1. 
 
-
+## CSV
+* **Comma Seperated Values**<br>
+<u>',' 쉼표로 각 데이터 항목을 구분하여 텍스트로 테이블 형태의 데이터를 저장하는 파일 형식</u>
+<br>  
+데이터 교환과 저장을 목적으로 사용된다. 현재 사용하는 예시는 DBeaver로 관리하는 mySQL의 데이터 저장 및 교환 용 
 
 ## 
 * ****<br>
@@ -1749,9 +1819,13 @@ condtion이 참이면 표현식 x, 거짓이면 표현식 y를 반환한다.
 
 ##
 ##
+##
+##
+##
 
 맨밑
 
+## 정처기를 위한 미니 메모장
 
 
 ## 알아두면 무조건 좋은 것들
