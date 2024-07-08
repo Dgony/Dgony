@@ -1565,6 +1565,9 @@ references table_name(column_name); /* 참조할 다른 테이블의 key를 가�
 drop database db_name; /* db 삭제 */
 
 drop table table_name; /* table 삭젝 */
+
+alter table table_name
+drop column column_name; /* table 내부의 column 삭제 */
 ```
 
 ### DML (CRUD 중요)
@@ -1579,6 +1582,11 @@ values (column_row);  /*테이블에 값을 집어넣는 방법, 각 column의 �
 select column_name 
 from table_name 
 where colum_name = column_row /*조건을 붙여 해당 column의 row 가져오기*/
+
+select column_name  
+from table_name
+order by column_name desc 
+/* 해당 column을 기준으로 내림차순 정릴하는 법, 오름차순 정렬을 위해선 desc만 지워주면 됨  */
 ```
 <img src = "img/crud_read.png">
 
@@ -1596,6 +1604,9 @@ where column_name = column_row;; /* 조건에 맞는 일부 row만 수정 */
 delete from table_name
 where column_name = column_row; /* 조건에 해당하는 row를 제거하는 delete문 */
 ```
+* **delete와 truncate의 차이**  
+delete ==> table의 데이터를 row 단위로 한줄 씩 삭제  
+truncate ==> table의 모든 row를 한번에 모두 삭제
 
 ### DCL
 **Data Control Language** - DBMS 제어
