@@ -1676,17 +1676,32 @@ DBCP 라이브러리와 MyBatis 등의 라이브러리를 이용해 처리를 �
     3. PreparedStatement의 인스턴스인 ps에 con.prepareStatement(sql)의 형태로 db 연결과 sql문이 준비된 상태를 가지는 SQL 부품을 만들고 
     4. ps.execute(); 로 db에 전송한다
 
-<img src = "img/JDBC_Basic.png">
-JDBC를 Driver, Connection, PreparedStatement, SQL문을 이용해 프로그래머가 직접 연결하는 방식
+<img src = "img/JDBC_Basic.png">   
+
+JDBC를 Driver, Connection, PreparedStatement, SQL문을 이용해 프로그래머가 직접 연결하는 방식       
+DB 연결 이후 DB의 데이터를 다루는 3단계를 조작해 CRUD가 가능하다.    
+그 CRUD를 위해 DAO, DTO가 필요하다.  
+JDBC 연결을 끝마친 후 위의 메서드를 활용하여 연결을 끊어주어야 한다.
 
 ### DB와 웹서버를 연결하기 위해 JAVA 애플리케이션에 필요한 클래스
 1. **DAO - Data Access Object**    
 자바 애플리케이션이 DB에 접근해 데이터를 처리하기 위한 클래스    
-CRUD 기능별로 메서드 구현   
+CRUD 기능별로 메서드 구현     
 
 2. **DTO - Data Transfer Object == VO(Value Object)**     
 데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스    
 
+### DB 처리가 끝나면 반드시 연결을 끊어야 한다.
+```java
+con.close();
+ps.close();
+```
+* 연결을 끊어야 하는 이유?
+    1. 자원 관리 - DB 연결은 제한된 자원이기 때문에, 커넥션 풀을 최대한 넓게 유지하기 위해 단아야 한다.
+    2. 메모리 누수 방지
+    3. 데드락(deadlock) 방지    
+    여러 트랜잭션이 동시에 연결되어 있으면 서로의 자원을 기다리는 현상이 발생하며, 시스템이 진행되지 않는다.
+    4. 보안 - 연결이 유지되면 DB에 접근할 수 있는 연결이 남아있을 수도 있음
 
 
 
