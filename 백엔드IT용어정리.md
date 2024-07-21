@@ -1624,6 +1624,149 @@ fk 제약이 있다면 실행되지 않을 수 있음
 2. ROLLBACK: 트랜잭션을 취소하고 변경 사항을 되돌림
 3. SAVEPOINT: 트랜잭션 내에서 중간 저장점을 설정
 
+### JOIN
+**특정 column을 기준으로 테이블의 column들을 합한 결과**
+
+### SQL문 
+
+```sql
+create database practice2;
+
+use practice2;
+
+select * from pratice2;
+
+drop database practice2;
+
+use practice1; /*데이터베이스를 선택하는 방법*/
+
+show tables;
+
+select * from personal;
+
+rename table personal to personalData;
+
+select * from personalData;
+
+create table personalData2
+as select * from personaldata p; /*테이블을 복사하는 방법*/
+
+select * from personaldata2;
+
+show tables;
+
+alter table personaldata 
+add constraint data_key primary key(num);
+
+alter table productorder 
+add constraint budate_key  
+foreign key(buydate)
+references personaldata(num);
+
+select * from personaldata p;
+
+use practice1;
+
+create table productOrder (
+id varchar(100) default null, 
+title varchar(100) default null,
+price varchar(100) default null)
+
+select * from productorder;
+
+alter table productorder 
+add buydate varchar(100) default null;
+
+alter table productorder 
+add addr varchar(100) default 'home' not null;
+
+insert into productorder (id, title, price, buydate)
+values ('1123', '사과', '3000', '15131425');  
+
+insert into productorder (id, title, price, buydate)
+values ('1234', '애플망고', '4000', '12512423')
+
+select * 
+from productorder p 
+where id = '4123';
+
+update productorder 
+set addr = 'my_home';
+
+update productorder 
+set addr = 'your_home'
+where id = '1123';
+
+delete from productorder 
+where id = '1234';
+
+select * from productorder p ;
+
+drop table personaldata2;
+
+create database practice2;
+
+drop database practice2;
+
+use practice1;
+
+create table product3 (
+id int not null,
+name varchar(50) default null,
+content varchar(50) default null,
+price int default null,
+company varchar(50) default null,
+img varchar(50) default null)
+
+select * from product3
+
+insert into product3 
+values (
+104, 'shoes1', 'fun shoes1', 1000, 'c100');
+
+update product3 
+set price = 5000
+where name = 'shoes1';
+
+update product3 
+set company = 'c555'
+where name = 'shoes2';
+
+update product3 
+set name = 'fun', price  = 9999
+where id = 103;
+
+delete from product3 
+where id = 101;
+
+select *
+from product3 p ;
+
+select * from product3 p
+order by price desc
+
+alter table product3
+drop column img;
+
+select * from product3 p 
+
+TRUNCATE TABLE product3 ; 
+
+use shop
+
+delete from `member` where id = "ring"
+
+update `member`
+set
+pw = "2", name = "2", tel = "2"
+where id = "cool";
+
+update `member` 
+set
+pw = "3", name = "3", tel = "3"
+where id = "melon";
+```
+
 
 ## TCP
 * **Transmisson Control Protocol**<br>
