@@ -50,6 +50,9 @@
 [Socket](#socket)<br>
 [WebServer](#webserver)<br>
 [CSV](#csv)<br>
+[JDBC](#jdbc)<br>
+[ORM](#orm)<br>
+[DBCP](#dbcp)<br>
 
 
 
@@ -1504,7 +1507,8 @@ db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세
 <u>관계형 DB에 관련된 작업을 할 수 있는 프로그램. RDB - 여러 테이블이 서로 관련되어 있음</u>
 <br>  
 수업에 배운 db는 mySQL, db 클라이언트 프로그램은 자바로 만들어진 DBeaver   
-DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크에도 좋고 변경사항을 db에 반영시키면서 진행해야 함  
+DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크에도 좋고 변경사항을 db에 반영시키면서 진행해야 함    
+DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터 모델을 사용하기 때문에 테이블 형태로 데이터 저장  
 1. entity - db에 저장할 데이터의 종류 혹은 카테고리(로그인에 필요한 개인정보, 한 사람의 시험 점수 등)  
 2. table - entity를 저장하는 곳
 3. table의 행 - column (로그인이라 치면, id, 비밀번호, 이메일 등의 데이터 구분 용)
@@ -1528,7 +1532,8 @@ DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크�
 <br>  
 1. SQL은 ISO 및 ANSI 표준에 의해 정의되어 있어 대부분의 RDBMS에서 유사한 형태로 사용된다.
 2. 비교적 읽고 쓰기 쉬운 구문을 가져서 접근성이 높다.  
-3. 복잡한 쿼리를 통해 다양한 데이터를 관리할 수 있다.  
+3. 복잡한 쿼리를 통해 다양한 데이터를 관리할 수 있다. 
+4. 정형 데이터베이스의 일종인 mySQL, Oracle 같은 RDBMS를 이용해 연습, 웹 애플리케이션에는 mySQl
 
 ### SQL의 분류
 ### DDL
@@ -1625,148 +1630,32 @@ fk 제약이 있다면 실행되지 않을 수 있음
 3. SAVEPOINT: 트랜잭션 내에서 중간 저장점을 설정
 
 ### JOIN
-**특정 column을 기준으로 테이블의 column들을 합한 결과**
+**특정 column을 기준으로 테이블의 column들을 합한 결과**   
+* Join이 왜 필요할까?   
+==> 검색을 통해 데이터를 가져오고 싶은데 그 데이터가 여러 테이블에 걸쳐 있을 때 사용하기 위한 방법  
 
-### SQL문 
+<img src = "img/join.png">  
 
+1. Inner Join - 양쪽 테이블에서 공통된 조건을 만족하는 선택된 column의 row 만 검색  
 ```sql
-create database practice2;
-
-use practice2;
-
-select * from pratice2;
-
-drop database practice2;
-
-use practice1; /*데이터베이스를 선택하는 방법*/
-
-show tables;
-
-select * from personal;
-
-rename table personal to personalData;
-
-select * from personalData;
-
-create table personalData2
-as select * from personaldata p; /*테이블을 복사하는 방법*/
-
-select * from personaldata2;
-
-show tables;
-
-alter table personaldata 
-add constraint data_key primary key(num);
-
-alter table productorder 
-add constraint budate_key  
-foreign key(buydate)
-references personaldata(num);
-
-select * from personaldata p;
-
-use practice1;
-
-create table productOrder (
-id varchar(100) default null, 
-title varchar(100) default null,
-price varchar(100) default null)
-
-select * from productorder;
-
-alter table productorder 
-add buydate varchar(100) default null;
-
-alter table productorder 
-add addr varchar(100) default 'home' not null;
-
-insert into productorder (id, title, price, buydate)
-values ('1123', '사과', '3000', '15131425');  
-
-insert into productorder (id, title, price, buydate)
-values ('1234', '애플망고', '4000', '12512423')
-
-select * 
-from productorder p 
-where id = '4123';
-
-update productorder 
-set addr = 'my_home';
-
-update productorder 
-set addr = 'your_home'
-where id = '1123';
-
-delete from productorder 
-where id = '1234';
-
-select * from productorder p ;
-
-drop table personaldata2;
-
-create database practice2;
-
-drop database practice2;
-
-use practice1;
-
-create table product3 (
-id int not null,
-name varchar(50) default null,
-content varchar(50) default null,
-price int default null,
-company varchar(50) default null,
-img varchar(50) default null)
-
-select * from product3
-
-insert into product3 
-values (
-104, 'shoes1', 'fun shoes1', 1000, 'c100');
-
-update product3 
-set price = 5000
-where name = 'shoes1';
-
-update product3 
-set company = 'c555'
-where name = 'shoes2';
-
-update product3 
-set name = 'fun', price  = 9999
-where id = 103;
-
-delete from product3 
-where id = 101;
-
-select *
-from product3 p ;
-
-select * from product3 p
-order by price desc
-
-alter table product3
-drop column img;
-
-select * from product3 p 
-
-TRUNCATE TABLE product3 ; 
-
-use shop
-
-delete from `member` where id = "ring"
-
-update `member`
-set
-pw = "2", name = "2", tel = "2"
-where id = "cool";
-
-update `member` 
-set
-pw = "3", name = "3", tel = "3"
-where id = "melon";
+select column_name  
+from table_name1, table_name2   
+where table_name1.column = table_name2.column    
 ```
 
+2. Left Outer Join - 왼쪽 테이블 row 전체 + 어떤 조건을 만족하는 오른쪽 테이블의 row 
+```sql
+select column_name
+from left_table_name left /* 기준이 되는 왼쪽 테이블 */ 
+left outer join right_table_name right on left.column_name = right.column_name 
+```
+<img src = "img/left_outer_join.png">   
+
+위 left join의 결과로 보았을 때, 조건을 만족하는 왼쪽 테이블의 row + 오른쪽 테이블의 row를 표시한 후   
+왼쪽 테이블 row 전체를 표시하는 순서를 가지고 있다.  
+
+3. Right Outer Join - 오른쪽 테이블 row 전체 + 어떤 조건을 만족하는 왼쪽 테이블의 row   
+Left Outer Join의 반대로 실행된다고 볼 수 있다.
 
 ## TCP
 * **Transmisson Control Protocol**<br>
@@ -1802,8 +1691,9 @@ where id = "melon";
 
 ## JDBC
 * **Java DataBase Connectivity**<br>
-<u> JAVA 애플리케이션과 DB를 연결하기 위한 프로그램이 방식</u>
+<u> JAVA 애플리케이션과 DB를 연결하기 위한 프로그래밍 방식</u>
 <br> 
+JAVA SE 에서 제공하는 java.sql 패키지를 사용하는 DB 기능 처리 객체
 
 * JDBC 프로그래밍 4단계   
 기본적으로 1 ~ 4번을 프로그래머가 직접 할 수 있지만,    
@@ -1838,14 +1728,36 @@ CRUD 기능별로 메서드 구현
 ```java
 con.close();
 ps.close();
+rs.close();
 ```
 * 연결을 끊어야 하는 이유?
-    1. 자원 관리 - DB 연결은 제한된 자원이기 때문에, 커넥션 풀을 최대한 넓게 유지하기 위해 단아야 한다.
+    1. 자원 관리 - DB 연결은 제한된 자원이기 때문에, 커넥션 pool을 최대한 넓게 유지하기 위해 단아야 한다.
     2. 메모리 누수 방지
     3. 데드락(deadlock) 방지    
     여러 트랜잭션이 동시에 연결되어 있으면 서로의 자원을 기다리는 현상이 발생하며, 시스템이 진행되지 않는다.
     4. 보안 - 연결이 유지되면 DB에 접근할 수 있는 연결이 남아있을 수도 있음
 
+## ORM
+* **Object-Relational Mapping**<br>
+<u>OOP를 사용해 호환되지 않는 유형의 시스템 간 데이터를 변환하는 프로그래밍 기술</u>
+<br>  
+1. 객체와 테이블 간 mapping  
+2. 데이터 쿼리 및 조작
+3. 트랜잭션 관리
+
+## DBCP
+* **DataBase Connection Pooling**<br>
+<u>자바 애플리케이션과 DB의 연결을 담당하는 한정된 연걸 자원의 집합인 Connection Pool을 관리하는 방법</u>
+<br>  
+
+* JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 함   
+    1. Connection con - con.close();
+    2. PreparedStatement ps - ps.close();
+    3. Resultset rs - rs.close();
+
+<img src = "img/connection_pool.png">    
+
+Connection pool은 한정되어 있기 떄문에, 연결이 너무 과부하되지 않도록 관리해주는 것이 필요하다.  
 
 
 
@@ -2125,7 +2037,12 @@ ps.close();
         * **빌더** - 인스턴스를 조합하여 건축하듯 객체 생성
         * 팩토리 메서드 - 상위 클래스에서 인터페이스만 정의, 객체 생성은 서브 클래스가 담당
         * 프로토타입 - 원본 객체를 복제
-        * 싱글톤 - 생성된 한 객체를 어디서든 참조할 수 있지만, 여러 프로세스가 동시에 참조할 순 없음
+        * 싱글톤 - 클래스당 객체 한개만 생성 가능하고, 생성된 한 객체를 어디서든 참조할 수 있지만, 여러 프로세스가 동시에 참조할 순 없음   
+            @(annotation)으로 지정 가능
+            * 단일 인스턴스
+            * 글로벌 접근
+            * 지연 초기화(필요한 시점에 최초로 생성(초기화))
+            * 멀티스레드 안정성
     * 구조 패턴
         * **어댑터** - 호환성 없는 클래스 변환 기능
         * **브리지** - 구현부의 추상층 분리, 서로 독립적으로 확장, 기능과 구현
@@ -2382,7 +2299,8 @@ ps.close();
     * ∀: 모든 것에 대하여(for all)
     * ∪: 합집합
 
-* 정규화 1NF ~ 5NF, 중복데이터 방지 위함, 두부이걸다줘?(도부이결다종)
+* 정규화 1NF ~ 5NF, 중복데이터 방지 위함, 두부이걸다줘?(도부이결다종)   
+    정규화되지 않은 날것의 중복데이터? ==> 이상현상(Anomaly, 삽입, 삭제, 수정) 발생 가능성  
     * 1NF - 도메인(row의 칸)이 원자값만 존재
     * 2NF - 부분 함수 종속 제거 == 완전함수 종속 관계 만족
     * 3NF - 이행적 함수 종속 제거
