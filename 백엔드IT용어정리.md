@@ -12,6 +12,7 @@
 [HTTPS](#https)  
 [URL](#url)  
 [URI](#uri)    
+[WebServer](#webserver)  
 [WAS](#was)  
 [Bootstrap](#bootstrap)  
 [SERVLET](#servlet)  
@@ -48,7 +49,6 @@
 [TCP](#tcp)<br>
 [UDP](#udp)<br>
 [Socket](#socket)<br>
-[WebServer](#webserver)<br>
 [CSV](#csv)<br>
 [JDBC](#jdbc)<br>
 [ORM](#orm)<br>
@@ -908,13 +908,17 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 ### HTTTP의 특성
 1. 무연결성(Connectionless) : 통신시 연결을 유지 않는다. 한 번 연결하고, 주고받고, 바로 끊는다.  
 2. 무상태성(Stataless) : 요청할 때마다 다른 작업을 실시한다. 이전에 연결했던 클라이언트임을 ID를 사용해 저장해두었다가 인식하는 방식이다.  
-3. 요청정보(Request)를 저장해두었다가 조건에 맞는 응답정보(Response)를 반환한다. 
+3. 요청정보(Request) == 클라이언트정보 를 저장해두었다가
+4. 조건에 맞는 응답정보(Response)를 반환한다. 
 
 ### HTTP 주요 응답 코드  
 1. 200 ==> ok  
-2. 400 ==> bad request  
-3. 404 ==> not found  
-4. 500 ==> interanl error  
+2. 400 ==> bad request, 요청이 잘못됨
+    * 401 == Unauthorized
+    * 403 == Forbidden
+3. 404 ==> not found, 요청에 따라 웹서버 밑의 리소스를 찾아봤는데 해당 위치에 요청한 리소스가 없음
+    * 405 == Method Not Allowed
+4. 500 ==> interanl error, 얘기치 못한 에러(클라이언트가 아닌 서버 측 문제) 발생
 
 ## HTTPS
 * **Hyper Text Transfer Protocol Secure**  
@@ -931,23 +935,39 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 2. 주로 CSS를 중심으로 하는 기본 프레임워크라고 생각할 수 있다.
 
 
+## WebServer
+* **클라이언트가 요청하면 응답을 해주는 서버**<br>
+<br>  
+현재 사용 중인 개발 과정에선 tomcat으로 웹서버를 대신함   
+
+### 웹문서
+클라이언트가 서버에 요청하면 응답하는 정적 혹은 동적 문서
+
+### 웹 애플리케이션
+웹에서 수행되는 애플리케이션
+
+### 웹서비스
+네트워크 상에 분산된 자원을 사용하기 위한 서비스
+
 ## WAS
-* **Web Application Service**  
-<u></u>
+* **Web Application Server**  
+<u>브라우저, 클라이언트 등을 통해 접근할 수 있고, 서버에서 실행되며 클라이언트의 요청을 처리해 동적인 콘텐츠 제공</u>
 <br>  
 1. 
 
 ## SERVLET
-* ****
-<u></u>
+<u>자바를 기반으로 한 서버측 프로그램으로, 웹 애플리케이션에서 클라이언트의 요청을 처리하고 동적인 콘텐츠 생성</u>
 <br>  
-1.
+* servlet engine이 서블렛의 생명주기, 스레드, 요청 처리, 서블릿 로딩 및 초기화 등을 담당한다   
+이번 과정에선 서블렛 엔진이 java spring에서 제공하는 mvc 프레임워크의 서블릿을 관리하는 것을 확인했다.  
+<img src = "img/servlet_lifecycle.png">
 
 ## JSP
-* ****
+* **JAVA Server Page**
 <u></u>
 <br>  
-1. jsp가 html처럼 쓸 수 있기는 하지만, 결국 클라이언트에게 전달될 때 jsp 그대로 보내지는 것은 아니고 html로 번역되어서 보내지게 된다. 
+1. 브라우저는 **반드시 html만 읽을 수 있다.** 
+2. jsp가 html처럼 쓸 수 있기는 하지만, 결국 클라이언트에게 전달될 때 jsp 그대로 보내지는 것은 아니고 html로 번역되어서 보내지게 된다. 
 
 ## SNIPPET
 * **코드조각모음**   
@@ -1488,6 +1508,11 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 데이터베이스 같은 곳에 자원의 주소를 지정하는 방법 
 9. TCP(Transmisson Control Protocol) - 네트워크 연결 방식 중 하나, 후술
 10. UDP(User Diagram Protocol) - 네트워크 연결 방식 중 하나, 후술
+11. QueryString - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미   
+"https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%84%A0%EB%AC%BC"    
+네이버에서 '선물'을 검색했을 때 해당 검색 페이지를 요청하는 쿼리스트링
+
+
 
 ## DBMS
 * **DataBase Management System**<br>
@@ -1657,6 +1682,8 @@ left outer join right_table_name right on left.column_name = right.column_name
 3. Right Outer Join - 오른쪽 테이블 row 전체 + 어떤 조건을 만족하는 왼쪽 테이블의 row   
 Left Outer Join의 반대로 실행된다고 볼 수 있다.
 
+4. Full Outer Join - 테이블을 모두 합쳐 출력
+
 ## TCP
 * **Transmisson Control Protocol**<br>
 <u>네트워크 연결 방식, 신뢰성 있는 통신을 위해 '연결을 먼저 설정'하고 그 통로로 데이터를 주고 받는 방식</u>  
@@ -1677,12 +1704,6 @@ Left Outer Join의 반대로 실행된다고 볼 수 있다.
 <br>  
 <img src = "img/Socket.png">
 
-## WebServer
-* **클라이언트가 요청하면 응답을 해주는 서버**<br>
-<br>  
-현재 사용 중인 개발 과정에선 tomcat으로 서버를 대신함
-1. 
-
 ## CSV
 * **Comma Seperated Values**<br>
 <u>',' 쉼표로 각 데이터 항목을 구분하여 텍스트로 테이블 형태의 데이터를 저장하는 파일 형식</u>
@@ -1693,7 +1714,8 @@ Left Outer Join의 반대로 실행된다고 볼 수 있다.
 * **Java DataBase Connectivity**<br>
 <u> JAVA 애플리케이션과 DB를 연결하기 위한 프로그래밍 방식</u>
 <br> 
-JAVA SE 에서 제공하는 java.sql 패키지를 사용하는 DB 기능 처리 객체
+JAVA SE 에서 제공하는 java.sql 패키지를 사용하는 DB 기능 처리 객체   
+**1~2 단계를 합치고 DB와 연결하면 DBCP, 1~3 단계를 합치고 DB와 연결하면 myBatis**
 
 * JDBC 프로그래밍 4단계   
 기본적으로 1 ~ 4번을 프로그래머가 직접 할 수 있지만,    
@@ -1709,6 +1731,7 @@ DBCP 라이브러리와 MyBatis 등의 라이브러리를 이용해 처리를 �
     3. PreparedStatement의 인스턴스인 ps에 con.prepareStatement(sql)의 형태로 db 연결과 sql문이 준비된 상태를 가지는 SQL 부품을 만들고 
     4. ps.execute(); 로 db에 전송한다
 
+
 <img src = "img/JDBC_Basic.png">   
 
 JDBC를 Driver, Connection, PreparedStatement, SQL문을 이용해 프로그래머가 직접 연결하는 방식       
@@ -1721,8 +1744,9 @@ JDBC 연결을 끝마친 후 위의 메서드를 활용하여 연결을 끊어�
 자바 애플리케이션이 DB에 접근해 데이터를 처리하기 위한 클래스    
 CRUD 기능별로 메서드 구현     
 
-2. **DTO - Data Transfer Object == VO(Value Object)**     
-데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스    
+2. **DTO(Data Transfer Object, only 데이터 전달 뿐) == VO(Value Object, 비즈니스 로직이 있는 경우)**     
+데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스      
+비즈니스 로직이 있는 경우 VO로 부르며, 코드의 가독성 향상과 처리의 일원화를 위해 비즈니스 로직을 DAO 등으로 분산하고 오직 데이터 전달만을 위해 DTO를 사용하는 경우도 있다.
 
 ### DB 처리가 끝나면 반드시 연결을 끊어야 한다.
 ```java
@@ -1750,14 +1774,20 @@ rs.close();
 <u>자바 애플리케이션과 DB의 연결을 담당하는 한정된 연걸 자원의 집합인 Connection Pool을 관리하는 방법</u>
 <br>  
 
-* JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 함   
+* JDBC 1~2단계를 묶어서 처리할 수 있는 싱글톤 방식을 활용한다.    
+
+* Connection pool은 한정되어 있기 떄문에, 연결이 너무 과부하되지 않도록 관리해주는 것이 필요하다.  
+JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 함   
     1. Connection con - con.close();
     2. PreparedStatement ps - ps.close();
     3. Resultset rs - rs.close();
 
 <img src = "img/connection_pool.png">    
 
-Connection pool은 한정되어 있기 떄문에, 연결이 너무 과부하되지 않도록 관리해주는 것이 필요하다.  
+여기서 java.util 패키지의 vector 클래스는 크기가 자동으로 조절되는 동적 배열을 여러개 제공하는데,   
+여러 스레드가 동시에 접근해도 안전하게 사용 가능하다.     
+==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.     
+
 
 
 
@@ -2650,6 +2680,42 @@ project 탭 혹은 프로젝트 우클릭 - properties - proeject facets - java 
 8. 이게 데이터베이스를 연결하는 방식, 새 데이터베이스를 열려면 탭에 코드+ 모양 누르면 됨.
 9. 비밀 번호 등이 바뀌면 localhost 등을 우클릭 - Edit connection을 통해 연결 정보를 바꿔줄 수 있다.
 
+### StarUML 설치
+1. https://staruml.io/download/ ==> 여기서 윈도우 다운, 실행시키면 거의 바로 켜지는 작고 귀여운 프로그램. 
+2. 들어가면 evaluate를 클릭해서 창 끄고 진행.
+3. tools 탭 - extension manger - java 검색 - reload - StarUML 재부팅
+4. 이제 Spring이나 eclipse에서 원하는 자바 class에 접근해서 우클릭 - refactor - extract interface - interface 이름 자유생성 - select all - 하면 해당 이름으로 interface이름, 메서드, 메서드 파라미터만 가진 불완전한 메서드(추상 메서드 생성)
+5. 다시 StarUML에서 tools - java - reversecode - UML을 그리고 싶은 파일이 잇는 위치 지정 - interface로 지정된걸 가져오면서 다른 파일을 가져오면 자동으로 그림을 그려주는걸 볼 수 있음  
+interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그릴 때 dao interface와 dao 전부 가져와서 써야 함
+
+### Tomcat 설치
+1. Tomcat검색해서 Apache Tomcat에서 Tomcat 8.5.95 Released 다운로드 폴더로 가기. 페이지가 수시로 바뀜(현재 7월)
+2. winodw는 32-bit/64-bit Windows Service Installer 다운 받기, mac은 brew 버전으로 받음
+3. 다 next 하다가 configuration 화면에서 server shutdown port = 7777, HTTP/1,1 Connetor port = 8888로 설정하고 넘어감
+4. 작업표시줄 오른쪽에 초록색화살표를 가진 동영상 재생버튼이 생기면 WAS가 잘 설치되었다는 뜻
+5. 윈도우 검색 - 서비스(작업표시줄 고정 권장) - Apche Tomcat 서비스 더블클릭하면 실행 중지 자동설정 가능
+6. eclipse 실행 - window 탭 - preferences - server - Runtime Envrionment - add - 서버 종류 폴더 나열(Apache) - 8.5버전 선택 - Browse - c드라이브 program files 밑에 Apache foundation - Tomcat 8.5 폴더 클릭해서 선택 - JRE 버전 맞추고 finish
+7. eclipse 오른쪽 위 java EE = java Enterprise Edition , 이제 화면 하단에 Servers가 보이는데, 얘만 왼쪽으로 따로 떼서 쓰기, 여기서 서버 실행 종료 가능
+8. 실행한 서버 더블클릭으로 port확인 가능, Server option에서 체크리스트 1,2,3번 체크 후 저장
+9. 웹 프로그램을 만드려면 프로젝트를 만들 때 dynamic java project를 만들어서 만들기, web content를 src처럼 생각하고 그 밑에 프로그램 제작
+10. 만약 기본설정 UTF-8이 아니면 windows - prefenrences - web에서 css, html, jsp 전부 UTF-8로 바꿔주기
+11. 필요한 library는 lib 폴더에 집어넣기
+
+### Spring Tool Suite(STS)설치
+1. https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3
+2. Spring Tool Suite 3.9.14 (New and Noteworthy) - full distribution on Eclipse 4.17 -window는 1번, mac는 2번, 사진 참조 - 받음 파일 압축풀기, 반디집 권장(경로 문제), Spring의 버전은 JDK와 호환해서 결정
+3. 압축 해제 이후 - spring-tool-suite-3.9.14.RELEASE-e4.17.0-win32-x86_64\sts-bundle\sts-3.9.14.RELEASE - STS.ini를 vscode로 열고 - -Dosgi.requiredJavaVersion=1.8 를 현재 자바 버전에 맞추기. 내 경우는 1.8 - STS.exe 실행 - 기존 eclipse workspace 지정 - Spring Legacy project 생성
+4. 환경변수 설정 - eclipse 실행 - help 탭 - Eclipse marketplace - Spring tools 3 add-on 뭐시기 설치
+5. eclipse 오른쪽 위에서 spring 개발 화면으로 전환 - 없으면 open perspective 살펴보기 - Spring leagcy project - mvc project 이후 com.multi.mongo 등으로 package까지 지정 - 만든 프로젝트 선택하고 alt + enter - 이 과정을 spring 프로젝트 만들 때마다 해야 함
+6. project facets - java 버전 1.8로 설정 - runtimes - Apache tomcat 체크 - 기존에 tomcat 미리 깔아서 사용하고 있었으면 tomcat 재시작해서 새로 만든 spring project 속의 파일도 돌아갈 수 있도록 시작. tomcat 서버 더블 클릭 이후 port 번호 바꾸기
+7. Spring도 eclipse 처럼 workpspace를 따로 지정해야 하는데, eclipse가 사용중인 workspace를 spring도 동시에 키는 것은 불가능 하다. 따로 키기는 가능 
+
+### MongoDB 설치
+1. MongoDB community server - selelct package - 5.0.23버전 다운로드
+2. msi로 받아서 실행 - 중간에 complete 클릭 - Install MongoDB compass 체크굄(MongoDB 다루는 프로그램) - 쭉 진행 후 install
+3. 이후 설치가 완료되면 mySQL과 DBeaver가 같이 설치된 것처럼 생각하면 됨
+4. 이후 기본 port가 27017로 되어있고, connect - 오른쪽 아래 화살표 열면 터미널이 열려서 명령어 입력 가능
+
 ## 웹 페이지가 동작하는 방식
 1. 클라이언트에서 브라우저 실행  
 2. 브라우저에서 HTTP방식으로 요청  
@@ -2663,9 +2729,17 @@ project 탭 혹은 프로젝트 우클릭 - properties - proeject facets - java 
 
 ## 웹 개발 3단계(3tier)의 이해
 <img src="img/web.png" alt="웹의 구조를 3구역으로 나눈 모습">
+<img src="img/web2.png" >
 클라이언트 측(UI 측) / 웹서버측(웹서버 + WAS = JAVA 측) / DB 측<br>
 웹 개발은 위 사진처럼 3부분으로 나뉘어서 이루어지게 된다.  
 웹서버의 경우 단순 html 요청인지, DB가 필요한 요청인지 판단해서 WAS로 넘기는 역할도 있기 때문에 웹서버측이라는 WAS를 포함하는 말로 부르는 것이 좋다고 배웠다.  
+
+### 클라이언트가 서버에 주소로 요청하는 방법
+1. 브라우저에 주소 입력 + 엔터 == get 방식 
+2. form을 이용해 action이 '요청주소'로 가게 하는 방식 == method로 get/post 선택 가능
+3. a태그를 이용해서 href="주소" 로 요청 == get 방식
+4. js로 location.href="주소" == get 방식
+
 
 ### 클라이언트의 요청(웹서버까지)
 클라이언트가 데이터를 전달하는 등 HTTP 방식을 통해 URI(주소)를 요청하면 웹서버가 요청을 판단한다.  
@@ -2735,11 +2809,17 @@ JS에서 이미 변수 x = 100이 할당 된 경우
 ```condtion ? x : y``` 의 형태를 취한다.  
 condtion이 참이면 표현식 x, 거짓이면 표현식 y를 반환한다.  
 
+## JAVA SE8이 가지는 구성
+<img src = "img/java_se8.png">
+
 ## 자료구조 = 공간복잡도?
 
 ## 알고리즘 = 시간복잡도?
 
 ## TDD 방법론
+
+
+
 
 
 
