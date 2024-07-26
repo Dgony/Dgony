@@ -53,6 +53,7 @@
 [JDBC](#jdbc)<br>
 [ORM](#orm)<br>
 [DBCP](#dbcp)<br>
+[spring framework](#spring-framework)<br>
 
 
 
@@ -899,8 +900,7 @@ Interface와 연계해서 생각할 수 있는 개념
 1. https://dgony.github.io//daily-record-1/  <== 이 URI를 예로들어 설명하면,    
 https: ==> 웹 브라우저의 정보 전송 규약  
 dgony.github.io ==> 네트워크 연결 주소 + port  
-daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름  
-<br>
+daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름    
 2. 80번 포트 사용  
 3. 클라이언트와 웹서버 간의 전송은 HTTP 규약을 따르도록 정해져 있다.  
 4. HTTPS에 비해 보안성이 떨어지고 데이터가 해킹될 수 있음  
@@ -910,6 +910,7 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 2. 무상태성(Stataless) : 요청할 때마다 다른 작업을 실시한다. 이전에 연결했던 클라이언트임을 ID를 사용해 저장해두었다가 인식하는 방식이다.  
 3. 요청정보(Request) == 클라이언트정보 를 저장해두었다가
 4. 조건에 맞는 응답정보(Response)를 반환한다. 
+<img src = "img/http_request,response.png">
 
 ### HTTP 주요 응답 코드  
 1. 200 ==> ok  
@@ -937,8 +938,13 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 
 ## WebServer
 * **클라이언트가 요청하면 응답을 해주는 서버**<br>
-<br>  
-현재 사용 중인 개발 과정에선 tomcat으로 웹서버를 대신함   
+<br>
+현재 사용 중인 개발 과정에선 tomcat으로 웹서버를 대신함     
+
+* 웹서버의 종류
+    * Tomcat - 기본 port번호 8080, 현재 8888로 커스텀해서 사용중
+    * nginx(엔진엑스)
+    * IIS
 
 ### 웹문서
 클라이언트가 서버에 요청하면 응답하는 정적 혹은 동적 문서
@@ -953,21 +959,45 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 * **Web Application Server**  
 <u>브라우저, 클라이언트 등을 통해 접근할 수 있고, 서버에서 실행되며 클라이언트의 요청을 처리해 동적인 콘텐츠 제공</u>
 <br>  
-1. 
+* 브라우저 → http://127.0.0.1:8080/web02/ajax1.html  
+이런 방식의 url을 통해 웹서버 아래의 웹 애플리케이션에 접근할 수 있다.    
+
+* WAS 종류
+    * Tomcat - 현재 Tomcat이 웹서버, 웹 애플리케이션 서버 모두 담당해주는 버전으로 사용 중
 
 ## SERVLET
 <u>자바를 기반으로 한 서버측 프로그램으로, 웹 애플리케이션에서 클라이언트의 요청을 처리하고 동적인 콘텐츠 생성</u>
 <br>  
-* servlet engine이 서블렛의 생명주기, 스레드, 요청 처리, 서블릿 로딩 및 초기화 등을 담당한다   
+* servlet engine(== container)이 서블렛의 생명주기, 스레드, 요청 처리, 서블릿 로딩 및 초기화 등을 담당한다   
 이번 과정에선 서블렛 엔진이 java spring에서 제공하는 mvc 프레임워크의 서블릿을 관리하는 것을 확인했다.  
 <img src = "img/servlet_lifecycle.png">
 
 ## JSP
-* **JAVA Server Page**
-<u></u>
-<br>  
-1. 브라우저는 **반드시 html만 읽을 수 있다.** 
-2. jsp가 html처럼 쓸 수 있기는 하지만, 결국 클라이언트에게 전달될 때 jsp 그대로 보내지는 것은 아니고 html로 번역되어서 보내지게 된다. 
+* **JAVA Server Page**  
+<u>JSP는 서버에서 동적 웹 페이지 생성을 위해 HTML문서 내에 JAVA 코드를 생성할 수 있게 만들어주는 기술</u>   
+== 사용자 요청에 따라 실시간으로 변화하는 컨텐츠 생성 가능
+
+* 브라우저는 **반드시 html만 읽을 수 있다.** .jsp 파일을 이용해 java 코드를 html에 섞어 다양한 기능 이용가능
+
+1. 동적 컨텐츠 생성 - 웹서버뿐만 아니라 DB나 다른 외부 서비스와 연계가 필요한 컨텐츠 생성
+2. JAVA 기반 - java 작성이 가능하기 떄문에 java의 기능과 라이브러리 사용 가능
+3. 서버 측 처리 - jSp는 서버에서 처리 후 클라이언트가 해석할 수 있는 html, json 형태의 응답만 보내 줄 수 있음
+
+### servlet이랑 jsp 비슷한 것 같은데?
+
+* 공통점 - 서버 측의 동적 웹 콘텐츠 처리를 위함   
+spring framework가 제공하는 mvc 패턴은 servlet과 jsp를 비롯한 다양한 기술을 사용하여 서버 측의 동적 처리를 진행함
+
+* 차이점
+    * servlet
+        * 웹 페이지 디자인과 서버 로직이 혼합되어 유지보수가 어려움
+        * 동적 컨텐츠 응답을 위해 HTML 작성을 JAVA 코드로 처리하게 되는데, 코드 작성이 너무 복잡함
+        * 대신 복잡한 서버 로직 처리가 가능함
+    * jsp
+        * 웨 페이지 디자인과 서버 로직이 분리되어 있기 떄문에 유지보수가 용이함
+        * HTML 내부에 JAVA 코드 삽입이 가능해 웹 페이지 디자인이 쉬움
+        * 비즈니스 로직, 복잡한 서버 로직은 여전히 서블릿이나 다른 비즈니스 계층에서 처리해야 함
+
 
 ## SNIPPET
 * **코드조각모음**   
@@ -1549,6 +1579,7 @@ DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터
 다른 테이블에서 PK를 포함하는 유일한 key를 참조하여 사용         
 값의 범위를 체크 ==> FK에 존재하지 않는 데이터를 넣으면 오류 ==> 결점이 없는 데이터만 넣을 수 있음 ==> **참조 무결성**  
 10. ERD - Entity Relationship Diagram, 엔티티관계도, 다음과 같은 형식으로 표시된다.
+11. mySQL, Oracle - RDBMS의 일종으로, 각각 기본 port 번호 3306, 1521을 가진다.
 <img src = "img/ERD.png">
 
 ## SQL
@@ -1722,14 +1753,15 @@ JAVA SE 에서 제공하는 java.sql 패키지를 사용하는 DB 기능 처리 
 DBCP 라이브러리와 MyBatis 등의 라이브러리를 이용해 처리를 더욱 간단하게 만들 수 있다.   
     1. 드라이버(Driver) 로딩 - (mysql-connector-j-8.0.31.jar, 라이브러리 참조 해야 함)
     2. DB 연결 (DBCP 라이브러리 - 1, 2단계 간소화)
-    3. SQL 객체화(SQL문 객체로 db처리)  (MyBatis로 간소화 가능)
-    4. SQL 실행 요청 
+    3. SQL 객체화, 실행 요청(SQL문 객체로 db처리)  (MyBatis로 간소화 가능)
+    4. 연결 종료
 
 * JDBC 4단계를 더 드럽게 풀어 쓰면
     1. 연결할 드라이버를 설정한 다음(jdbc.driver)
     2. Connection의 인스턴스인 con에 DriverManager.getConnection(url, user, password) 라는 방법으로 db를 연결하고,
-    3. PreparedStatement의 인스턴스인 ps에 con.prepareStatement(sql)의 형태로 db 연결과 sql문이 준비된 상태를 가지는 SQL 부품을 만들고 
-    4. ps.execute(); 로 db에 전송한다
+    3. PreparedStatement의 인스턴스인 ps에 con.prepareStatement(sql)의 형태로 db 연결과 sql문이 준비된 상태를 가지는 SQL 부품을 만들고 ps.execute(); 로 db에 전송한다    
+    ps라는 쿼리는 저장된 url을 토대로 db를 찾아 sql문을 전달한다.
+    4. .close(); 메서드를 사용해 연결을 종료한다.
 
 
 <img src = "img/JDBC_Basic.png">   
@@ -1748,6 +1780,13 @@ CRUD 기능별로 메서드 구현
 데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스      
 비즈니스 로직이 있는 경우 VO로 부르며, 코드의 가독성 향상과 처리의 일원화를 위해 비즈니스 로직을 DAO 등으로 분산하고 오직 데이터 전달만을 위해 DTO를 사용하는 경우도 있다.
 
+3. connection con
+
+4. PreparedStatement ps = con.prepareStatement(sql);
+
+5. resulset rs = ps.executeQuery();   
+DB의 데이터를 받아오기 위해 사용하는 인터페이스로, ps.executeQuery(); 를 통해 쿼리 실행과 결과 수신을 동시에 한다.
+
 ### DB 처리가 끝나면 반드시 연결을 끊어야 한다.
 ```java
 con.close();
@@ -1761,7 +1800,7 @@ rs.close();
     여러 트랜잭션이 동시에 연결되어 있으면 서로의 자원을 기다리는 현상이 발생하며, 시스템이 진행되지 않는다.
     4. 보안 - 연결이 유지되면 DB에 접근할 수 있는 연결이 남아있을 수도 있음
 
-## ORM
+## ORM  
 * **Object-Relational Mapping**<br>
 <u>OOP를 사용해 호환되지 않는 유형의 시스템 간 데이터를 변환하는 프로그래밍 기술</u>
 <br>  
@@ -1788,7 +1827,44 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 여러 스레드가 동시에 접근해도 안전하게 사용 가능하다.     
 ==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.     
 
+## Spring Framework
+* **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
+<u>어떤 정해진 흐름을 가진 개발의 기본이 되는 틀을 제공해 개발자의 능률을 향상시켜주는 방법 의 JAVA 버전</u>
+<br>  
+스프링을 사용하려면 이클립스 ee버전에 스프링 플러그인을 설치하거나 직접 STS를 설치해서 사용해야 한다.  
 
+* 프레임워크의 장점
+    * 빠른 구현 시간 - 개발자는 비즈니스 로직에만 집중하면 되기 때문
+    * 쉬운 관리 
+    * 개발자들의 역량 획일화 - 초급 개발자도 프레임워크를 통해 효율적인 코드 생성 가능
+    * 재사용성, 일관성 유지
+    * IOC와 AOP를 제공
+        * IOC(Inversion of Control) - 제어의 역행 == 낮은 결합도와 높은 응집도 만족   
+            객체의 구성, 생성, 생명주기 관리 등의 책음을 개발자가 아닌 프레임워크가 담당하는 디자인 원칙      
+            프로그램의 제어는 원래 개발자가 맡는 것이 원칙이지만 이를 프레임워크가 대신했을 때 IOC가 되는 것  
+        * AOP(Aspect Oriented Programming) - 관점 지향 프로그래밍
+
+
+### spring framework mvc2
+* <u>spring이 제공하는 프레임워크 중 디자인패턴 mvc2를 사용하는 프레임워크</u>
+<br>  
+<img src = "img/spring_framework_mvc2.png">
+
+* Spring MVC의 동작 흐름
+    * 요청 수신:
+        * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.
+        * 요청은 DispatcherServlet으로 전달됩니다. DispatcherServlet은 Spring MVC의 프론트 컨트롤러 역할을 합니다.
+
+    * 요청 처리:
+        * DispatcherServlet은 요청을 처리할 적절한 컨트롤러를 찾습니다.
+        * 컨트롤러는 요청을 처리하고, 필요한 데이터를 모델에 담아 뷰 이름을 반환합니다.
+
+    * 뷰 선택:
+        * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰 이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.
+
+    * 응답 생성:
+        * 찾은 뷰(JSP 페이지)가 모델 데이터를 사용하여 HTML을 생성합니다.
+        * 최종적으로 HTML 응답이 클라이언트에게 전송됩니다.
 
 
 
@@ -2716,6 +2792,10 @@ interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그�
 3. 이후 설치가 완료되면 mySQL과 DBeaver가 같이 설치된 것처럼 생각하면 됨
 4. 이후 기본 port가 27017로 되어있고, connect - 오른쪽 아래 화살표 열면 터미널이 열려서 명령어 입력 가능
 
+### weka 설치
+1. https://sourceforge.net/projects/weka/files/weka-3-9/3.9.3/ - weka-3-9-3-x64.exe - 윈도우 / weka-3-9-3-corretto-jvm.dmg - 맥 다운로드, 3.9안되면 3.8로 받기
+2. 맥은 압축풀고 실행 윈도우는 실행파일 실행시키면 설치 됨. 바로 끝. explorer 기능만 사용할 예정
+
 ## 웹 페이지가 동작하는 방식
 1. 클라이언트에서 브라우저 실행  
 2. 브라우저에서 HTTP방식으로 요청  
@@ -2878,3 +2958,5 @@ https://developers.google.com/chart?hl=ko
 * JS와 JAVA모두 입력장치를 통해 들어온 입력 값은 문자열 취급을 받는다.
 * 윈도우에는 리눅스가 비활성화 된 상태로 들어있다.
 * JAVA니까 '변수 값 할당' ==> '변수 초기화' 로 쓰도록 하자.
+* eclipse 메모리 늘리기 - 원래 메모리 제한이 걸려 있는데, 임의로 제한을 푸는 방법   
+<img src ="img/eclipse_limit.png">
