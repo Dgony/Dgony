@@ -53,6 +53,7 @@
 [JDBC](#jdbc)<br>
 [ORM](#orm)<br>
 [DBCP](#dbcp)<br>
+[myBatis](#mybatis)<br>
 [spring framework](#spring-framework)<br>
 
 
@@ -360,12 +361,24 @@ JAVA프로그램이 .class파일로 변환되고 JVM에서 실행되는 일련�
 <img src ="img/java_project.png">
 
 ### JAVA 프로그램의 실행 과정
-1. JAVA로 소스 코드를 작성한다. 소스코드는 .java 확장자를 가진다.
-2. JAVA의 컴파일러인 'javac'를 가지고 소스코드를 컴파일한다.  
-소스코드에 구문 오류가 없다면 컴파일이 이루어지고, 컴파일 된 파일은 .class 확장자를 가진다.  
-바이트코드는 기계어와 달리 JVM에서 실행 가능한 언어이다.  
-3. window, linux, mac 등 다양한 환경에 설치된 JVM은 .class의 바이트코드를 해당 플랫폼에 맞는 기계어로 변환하여 실행한다. 
-4. 실행 결과를 출력한다.
+* JAVA 프로그램의 경우
+    1. 소스 코드 작성  
+        * JAVA로 소스 코드를 작성한다. 소스코드는 .java 확장자를 가진다. 이 파일은 클래스, 메서드, 변수 등을 포함한다.
+    2. 컴파일   
+        * JAVA의 컴파일러인 'javac'를 가지고 소스코드를 컴파일한다.  
+        * 소스코드에 구문 오류가 없다면 바이트 코드로 컴파일이 이루어지고,   
+        * 컴파일 된 바이트코드는 .class 확장자를 가지는 파일로 저장된다.   
+        * 바이트코드는 기계어와 달리 JVM에서 실행 가능한 언어이다.  
+    3. 실행  
+        * 바이트코드로 컴파일된 .class 파일은 JVM(Java Virtual Machine)에서 실행된다.  
+        * JVM은 바이트코드를 설치된 플랫폼에 맞는 기계어로 번역한다. 
+        * JVM이 직접 바이트 코드를 해석하거나, JIT(Just In Time) 컴파일러를 사용하여 네이티브 코드로 컴파일 가능 
+    4. 실행 결과를 출력한다.
+
+* spring 같은 프레임 워크로 만드는 경우
+    * 기본적인 JAVA 프로그램의 경우는 위의 과정을 거치지만, 웹 애플리케이션이나 다른 프레임워크를 통해 프로그램을 만드는 경우 실행 과정이 달라지게 된다.  
+    * spring mvc 프레임워크의 경우 [spring framework](#spring-framework)탭에서 확인  
+
 
 ### 기본 데이터 타입(Primitive type, 원시형)
 JAVA는 JS와 달리 변수 선언 시 데이터 타입도 함께 선언해야 한다.  
@@ -1827,11 +1840,16 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 여러 스레드가 동시에 접근해도 안전하게 사용 가능하다.     
 ==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.     
 
+## myBatis
+* ****<br>
+<u></u>
+<br>
+
 ## Spring Framework
 * **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
 <u>어떤 정해진 흐름을 가진 개발의 기본이 되는 틀을 제공해 개발자의 능률을 향상시켜주는 방법 의 JAVA 버전</u>
 <br>  
-스프링을 사용하려면 이클립스 ee버전에 스프링 플러그인을 설치하거나 직접 STS를 설치해서 사용해야 한다.  
+스프링을 사용하려면 이클립스 ee버전에 스프링 플러그인을 설치하거나 직접 STS를 설치해서 사용해야 한다.   
 
 * 프레임워크의 장점
     * 빠른 구현 시간 - 개발자는 비즈니스 로직에만 집중하면 되기 때문
@@ -1848,6 +1866,68 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 ### spring framework mvc2
 * <u>spring이 제공하는 프레임워크 중 디자인패턴 mvc2를 사용하는 프레임워크</u>
 <br>  
+
+* Spring MVC 프로젝트에서 웹 서버와 애플리케이션 서버를 분리하여 사용하는 경우,   
+별도의 연결 설정 없이도 정적 리소스와 동적 콘텐츠를 효율적으로 제공할 수 있다.    
+웹 서버는 정적 콘텐츠를 직접 제공하고, 동적 요청은 애플리케이션 서버로 전달하는 방식으로 설정하면 된다.  
+
+* myBatis를 포함하는 Spring 설정 
+    1. spring mvc 프로젝트 생성
+        * eclipse spring 플러그인이나 STS에서 spring legacy 프로젝트 생성 - spring mvc 프로젝트로 설정  
+        * 프로젝트를 처음 만들 때 com.multi.spring의 형태로 패키지 분류를 정하고 시작
+    2. project facet 설정 
+        * project - properties - project facets 
+        * JAVA 버전은 1.8
+        * Runtime - 미리 설치한 Apache Tomcat 8.5로 설정, 서블릿 컨테이너로써 웹 애플리케이션 서버 설정을 위함   
+        현재 tomcat이 웹서버와 애플리케이션 서버를 모두 담당하고 있기 때문에, 둘 중 어떤 것을 설정하는지 구분하자
+    3. pom.xml 파일 설정  
+        * 주로 dependency 설정(프로젝트 종속성 주입)  
+            * 프로젝트 전체에서 필요한 라이브러리와 프레임워크를 적용하는 방법, 모든 클래스와 모듈 사용 가능 
+            * 자동 다운로드 및 관리
+            * dependency 설정 시 버전 명시를 통해 쉬운 버전 관리 가능  
+            * driver, dbcp, myBatis, myBats-spring, myBatis-jdbc 설정 등
+    4. src\main\webapp\WEB-INF\spring\root-context.xm 파일 설정  
+        * dbcp 설정 - driver, url, user, pw 설정  
+        * myBatis factory - dbcp 설정, myBatis 설정 파일 지정이후 myBatis를 설정하기 위한 설정 객체 생성
+    5. myBatis 설정 파일 생성 및 수정
+        * mapper 파일
+        * config 파일
+
+* 웹 애플리케이션의 실행 과정
+    1. 소스 코드 작성
+        * spring mvc 프레임워크나 spring boot, 다른 프레임워크 등을 사용하여 웹 애플리케이션 개발
+        * 소스코드는 .java 파일로 작성되고, XML, YAML, JSON 파일을 통해 설정
+    2. 컴파일
+        * 소스 코드가 자바이므로 동일하게 javac 를 통해 컴파일
+        * .java 파일을 바이트코드인 .class 파일로 컴파일 한다.
+    3. 빌드 및 패키징
+        * STS에는 Maven, Gradle 이라는 빌드 도구가 포함되어 있는데, pom.xml을 사용하는 mvc는 Maven 사용  
+        * 빌드 도구는 종속성 라이브러리, 각종 설정 파일, 정적 리소스(HTML, CSS, JS 등)를 포함하는 최종 패키지 생성
+        * 결과물은 .jar(Java ARchive) 혹은 .war(Web Application Archive) 파일 형식으로 패키징 됨
+    4. 서버 배포
+        * 만들어진 웹 애플리케이션을 웹 서버 혹은 애플리케이션 서버에 배포
+        * spring boot나 tomcat을 사용하는 STS 같은 경우 내장된 서버를 통해 배포 없이 직접 실행 가능
+    5. 서버 초기화 및 애플리케이션 실행
+        * 웹서버나 애플리케이션 서버가 웹 애플리케이션을 로드하고 초기화 함
+        * 의존성 주입, 핸들러 매핑, 필터 설정 등 다양한 설정 진행
+    6. 클라이언트의 요청 처리
+        * 클라이언트의 요청은 HTTP로 이루어지고, 웹 서버가 HTTP 요청을 받아 웹 애플리케이션으로 전달
+        * 애플리케이션의 컨트롤러(mvc의 경우 servlet)가 요청을 처리하고, 비즈니스 로직이 존재한다면 처리하고, 결과를 View의 리소스로 반환하거나 JSON, XML등의 형식으로 응답을 생성
+    7. 결과 반환
+
+* Spring 애플리케이션의 실행 과정
+    spring 같은 프레임워크를 사용하는 경우, 다음과 같은 추가 과정이 필요하다. 
+    * Spring IoC 컨테이너: 
+        * 애플리케이션 시작 시 Spring IoC(Inversion of Control) 컨테이너가 초기화됩니다.     
+        * 이 컨테이너는 애플리케이션의 빈(Bean)들을 생성하고 관리하며, 의존성 주입을 수행합니다.
+    * Application Context:   
+        * Spring 애플리케이션의 컨텍스트가 설정되며, 이 컨텍스트는 애플리케이션의 설정 정보를 읽고 필요한 빈들을 초기화합니다.
+    * DispatcherServlet:
+        * Spring MVC의 경우, DispatcherServlet이 클라이언트의 HTTP 요청을 처리하고, 적절한 컨트롤러를 호출하여 요청을 처리합니다.
+
+View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver에 의해 실제 뷰(HTML, JSP 등)로 변환되어 클라이언트에 반환됩니다.
+        
+
 <img src = "img/spring_framework_mvc2.png">
 
 * Spring MVC의 동작 흐름
