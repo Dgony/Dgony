@@ -899,6 +899,9 @@ Interface와 연계해서 생각할 수 있는 개념
 클래스가 추상 메서드를 하나라도 가지고 있으면 무조건 추상 클래스이다.  
 추상 메서드, 추상 클래스 모두 다른 클래스가 이를 받아서 무조건 정의하도로 하는 것에 의미가 있다.  
 
+### JAVA의 @ - annotation (어노테이션)
+
+
 
 
 
@@ -1881,17 +1884,93 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
         * Runtime - 미리 설치한 Apache Tomcat 8.5로 설정, 서블릿 컨테이너로써 웹 애플리케이션 서버 설정을 위함   
         현재 tomcat이 웹서버와 애플리케이션 서버를 모두 담당하고 있기 때문에, 둘 중 어떤 것을 설정하는지 구분하자
     3. pom.xml 파일 설정  
+        * pom.xml 파일은 프로젝트 바로 아래에 위치한다. 
         * 주로 dependency 설정(프로젝트 종속성 주입)  
             * 프로젝트 전체에서 필요한 라이브러리와 프레임워크를 적용하는 방법, 모든 클래스와 모듈 사용 가능 
             * 자동 다운로드 및 관리
             * dependency 설정 시 버전 명시를 통해 쉬운 버전 관리 가능  
             * driver, dbcp, myBatis, myBats-spring, myBatis-jdbc 설정 등
-    4. src\main\webapp\WEB-INF\spring\root-context.xm 파일 설정  
+        * 다음은 pom.xml에 집어넣어야 할 의존성으로, 필요한 버전에 맞는 라이브러리나 프레임워크를 test 위에 작성  
+        test 위에 작성하는 것은 새로 주입한 의존성을 구분하기 위함
+        ``` xml
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.31</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<!-- spring jdbc기능 확장 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.0.1.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<!-- mybatis + spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+        ```
+    4. src\main\webapp\WEB-INF\spring\root-context.xm 파일에 bean 설정  
         * dbcp 설정 - driver, url, user, pw 설정  
         * myBatis factory - dbcp 설정, myBatis 설정 파일 지정이후 myBatis를 설정하기 위한 설정 객체 생성
+            ```xml
+            	<!-- myBatis의 싱글톤 객체 생성 -->
+            <bean id="my" class="org.mybatis.spring.SqlSessionTemplate">
+                <constructor-arg ref="config"></constructor-arg>
+            </bean>
+
+            <!-- myBatis의 설정 객체 생성 -->
+            <bean id="config" class="org.mybatis.spring.SqlSessionFactoryBean">
+                <property name="dataSource" ref="dbcp"></property>
+                <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+            </bean>
+            <!-- classpath: src/main/resources아래를 말함. -->
+
+            <!-- dbcp의 싱글톤 객체 생성 -->
+            <!-- db프로그램의 2단계까지 담당. driver설정, db연결 -->
+            <!--  BasicDataSource dbcp = new BasicDataSource -->
+            <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+                <property name="driverClassName" value="${jdbc.driver}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+            </bean>	
+            ```
+            classpath란 src/main/resources 아래를 말함   
+            src/main/resources 는 spring의 리소스 파일을 보관한다.    
+            * org.apache.commons.dbcp.BasicDataSource 클래스는 classpath 아래의 설정 파일을 읽어오게 된다.     
+            데이터 베이스 연결 풀을 설정하기 위해 사용되는데, .properties 혹은 application.yml 파일을 참조한다.  
+
     5. myBatis 설정 파일 생성 및 수정
-        * mapper 파일
-        * config 파일
+        * mapper 파일 - db와 연결한다면 보통 테이블 당 1개씩 생성
+        * config 파일 - mapper 파일 관리와 관리를 위한 별명 설정    
+            
+    6. mvc 구현
+        * 입력화면 (웹페이지, 프론트엔드 부분)
+        * 컨트롤러 (서블릿을 포함하는 백엔드)
+        * myBatis를 주입한 DAO 객체 사용
+        * views 화면으로 연결
 
 * 웹 애플리케이션의 실행 과정
     1. 소스 코드 작성
@@ -1934,13 +2013,19 @@ View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver�
     * 요청 수신:
         * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.
         * 요청은 DispatcherServlet으로 전달됩니다. DispatcherServlet은 Spring MVC의 프론트 컨트롤러 역할을 합니다.
+        * 요청이 들어오는 웹 페이지와 정적컨텐츠, 프론트엔드 컨텐츠의 위치는 다음과 같다.    project_name\src\main\webapp\index.jsp 에 위치한다.     
+        웹페이지의 경우 활용성을 높이기 위해 jsp 파일로 작성한다.  
+        
 
     * 요청 처리:
         * DispatcherServlet은 요청을 처리할 적절한 컨트롤러를 찾습니다.
         * 컨트롤러는 요청을 처리하고, 필요한 데이터를 모델에 담아 뷰 이름을 반환합니다.
+        * 컨트롤러를 포함하는 백엔드 리소스의 위치는 다음과 같다.   project_name\src\main\java\com\multi\mvc02\HomeController.java
 
     * 뷰 선택:
         * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰 이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.
+        * 실제 뷰 가 존재하는 위치는 다음과 같다.  
+        project_name\src\main\webapp\WEB-INF\views\home.jsp
 
     * 응답 생성:
         * 찾은 뷰(JSP 페이지)가 모델 데이터를 사용하여 HTML을 생성합니다.
@@ -3040,3 +3125,4 @@ https://developers.google.com/chart?hl=ko
 * JAVA니까 '변수 값 할당' ==> '변수 초기화' 로 쓰도록 하자.
 * eclipse 메모리 늘리기 - 원래 메모리 제한이 걸려 있는데, 임의로 제한을 푸는 방법   
 <img src ="img/eclipse_limit.png">
+* java의 프로젝트에서 사용할 일이 많은 classpath란 src/main/resources아래를 말함  
