@@ -940,7 +940,7 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
     * 403 == Forbidden
 3. 404 ==> not found, 요청에 따라 웹서버 밑의 리소스를 찾아봤는데 해당 위치에 요청한 리소스가 없음
     * 405 == Method Not Allowed
-4. 500 ==> interanl error, 얘기치 못한 에러(클라이언트가 아닌 서버 측 문제) 발생
+4. 500 ==> interanl error, 얘기치 못한 에러(클라이언트가 아닌 서버 측 문제) 발생 == spring의 경우 문법 오류, 연결 오류
 
 ## HTTPS
 * **Hyper Text Transfer Protocol Secure**  
@@ -995,12 +995,15 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 <br>  
 * servlet engine(== container)이 서블렛의 생명주기, 스레드, 요청 처리, 서블릿 로딩 및 초기화 등을 담당한다   
 이번 과정에선 서블렛 엔진이 java spring에서 제공하는 mvc 프레임워크의 서블릿을 관리하는 것을 확인했다.  
+
+* servlet은 mvc2 프레임워크를 사용한다면 web.xml 파일에 자동적으로 구성되어 있다.    
+web.xml은 spring mvc2가 어떻게 요청을 받고 view로 응답하는지 연결을 설정할 수 있다. 
 <img src = "img/servlet_lifecycle.png">
 
 ## JSP
 * **JAVA Server Page**  
 <u>JSP는 서버에서 동적 웹 페이지 생성을 위해 HTML문서 내에 JAVA 코드를 생성할 수 있게 만들어주는 기술</u>   
-== 사용자 요청에 따라 실시간으로 변화하는 컨텐츠 생성 가능
+== 사용자 요청에 따라 실시간으로 변화하는 컨텐츠 생성 가능 
 
 * JSP는 servlet으로 변환되어 처리되는 자바의 서버 동적 처리 기술    
 
@@ -1363,7 +1366,7 @@ IaaS, PaaS, SaaS
 1. 주로 데이터를 전달하는 목적으로 사용된다.
 
 ## XML
-* **eXtensible Markup Language**<br>
+* **eXtensible Markup Language == 확장 가능한 마크업 언어**<br>
 <u>W3c에서 개발되어 다른 특수한 목적을 갖는 마크업 언어를 만드는데 사용하도록 권장하는 다목적 마크업 언어  
 ```<key>value</key>```의 형태로 저장한다.</u>
 <br>  
@@ -1568,11 +1571,15 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 데이터베이스 같은 곳에 자원의 주소를 지정하는 방법 
 9. TCP(Transmisson Control Protocol) - 네트워크 연결 방식 중 하나, 후술
 10. UDP(User Diagram Protocol) - 네트워크 연결 방식 중 하나, 후술
-11. QueryString - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미   
+11. QueryString(질의 문자열) - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미, 서버 등으로 이 문자열을 전달하면 문자열이 포함하고 있는 정보를 통해 서버의 어떤 서비스나 모델 등이 문자열의 리소스로 안내하게 된다.  
+"http://ip:port/site/호출하는파일명?파라메터이름=값&파라메터이름2=값2"  의 형태로 전달한다.   
 "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%84%A0%EB%AC%BC"    
-네이버에서 '선물'을 검색했을 때 해당 검색 페이지를 요청하는 쿼리스트링
-
-
+네이버에서 '선물'을 검색했을 때 해당 검색 페이지를 요청하는 쿼리스트링   
+    * 파라메터이름=값 형식으로 전달
+    * 여러 개의 전달값은 name=value를 여러 개 보냄, &로 연결
+    * 영문자,숫자,특수문자 일부 그대로 전달됨.
+    * 한글 등은 %기호와 같이 16진수로 전달
+    * 공백은 +기호로 변환되어 전달
 
 ## DBMS
 * **DataBase Management System**<br>
@@ -1765,7 +1772,7 @@ Left Outer Join의 반대로 실행된다고 볼 수 있다.
 <br>  
 <img src = "img/Socket.png">
 <img src = "img/socket2.png">
-프로그램의 실행(통신 시작) - port - tcp/udp - ip - network - ip - tcp/udp - port - 프로그램 탐색
+프로그램의 실행(통신 시작) - port - tcp/udp - ip - network - ip - tcp/udp - port - 프로그램 탐색  
 
 ## CSV
 * **Comma Seperated Values**<br>
@@ -2055,6 +2062,34 @@ View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver�
 
 <img src = "img/spring_framework_mvc2.png">
 
+* mvc2가 제공하는 주요 클래스
+    * DispatcherServlet: 모든 요청을 중앙에서 처리합니다.
+    * Handler Mapping: 요청 URL을 적절한 컨트롤러와 매핑합니다.
+    * View Resolver: 뷰 이름을 실제 뷰로 변환합니다.
+    * View: 모델 데이터를 기반으로 최종 HTML을 생성합니다.
+    * Exception Resolver: 예외 처리를 담당합니다.
+    * Data Binding and Validation: 요청 데이터를 바인딩하고 검증합니다.
+
+* mvc2가 제공하는 컴포넌트 
+    * DispatcherServlet:  
+        역할: 모든 HTTP 요청을 중앙에서 받아서 처리합니다.   
+        제공: Spring MVC가 자동으로 설정해주며, 개발자가 직접 구현할 필요가 없습니다.  
+    * Handler Mapping:  
+        역할: 어떤 컨트롤러가 요청을 처리할지 결정합니다.  
+        제공: Spring MVC에서 다양한 HandlerMapping 구현체를 제공하여 URL 패턴에 따라 적절한 컨트롤러를 매핑합니다.
+    * Controller:   
+        역할: 비즈니스 로직을 수행하고 모델 데이터를 준비하여 뷰에 전달합니다.  
+        구현: 개발자는 @Controller 어노테이션을 사용하여 컨트롤러 클래스를 작성합니다.
+    * ModelAndView:  
+        역할: 컨트롤러가 반환하는 데이터와 뷰 이름을 포함합니다.  
+        제공: Spring MVC가 자동으로 처리합니다.
+    * View Resolver:  
+        역할: 컨트롤러가 반환한 뷰 이름을 실제 뷰로 변환합니다.  
+        제공: Spring MVC는 다양한 ViewResolver 구현체를 제공하여 JSP, Thymeleaf 등의 뷰 기술을 사용할 수 있도록 합니다.
+    * View:  
+        역할: 모델 데이터를 기반으로 최종 HTML 응답을 생성합니다.  
+        제공: JSP, Thymeleaf 등의 템플릿 엔진을 통해 제공됩니다.
+
 * Spring MVC의 동작 흐름
     * 요청 수신:
         * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.
@@ -2109,6 +2144,26 @@ BookDAO와 BookController 클래스 자체는 팩토리 기법을 구현한 것�
 그러나 Spring 프레임워크는 내부적으로 팩토리 기법을 사용하여 빈 객체를 생성하고 주입합니다.  
 따라서, Spring의 IoC 컨테이너가 팩토리 기법을 활용하고 있다고는 말할 수 있습니다.    
 그러나 해당 클래스들을 직접 팩토리 기법의 구현이라고 부르기보다는, Spring이 제공하는 의존성 주입과 빈 관리 기능을 사용한 예제라고 하는 것이 정확합니다.
+
+## GET 방식과 POST 방식
+* **네트워크의 요청 방식 차이**<br>
+<br>  
+1. GET 방식
+    * 요청정보 헤더의 URI 뒤에 추가되어 전달됨.
+    * 쿼리 스트링 내용이 외부에 노출되어 보임.
+    * 쿼리 스트링 길이가 제한적
+    * 인코딩/디코딩 설정이 별도로 불필요
+    * http의 header부분에 URI와 함께 서버로 전달됨. 
+
+
+2. POST 방식
+    * 요청정보가 http body에 넣어져서 서버로 전달
+    * 전달되는 문자열의 내용이 주소에 노출되지 않음.
+    * 인코딩/디코딩의 작업이 별도로 필요
+    * 보안이 유지되어야 하는 데이터 전송
+    * 데이터의 길이가 긴 경우
+    * 바이너리 파일 전송(이미지, 파일첨부 등)
+
 
 
 
