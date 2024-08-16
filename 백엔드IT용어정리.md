@@ -16,7 +16,7 @@
 [WAS](#was)  
 [Bootstrap](#bootstrap)  
 [SERVLET](#servlet)  
-[JSP](#JSP)  
+[JSP](#jsp)  
 [SNIPPET](#snippet)  
 [DOM TREE](#dom-tree)   
 [OOP](#oop)  
@@ -53,8 +53,9 @@
 [JDBC](#jdbc)<br>
 [ORM](#orm)<br>
 [DBCP](#dbcp)<br>
-[myBatis](#mybatis)<br>
 [spring framework](#spring-framework)<br>
+[myBatis](#mybatis)<br>
+[get방식과 post방식](#get-방식과-post-방식)<br>
 
 
 
@@ -910,9 +911,10 @@ daily-record-1 ==> 요청하는 문서(페이지, 데이터)의 위치와 이름
 
 ### HTTTP의 특성
 1. 무연결성(Connectionless) : 통신시 연결을 유지 않는다. 한 번 연결하고, 주고받고, 바로 끊는다.  
-2. 무상태성(Stataless) : 요청할 때마다 다른 작업을 실시한다. 이전에 연결했던 클라이언트임을 ID를 사용해 저장해두었다가 인식하는 방식이다.  
+2. 무상태성(Stataless) : 무연결성으로 인해 이전에 저장한 상태유지 x, 그렇기 때문에 요청할 때마다 다른 작업을 실시한다.   
+연결했던 클라이언트임을 인식하기 위해 쿠키와 세션을 사용해 ID를 저장해두었다가 인식하는 방식이다.  
 3. 요청정보(Request) == 클라이언트정보 를 저장해두었다가
-4. 조건에 맞는 응답정보(Response)를 반환한다. 
+4. 조건에 맞는 응답정보(Response)를 반환한다. - 이 요청과 응답의 구분에 대해선 cookie에 서술
 <img src = "img/http_request,response.png">
 
 ### HTTP 주요 응답 코드  
@@ -987,7 +989,8 @@ web.xml은 spring mvc2가 어떻게 요청을 받고 view로 응답하는지 연
 <u>JSP는 서버에서 동적 웹 페이지 생성을 위해 HTML문서 내에 JAVA 코드를 생성할 수 있게 만들어주는 기술</u>   
 == 사용자 요청에 따라 실시간으로 변화하는 컨텐츠 생성 가능 
 
-* JSP는 servlet으로 변환되어 처리되는 자바의 서버 동적 처리 기술    
+* JSP는 servlet으로 변환되어 처리되는 자바의 서버 동적 처리 기술     
+최초 요청 시 servlet으로 변환되어 serviec() 가 호출되고, 두번째 요청부터는 servie()만 호출
 
 * 브라우저는 **반드시 html만 읽을 수 있다.** .jsp 파일을 이용해 java 코드를 html에 섞어 다양한 기능 이용가능
 
@@ -996,6 +999,13 @@ web.xml은 spring mvc2가 어떻게 요청을 받고 view로 응답하는지 연
 3. 서버 측 처리 - jSp는 서버에서 처리 후 클라이언트가 해석할 수 있는 html, json 형태의 응답만 보내 줄 수 있음
 
 * new_neo_jsp 프로젝트에서 webapp 아래의 jsp 파일에서 java 프로그래밍을 사용한 함수 페이지 생성 가능을 확인
+
+### 내장 객체   
+jsp페이지에 일시적인 파라미터에 데이터를 저장하거나 세션에 저장할 때 사용하게 될 것
+1. request
+2. response
+3. session
+4. out 
 
 ### servlet이랑 jsp 비슷한 것 같은데?
 
@@ -1232,19 +1242,109 @@ Animal 클래스 타입의 참조 변수가 각각 Dog와 Cat 객체를 참조�
 ==> 처 바퀴 클래스 - 서스펜스, 엔진, 범퍼 등과 묶여있으면 안됨, 차 바퀴만 만들고 싶은데? 다른게 딸려와버림
 
 ## Cookie
-* <u>웹 브라우저에 저장되는 데이터 조각</u>
-<br>    
-1. 웹 애플리케이션에서 클라이언트와 서버 간의 상태 유지를 위해 사용되는 두 가지 기술 중 하나(쿠키, 세션)
-2. 클라이언트 측(브라우저)에 저장된다.
-3. 보통 클라이언트측에 텍스트로 저장되기 떄문에 보안이 취약한 점이 있다.
+* <u>웹 브라우저에 데이터 조각을 저장하는 상태정보기술</u>
+* **클라이언트 측 컴퓨터(브라우저)에 저장된다.**   
+<br>   
+* 쿠키와 세션의 초간단 예제는 sts에서 프로젝트로 서술 
+ 
+* 특징
+    * 클라이언트에 텍스트(String만 사용 가능)로 저장  
+    Key : value 형태로 저장되며, value에 사용자를 구분하기 위한 모든 데이터가 저장된다. 
+    * 사용자 개인 설정, 식별 정보, 사이트 방문 기록, 트래킹 및 분석 등
+    * 보안 취약
+    
+* 쿠키 확인 방법
+    * 브라우저 전체 쿠키(크롬의 경우)
+        * 설정
+        * 개인 정보 보호 및 보안
+        * 서드 파티 쿠키
+        * 모든 사이트 데이터 및 권한 보기 
+    * 내가 설정한 페이지의 쿠키
+        * 개발자도구
+        * 애플리케이션
+        * 저장 용량
+        * 쿠키
+
+* 쿠키 심는 법
+    ```java
+    // 쿠키 심기
+    <% //쿠키는 자바 클래스와 메서드를 통해 심을 수 있다.
+    // 스크립트릿 applet : application + let(작은) 프로그램
+    // 쿠키는 브라우저에 텍스트로 저장되어야 하기 때문에 문자열만 허용 가능
+    Cookie c1 = new Cookie("name", "honggildong"); // name, value
+    Cookie c2 = new Cookie("age", "100");
+    response.addCookie(c1); // 클라이언트에 쿠키를 심게 명령하는 메서드 
+    response.addCookie(c2); 
+    %>
+    
+    // 쿠키 출력하기
+    <% 
+    Cookie[] cookies = request.getCookies();
+    for(Cookie c : cookies) {
+	out.print(c.getName() + ", " + c.getValue() + "<br>");
+    }
+    %>
+    쿠키의 갯수 : <%= cookies.length %> <!-- 프린트용으로 사용하는 자바스크립트릿 표현식 -->
+
+    // 쿠키 출력 결과
+    JSESSIONID, 15B3FD2C17FE84E8412A8D0A8C6C8534
+    name, honggildong
+    age, 100
+    쿠키의 갯수 : 3
+    ```
+    * cookie 생성 == new Cookie(name, value) / name=value형식, name은 ascii문자만 가능, 쿠키이름
+    * setMaxAge(0)은 쿠키삭제 == setMaxAge(expire) / expire=날짜, 쿠키 유지 시간
+	* 쿠키 유효 폴더 지정 == setPath(uri) / path=경로 
+    * 쿠키 유효 서버 지정 == setDomain(domain) / domain=서버정보
+    * 쿠키 전송 == addCookie(cookie)
+    * 쿠키 목록 추출 == Cookie[]  list = request.getCookies()
+    * 쿠키 검색 == String name = list.get(0).getName()
+    * 쿠키 값 추출 == String value = list.get(0).getValue()
 
 
 ## Session
-* <u>서버측에서 사용자별로 상태 정보를 유지하기 위한 방법</u>
-<br>  
-1. 데이터는 서버 측에 저장된다.
-2. 클라이언트를 구별하기 위한 id만 클라이언트의 브라우저에 저장된다.  
-3. 정보를 서버에서 저장하기 때문에 비교적 안전하게 다룰 수 있다.
+* <u>서버측에서 사용자별로 상태 정보를 유지하기 위한 상태정보기술</u>
+* **데이터는 서버 측 컴퓨터 RAM에 저장된다.**   
+<br>
+
+* 특징  
+    * 클라이언트 구별 id만 브라우저에 저장, 데이터(모든 데이터 타입 사용 가능)는 서버에 저장   
+    마찬가지로 key : value 형태로 브라우저에 저장되는데, id만 저장하고 나머지 세세한 상태정보는 서버에 저장된다.   
+    * 인증 정보, 사용자 상태, 대량의 데이터, 보안이 중요한 정보 등
+    * 비교적 안전
+
+* 세션 설정하는 법
+    ``` java
+    // session.setAttribute(name(String), value(Object))
+    session.setAttribute("view", 0); // String, Object만 지켜서 넣으면 됨
+    %>
+    세션값 확인 : <%= session.getAttribute("view") %>
+    ```
+    * 세션 객체 획득 == HttpSession session = request.getSession() - jsp에는 내장 객체로 자동 제공
+    * 세션 설정 == session.setAttribute(String name, Object value)
+    * 세션 추출 == session.getAttribute(String name)
+    * 세션을 끊음 == session.invalidate()
+    * 세션 삭제 == session.removeAttribute(String name, Object value);
+    * 세션 전체 이름 목록 == session.getAttributeNames()
+
+
+
+### Session 이라는 용어의 중복
+현재 내가 배우는 것은 웹프로그램으로써의 세션의 의미
+1. 웹프로그램의 세션
+    * 웹 애플리케이션과 사용자의 상호작용 기간
+    * 비연결 지향적 - HTTP의 특성
+    * 세션 ID - 상태 정보 유지
+    * 사용자 상태와 데이터 유지, 인증 관리 등을 목적으로 사용
+    * 세션 만료 - 설정된 세션 타임 아웃 / 사용자 활동 부재
+
+2. 네트워크의 세션 
+    * 두 개의 장치가 통신을 시작하고 끝내는 동안의 지속적인 연결
+    * 연결 지향적 프로토콜(TCP)
+    * 프로토콜 자체에서 상태 관리(TCP 상태 머신)
+    * 데이터 전송과 통신 연결을 목적으로 사용
+    * 세션 만료 - 설정된 세션 타임 아웃 / 네트워크 연결 종료
+    
 
 ## 클라우드 컴퓨팅
 * <u>인터넷을 통해 컴퓨팅 자원을 제공하는 서비스</u>
@@ -1821,19 +1921,21 @@ DB 연결 이후 DB의 데이터를 다루는 3단계를 조작해 CRUD가 가�
 JDBC 연결을 끝마친 후 위의 메서드를 활용하여 연결을 끊어주어야 한다.
 
 ### DB와 웹서버를 연결하기 위해 JAVA 애플리케이션에 필요한 클래스
-1. **DAO - Data Access Object**    
-자바 애플리케이션이 DB에 접근해 데이터를 처리하기 위한 클래스    
-CRUD 기능별로 메서드 구현     
+* **DAO - Data Access Object**    
+    * 자바 애플리케이션이 DB에 접근해 데이터를 처리하기 위한 클래스    
+    * CRUD 기능별로 메서드 구현     
+<img src = "img/dao_process.png">
 
-2. **DTO(Data Transfer Object, only 데이터 전달 뿐) == VO(Value Object, 비즈니스 로직이 있는 경우)**     
-데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스      
-비즈니스 로직이 있는 경우 VO로 부르며, 코드의 가독성 향상과 처리의 일원화를 위해 비즈니스 로직을 DAO 등으로 분산하고 오직 데이터 전달만을 위해 DTO를 사용하는 경우도 있다.
+* **DTO(Data Transfer Object, only 데이터 전달 뿐) == VO(Value Object, 비즈니스 로직이 있는 경우)**     
+    * 데이터를 DB와 주고받기 위해 데이터를 묶는 가방 역할을 하는 클래스 - get(), set() 메서드를 통함
+    * DB 테이블 하나당 DTO 하나릉 만들게 된다.
+    * 비즈니스 로직이 있는 경우 VO로 부르며, 코드의 가독성 향상과 처리의 일원화를 위해 비즈니스 로직을 DAO 등으로 분산하고 오직 데이터 전달만을 위해 DTO를 사용하는 경우도 있다.
 
-3. connection con
+* connection con
 
-4. PreparedStatement ps = con.prepareStatement(sql);
+* PreparedStatement ps = con.prepareStatement(sql);
 
-5. resulset rs = ps.executeQuery();   
+* resulset rs = ps.executeQuery();   
 DB의 데이터를 받아오기 위해 사용하는 인터페이스로, ps.executeQuery(); 를 통해 쿼리 실행과 결과 수신을 동시에 한다.
 
 ### DB 처리가 끝나면 반드시 연결을 끊어야 한다.
@@ -1853,6 +1955,8 @@ rs.close();
 * **Object-Relational Mapping**<br>
 <u>OOP를 사용해 호환되지 않는 유형의 시스템 간 데이터를 변환하는 프로그래밍 기술</u>
 <br>  
+
+* 한마디로 JDBC 3~4단계를 부르는말, sql문을 써서 ORM 정의 가능
 1. 객체와 테이블 간 mapping  
 2. 데이터 쿼리 및 조작
 3. 트랜잭션 관리
@@ -1876,11 +1980,6 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 여러 스레드가 동시에 접근해도 안전하게 사용 가능하다.     
 ==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.     
 
-## myBatis
-* ****<br>
-<u></u>
-<br>
-
 ## Spring Framework
 * **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
 <u>어떤 정해진 흐름을 가진 개발의 기본이 되는 틀을 제공해 개발자의 능률을 향상시켜주는 방법 의 JAVA 버전</u>
@@ -1903,6 +2002,17 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
             객체의 구성, 생성, 생명주기 관리 등의 책음을 개발자가 아닌 프레임워크가 담당하는 디자인 원칙      
             프로그램의 제어는 원래 개발자가 맡는 것이 원칙이지만 이를 프레임워크가 대신했을 때 IOC가 되는 것  
         * AOP(Aspect Oriented Programming) - 관점 지향 프로그래밍
+  
+### tomcat이 spring 프로젝트의 xml을 읽는 순서
+* web.xml   
+    * Listener 실행 - 어노테이션 스캔, root-context.xml의 bean 설정
+    * Frontcontroller 설정 - Dispatcher Servlet 설정
+
+* root-context
+    * 싱글톤 객체(bean) 생성 - dbcp+myBatis / transaction
+
+* servlet-context.xml
+    * Frotncontroller 설정 - resource의 위치 / viewResolver의 설정
 
 
 ### spring framework mvc2
@@ -1910,7 +2020,8 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 mvc란 소프트웨어 디자인 패턴으로, 애플리케이션을 세 가지 주요 구성요소로 나누어 설계하는 방식</u>
 <br>  
 
-* MVC 패턴 - 소프트웨어의 구성 요소의 구조를 표현하는 소프트웨어 아키텍쳐 패턴의 일종 
+* MVC 패턴 - 소프트웨어의 구성 요소의 구조를 표현하는 소프트웨어 아키텍쳐 패턴의 일종   
+    장기적으로 걸쳐 안정적이라고 검증된 패턴이다.
     * 모델 - 서브 시스템의 핵심 기능과 데이터 보관 - 정의하는 범위가 넓기 때문에 더 세분화한 정의가 필요   
     **Model 이라 함은 특정 상황에 따라 의미가 다를 수 있지만 spring에서는 컨트롤러와 뷰 사이의 데이터 전달을 의미하기 때문에, 서블릿 컨트롤러와 연결된 DAO, DTO, 비즈니스 로직 등은 Model의 일부로 볼 수 있다.**
         * Model - controller와 view 사이의 데이터 전달을 위한 컴포넌트(요소)
@@ -1935,105 +2046,6 @@ mvc란 소프트웨어 디자인 패턴으로, 애플리케이션을 세 가지 
 * Spring MVC 프로젝트에서 웹 서버와 애플리케이션 서버를 분리하여 사용하는 경우,   
 별도의 연결 설정 없이도 정적 리소스와 동적 콘텐츠를 효율적으로 제공할 수 있다.    
 웹 서버는 정적 콘텐츠를 직접 제공하고, 동적 요청은 애플리케이션 서버로 전달하는 방식으로 설정하면 된다.  
-
-* myBatis를 포함하는 Spring 설정 
-    1. spring mvc 프로젝트 생성
-        * eclipse spring 플러그인이나 STS에서 spring legacy 프로젝트 생성 - spring mvc 프로젝트로 설정  
-        * 프로젝트를 처음 만들 때 com.multi.spring의 형태로 패키지 분류를 정하고 시작
-    2. project facet 설정 
-        * project - properties - project facets 
-        * JAVA 버전은 1.8
-        * Runtime - 미리 설치한 Apache Tomcat 8.5로 설정, 서블릿 컨테이너로써 웹 애플리케이션 서버 설정을 위함   
-        현재 tomcat이 웹서버와 애플리케이션 서버를 모두 담당하고 있기 때문에, 둘 중 어떤 것을 설정하는지 구분하자
-    3. pom.xml 파일 설정  
-        * pom == Projecet Object Model
-        * pom.xml 파일은 프로젝트 바로 아래에 위치한다. 
-        * 주로 dependency 설정(프로젝트 종속성 주입)  
-            * 프로젝트 전체에서 필요한 라이브러리와 프레임워크를 적용하는 방법, 모든 클래스와 모듈 사용 가능 
-            * 자동 다운로드 및 관리
-            * dependency 설정 시 버전 명시를 통해 쉬운 버전 관리 가능  
-            * driver, dbcp, myBatis, myBats-spring, myBatis-jdbc 설정 등
-        * 다음은 pom.xml에 집어넣어야 할 의존성으로, 필요한 버전에 맞는 라이브러리나 프레임워크를 test 위에 작성  
-        test 위에 작성하는 것은 새로 주입한 의존성을 구분하기 위함
-        ``` xml
-        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<version>8.0.31</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.4.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-		<!-- spring jdbc기능 확장 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.0.1.RELEASE</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
-		<!-- mybatis + spring -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-        ```
-    4. src\main\webapp\WEB-INF\spring\root-context.xm 파일에 bean 설정  
-        * dbcp 설정 - driver, url, user, pw 설정  
-        * myBatis factory - dbcp 설정, myBatis 설정 파일 지정이후 myBatis를 설정하기 위한 설정 객체 생성
-            ```xml
-            	<!-- myBatis의 싱글톤 객체 생성 -->
-            <bean id="my" class="org.mybatis.spring.SqlSessionTemplate">
-                <constructor-arg ref="config"></constructor-arg>
-            </bean>
-
-            <!-- myBatis의 설정 객체 생성 -->
-            <bean id="config" class="org.mybatis.spring.SqlSessionFactoryBean">
-                <property name="dataSource" ref="dbcp"></property>
-                <property name="configLocation" value="classpath:mybatis-config.xml"></property>
-            </bean>
-            <!-- classpath: src/main/resources아래를 말함. -->
-
-            <!-- dbcp의 싱글톤 객체 생성 -->
-            <!-- db프로그램의 2단계까지 담당. driver설정, db연결 -->
-            <!--  BasicDataSource dbcp = new BasicDataSource -->
-            <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
-                <property name="driverClassName" value="${jdbc.driver}"></property>
-                <property name="url" value="${jdbc.url}"></property>
-                <property name="username" value="${jdbc.username}"></property>
-                <property name="password" value="${jdbc.password}"></property>
-            </bean>	
-            ```
-            classpath란 src/main/resources 아래를 말함   
-            src/main/resources 는 spring의 리소스 파일을 보관한다.    
-            * org.apache.commons.dbcp.BasicDataSource 클래스는 classpath 아래의 설정 파일을 읽어오게 된다.     
-            데이터 베이스 연결 풀을 설정하기 위해 사용되는데, .properties 혹은 application.yml 파일을 참조한다.  
-
-    5. myBatis 설정 파일 생성 및 수정
-        * mapper 파일 - db와 연결한다면 보통 테이블 당 1개씩 생성
-        * config 파일 - mapper 파일 관리와 관리를 위한 별명 설정    
-            
-    6. mvc 구현
-        * 입력화면 (웹페이지, 프론트엔드 부분)
-        * 컨트롤러 (서블릿을 포함하는 백엔드)
-        * myBatis를 주입한 DAO 객체 사용
-        * views 화면으로 연결
 
 * 웹 애플리케이션의 실행 과정
     1. 소스 코드 작성
@@ -2155,10 +2167,185 @@ BookDAO와 BookController 클래스 자체는 팩토리 기법을 구현한 것�
 따라서, Spring의 IoC 컨테이너가 팩토리 기법을 활용하고 있다고는 말할 수 있습니다.    
 그러나 해당 클래스들을 직접 팩토리 기법의 구현이라고 부르기보다는, Spring이 제공하는 의존성 주입과 빈 관리 기능을 사용한 예제라고 하는 것이 정확합니다.
 
+## myBatis
+* **MyBatis는 SQL 쿼리와 Java 객체 간의 매핑을 간편하게 해주는 프레임워크**<br>
+<u>XML 또는 어노테이션을 통해 SQL을 직접 작성하고, 결과를 Java 객체로 매핑 가능  
+== 복잡한 SQL 쿼리 작업을 쉽게 수행 가능</u>
+<br>
+
+* resultset이 안보여요! == 주요 목표가 SQL과 JAVA 객체 간의 매핑을 간편하게 만들기 위한 것   
+==> SQL문이 실행되면 myBatis를 JDBC에서 반환된 resultset을 자동을 받아옴. 이후 결과를 JAVA 객체로 매핑
+
+### myBatis를 포함하는 Spring 설정 
+1. spring mvc 프로젝트 생성
+        * eclipse spring 플러그인이나 STS에서 spring legacy 프로젝트 생성 - spring mvc 프로젝트로 설정  
+        * 프로젝트를 처음 만들 때 com.multi.spring의 형태로 패키지 분류를 정하고 시작
+2. project facet 설정 
+    * project - properties - project facets 
+    * JAVA 버전은 1.8
+    * Runtime - 미리 설치한 Apache Tomcat 8.5로 설정, 서블릿 컨테이너로써 웹 애플리케이션 서버 설정을 위함   
+    현재 tomcat이 웹서버와 애플리케이션 서버를 모두 담당하고 있기 때문에, 둘 중 어떤 것을 설정하는지 구분하자
+3. pom.xml 파일 설정  
+    * pom == Projecet Object Model
+    * pom.xml 파일은 프로젝트 바로 아래에 위치한다. 
+    * 주로 dependency 설정(프로젝트 종속성 주입)  
+        * 프로젝트 전체에서 필요한 라이브러리와 프레임워크를 적용하는 방법, 모든 클래스와 모듈 사용 가능 
+        * 자동 다운로드 및 관리
+        * dependency 설정 시 버전 명시를 통해 쉬운 버전 관리 가능  
+        * driver, dbcp, myBatis, myBats-spring, myBatis-jdbc 설정 등
+    * 다음은 pom.xml에 집어넣어야 할 의존성으로, 필요한 버전에 맞는 라이브러리나 프레임워크를 test 위에 작성  
+    test 위에 작성하는 것은 새로 주입한 의존성을 구분하기 위함
+    ``` xml
+    <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+	<dependency> <!-- java 애플리케이션이 mySQL 데이터베이스와 통신할 수 있게 하는 JDBC 드라이버 -->
+		<groupId>com.mysql</groupId>
+		<artifactId>mysql-connector-j</artifactId>
+		<version>8.0.31</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+	<dependency> <!-- JAVA의 퍼시스턴스 프레임워크로, SQL과 자바 객체 간의 매핑을 간편하게 만들어주는 lib -->
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis</artifactId>
+		<version>3.4.0</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+	<dependency> <!-- 데이터베이스 연결을 풀링하여 애플리케이션 성능향상, 미리 연결을 만들어높고 애플리케이션이 이를 필요로 할 때마다 재사용 하는 방식 -->
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.4</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+	<!-- spring jdbc기능 확장 -->
+	<dependency> <!-- spring에서 JDBC를 더 간단하게 사용할 수 있게 해주는 라이브러리 -->
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>5.0.1.RELEASE</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+	<!-- mybatis + spring -->
+	<dependency> <!-- MyBatis와 Spring 프레임워크를 통합하는 라이브러리로, myBatis의 매핑 기능과 Spring의 트랜잭션 관리 기능을 함께 사용 가능 -->
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-spring</artifactId>
+		<version>1.3.2</version>
+	</dependency>
+    ```
+4. src\main\webapp\WEB-INF\spring\root-context.xml 파일에 bean 설정  
+    * dbcp 설정 - driver, url, user, pw 설정  
+    * myBatis factory - dbcp 설정, myBatis 설정 파일 지정이후 myBatis를 설정하기 위한 설정 객체 생성
+        ```xml
+        	<!-- myBatis의 싱글톤 객체 생성 -->
+        <bean id="my" class="org.mybatis.spring.SqlSessionTemplate">
+            <constructor-arg ref="config"></constructor-arg>
+        </bean>
+
+        <!-- myBatis의 설정 객체 생성 -->
+        <bean id="config" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource" ref="dbcp"></property>
+            <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        </bean>
+        <!-- classpath: src/main/resources아래를 말함. -->
+
+        <!-- dbcp의 싱글톤 객체 생성 -->
+        <!-- db프로그램의 2단계까지 담당. driver설정, db연결 -->
+        <!--  BasicDataSource dbcp = new BasicDataSource -->
+        <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+            <property name="driverClassName" value="${jdbc.driver}"></property>
+            <property name="url" value="${jdbc.url}"></property>
+            <property name="username" value="${jdbc.username}"></property>
+            <property name="password" value="${jdbc.password}"></property>
+        </bean>	
+        ```
+        classpath란 src/main/resources 아래를 말함   
+        src/main/resources 는 spring의 리소스 파일을 보관한다.    
+        * org.apache.commons.dbcp.BasicDataSource 클래스는 classpath 아래의 설정 파일을 읽어오게 된다.     
+        데이터 베이스 연결 풀을 설정하기 위해 사용되는데, .properties 혹은 application.yml 파일을 참조한다.  
+        
+5. myBatis 설정 파일 생성 및 수정
+    * mapper 파일 - 한 테이블 당 하나의 mapper 파일 생성.  
+    아래와 같은 형식의 mapper 파일이 "project\src\main\resources\mapper" 의 경로에 여럿 존재하는 것
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="book">
+    <!-- ORM, Mapper파일! -->
+    <!-- dto(Object) Relational(RDB, row) Mapping  ORM파일, mapper파일-->
+
+	<insert id="create" parameterType="bookVO" >
+		insert into book values (#{id},#{name},#{url},#{img})
+	</insert>
+	
+	<update id="update" parameterType="bookVO" >
+		update book
+		set name = #{name} 
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType= "String">
+		delete from book
+		where id = #{id}
+	</delete>
+	
+	<!-- insert, delete, update의 resultType = "int"라서 생략함.1 -->
+	<!-- select는 어떤 dto에 넣는지 모르기 떄문에 resultType = "bookVO"를 지정해주어야 한다. 반드시! -->
+	<select id="list" resultType="bookVO">
+		select * from book
+	</select>
+	
+	<select id="one" parameterType="String" resultType="bookVO">
+		select * from book
+		where id = #{id}
+	</select>
+    </mapper>
+    ```
+    * config 파일 - mapper 파일 관리와 관리를 위한 별명 설정      
+    "project\src\main\resources\mybatis-config.xml" 위치에 존재하며, 아래와 같은 형식으로 myBatis 설정    
+    ```xml
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    <configuration>
+	<typeAliases>
+	<typeAlias type="com.multi.werin.trip.TripVO" alias="tripVO"></typeAlias>
+    <typeAlias type="com.multi.werin.trip.TripVO" alias="tripVO"></typeAlias>
+	<typeAlias type="com.multi.werin.trip.TripcmtVO" alias="tripcmtVO"></typeAlias>
+	<typeAlias type="com.multi.werin.landmark.LandmarkVO" alias="landmarkVO"></typeAlias>
+	<typeAlias type="com.multi.werin.landmark.LandmarkInfoVO" alias="landmarkinfoVO"></typeAlias>
+	<typeAlias type="com.multi.werin.chat.ChatVO" alias="chatVO"></typeAlias>
+	<typeAlias type="com.multi.werin.gowith.GowithcmtVO" alias="gowithcmt"></typeAlias>
+	<typeAlias type="com.multi.werin.gowith.GowithVO" alias="gowithVO"></typeAlias>
+	<typeAlias type="com.multi.werin.introducestore.IntroducestorecmtVO" alias="introducestorecmtVO"></typeAlias>
+	</typeAliases>
+
+	<mappers>
+	<mapper resource="mapper/trip.xml" />
+    <mapper resource="mapper/trip.xml" />
+	<mapper resource="mapper/tripcmt.xml" />
+	<mapper resource="mapper/schedule.xml"/>
+	<mapper resource="mapper/plan.xml"/>
+	<mapper resource="mapper/member.xml"/>
+	<mapper resource="mapper/map.xml"/>
+	<mapper resource="mapper/landmarkinfo.xml"/>
+	<mapper resource="mapper/landmark.xml"/>
+	</mappers>
+    </configuration>
+    ```
+        
+6. mvc 구현
+    * 입력화면 (웹페이지, 프론트엔드 부분)
+    * 컨트롤러 (서블릿을 포함하는 백엔드)
+    * myBatis를 주입한 DAO 객체 사용
+    * views 화면으로 연결
+
 ## GET 방식과 POST 방식
 * **네트워크의 요청 방식 차이**<br>
-<br>  
-1. GET 방식
+<br>
+
+### GET 방식
     * 요청정보 헤더의 URI 뒤에 추가되어 전달됨.
     * 쿼리 스트링 내용이 외부에 노출되어 보임.
     * 쿼리 스트링 길이가 제한적
@@ -2166,7 +2353,7 @@ BookDAO와 BookController 클래스 자체는 팩토리 기법을 구현한 것�
     * http의 header부분에 URI와 함께 서버로 전달됨. 
 
 
-2. POST 방식
+### POST 방식
     * 요청정보가 http body에 넣어져서 서버로 전달
     * 전달되는 문자열의 내용이 주소에 노출되지 않음.
     * 인코딩/디코딩의 작업이 별도로 필요
@@ -3129,7 +3316,6 @@ interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그�
 3. a태그를 이용해서 href="주소" 로 요청 == get 방식
 4. js로 location.href="주소" == get 방식
 
-
 ### 클라이언트의 요청(웹서버까지)
 클라이언트가 데이터를 전달하는 등 HTTP 방식을 통해 URI(주소)를 요청하면 웹서버가 요청을 판단한다.  
 이 때 요청이 html, css, js, img, text 등에 관한 것이라면 대부분 웹서버 단계에서 요청에 응답하게 된다.  
@@ -3201,6 +3387,12 @@ condtion이 참이면 표현식 x, 거짓이면 표현식 y를 반환한다.
 ## JAVA SE8이 가지는 구성
 <img src = "img/java_se8.png">
 
+## git에 이미 추가된 파일을 추적 제거하는 방법 
+1. .gitignore에 해당 파일의 디렉토리 혹은 파일 명 추가
+2. git rm --cached path/to/target/directory
+3. git commit -m "~~모시깽저시꺵"
+4. git push origin main  # 또는 해당하는 브랜치 이름
+
 ## 자료구조 = 공간복잡도?
 
 ## 알고리즘 = 시간복잡도?
@@ -3270,3 +3462,4 @@ https://developers.google.com/chart?hl=ko
 * eclipse 메모리 늘리기 - 원래 메모리 제한이 걸려 있는데, 임의로 제한을 푸는 방법   
 <img src ="img/eclipse_limit.png">
 * java의 프로젝트에서 사용할 일이 많은 classpath란 src/main/resources아래를 말함  
+* 종속적으로 자동생성되는 빌드 환경에 따른 결과물 target의 파일은 커밋 x, 제외설정
