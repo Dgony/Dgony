@@ -312,9 +312,6 @@ object(객체), String(문자열)
 
 
 
-
-
-
 ## JAVA
 * <u>한국에서 가장 많이 쓰이는 프로그래밍 언어</u>
 <br>  
@@ -505,6 +502,7 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 .round(x) - 실수 x를 반올림 한 정수를 반환하는 메서드  
 .floor(x) - 실수 x를 내림 한 정수를 반환하는 메서드  
 .ceil(x) - 실수 x를 올림 한 정수를 반환하는 메서드  
+.max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드
 
 8. ```java.time.LocalDate``` ==> JAVA 8 버전 이후 시간을 가져오는 클래스  
 ```LocalDate today = LocalDate.now();``` - 현재 날짜를 가져오는 메서드  
@@ -527,7 +525,9 @@ Thread를 이용할 때 보통 1초를 1000 이라는 숫자로 표현한다.
 ```Random r = new Random()``` - 매개변수를 통해 시드값을 부여할 수 있다.   
 ```r.nextInt()``` - 매개변수를 통해 랜덤값의 범위를 조절할 수 있다.  
 
-11. ```Character.toString(char변수)``` ==> char 변수를 String으로 변환하는 메서드  
+11. ```Character.toString(char변수)``` ==> char 변수를 String으로 변환하는 메서드       
+```Character.isLowerCase(str.charAt(i));``` ==> char 변수의 대소문자 여부를 판단 할 수 있는 메서드  
+```Character.toLowerCase(str.charAt(i));``` ==> char 변수의 대소문자 변경을 할 수 있는 메서드   
 ```String변수.toCharArray()``` ==> String 변수를 char[] 배열로 변환하는 메서드  
 String은 기본 데이터 타입이 아니기 때문에 이런 방식의 형변환을 사용한다.  
 String은 char[] 배열을 내부적으로 가지고 문자열을 만들기 때문에 char[] 배열을 이용함. 
@@ -599,6 +599,11 @@ s주소는 8바이트의 크기를 차지하고, 배열의 요소는 4+4+4+4 + 4
 5. ```Arrays.toString(arr)``` ==> 배열의 내용을 String으로 변환하는 메서드. 배열값 확인용으로 많이 씀.    
 컬렉션(ArraysList, HashSet)는 그냥 출력하면 이 메서드를 적용한 효과가 나옴
 6. ```Arrays.sort(배열)``` ==> 배열을 오름차순으로 정렬해주는 메서드, 파괴함수
+
+### JAVA 11이후의 문법
+* .repeat(); ==> 파라메터의 값 만큼 변수나 배열 등을 반복
+* 
+ 
 
 ### JAVA의 컬렉션
 배열처럼 많은 양의 데이터를 처리하기 위함. 배열과 다르게 타입이 다른 다양한 데이터 타입을 처리할 수 있다.   
