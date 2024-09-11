@@ -57,6 +57,7 @@
 [myBatis](#mybatis)<br>
 [get방식과 post방식](#get-방식과-post-방식)<br>
 [Linux](#linux-리눅스)<br>
+[알고리즘과 자료구조](#알고리즘과-자료구조)<br>   
 
 
 
@@ -499,7 +500,7 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 만약 다른 메서드들을 사용한 이후 nextline()메서드를 사용해야 할 상황이 발생한다면 nextline()메서드를 미리 하나 입력해서 버퍼에 남겨진 "\n"을 지우고 데이터를 입력할 수 있다.  
 
 7. ```Math``` ==> 정수나 실수 계산에 관련된 여러 메소드를 제공하는 자바 기본라이브러리 클래스  
-.pow(x, y) - x를 y제곱한 값을 반환하는 메서드    
+.pow(x, y) - x를 y제곱한 실수(dobuble)를 반환하는 메서드    
 .round(x) - 실수 x를 반올림 한 정수를 반환하는 메서드  
 .floor(x) - 실수 x를 내림 한 정수를 반환하는 메서드  
 .ceil(x) - 실수 x를 올림 한 정수를 반환하는 메서드  
@@ -529,7 +530,7 @@ Thread를 이용할 때 보통 1초를 1000 이라는 숫자로 표현한다.
 11. ```Character.toString(char변수)``` ==> char 변수를 String으로 변환하는 메서드       
 ```Character.isLowerCase(str.charAt(i));``` ==> char 변수의 대소문자 여부를 판단 할 수 있는 메서드  
 ```Character.toLowerCase(str.charAt(i));``` ==> char 변수의 대소문자 변경을 할 수 있는 메서드   
-```String변수.toCharArray()``` ==> String 변수를 char[] 배열로 변환하는 메서드  
+```String변수.toCharArray()``` ==> String 변수를 char[] 배열로 변환하는 메서드, 향상된 for문에 사용    
 String은 기본 데이터 타입이 아니기 때문에 이런 방식의 형변환을 사용한다.  
 String은 char[] 배열을 내부적으로 가지고 문자열을 만들기 때문에 char[] 배열을 이용함. 
 s1.concat(s2); ==> s1 + s2;와 같은 문자열 결합 메서드  
@@ -599,11 +600,18 @@ s주소는 8바이트의 크기를 차지하고, 배열의 요소는 4+4+4+4 + 4
 정수 - 0 / 실수 - 0.0 / 문자 - "" / String(을 비롯한 참조형) - null / Boolean - false
 5. ```Arrays.toString(arr)``` ==> 배열의 내용을 String으로 변환하는 메서드. 배열값 확인용으로 많이 씀.    
 컬렉션(ArraysList, HashSet)는 그냥 출력하면 이 메서드를 적용한 효과가 나옴
-6. ```Arrays.sort(배열)``` ==> 배열을 오름차순으로 정렬해주는 메서드, 파괴함수
+6. ```Arrays.sort(배열)``` ==> 배열을 오름차순으로 정렬해주는 메서드, 파괴함수  
+7. ```Arrays.binarySearch(배열, 특정 값)``` ==> 이진 검색, 배열에서 특정 값의 index 탐색, 배열이 반드시 정렬되어 있어야 함
+8. ```Arrays.equals(배열)``` ==> 배열 비교
+9. ```Arrays.fill(배열, 특정 값)``` ==> 배열을 특정 값으로 초기화
+10. ```Arrays.copyOf(배열, 길이)``` ==> 배열 복사  
+```Arrays.copyOfRange(배열, 시작 indxe, 마지막 index);``` ==> 특정 index부터 배열을 복사하는 방법  
+11. ```System.arraycopy(배열, 0, 새로만들배열이름, 0, 배열길이)``` - 배열 복사
+12. ```Arrays.stream()``` ==> 배열을 스트림으로 변환, 이후 .sum, .mapToInt 등 다양한 메서드 사둉 가능
 
-### JAVA 11이후의 문법
+### JAVA 8이후의 문법
 * .repeat(); ==> 파라메터의 값 만큼 변수나 배열 등을 반복
-* 
+* 배열.stream().mapToInt(i -> i).toArray(); ==> for문 대신 반복하기 위한 메서드로 추정
  
 
 ### JAVA의 컬렉션
@@ -2468,6 +2476,60 @@ unalias lsa : lsa라는 alias를 해제
 <br>  
 
 
+## 알고리즘과 자료구조
+* **램에 저장된 데이터를 처리하는 방식(문제해결방식, 알고리즘)과 램에 데이터를 저장하는 방법(자료구조)**
+<br>
+  
+* 어떤 문제를 해결하는 방식은 다양하다. 
+* 어떤 방법이 제일 좋은 방법일까? 
+* 어떤 기준으로 판단할까? 
+
+### 알고리즘 == CPU가 처리하는 방법 == 문제를 해결하는 방식의 정해진 형태 like 방정식
+* **시간복잡도 ==> CPU가 처리하는데 걸리는 시간**  
+
+* 순서도   
+알고리즘은 순서도로 나타내는 경우가 많다. 
+    * 다이아몬드 - 조건
+    * 직사강형 - 처리
+    * 찢어진 직사각형 - 출력
+
+* 빅오 표기법 - 알고리즘의 시간복잡도와 공간복잡도를 분석하는 수학적 표기    
+입력크기(n) 에 따라 얼마나 많은 시간이 걸리는지 나타낸다.  
+faster (O(1) - O(log n) - O(n) - O(n log n) - O(n의 제곱) - O(2의 n제곱) = O(n!)) slower
+    * O(1) : 스택에서 Push, Pop 
+    * O(log n) : 이진트리 
+    * O(n) : for 문 
+    * O(n log n) : **퀵 정렬(quick sort)**, **병합정렬(merge sort)**, 힙 정렬(heap Sort)
+    * O(n의 제곱): 이중 for 문, **삽입정렬(insertion sort), 거품정렬(bubble sort), 선택정렬(selection sort)**
+    * O(2의 n제곱) : 피보나치 수열
+    * O(n!) : 팩토리얼
+
+* 정렬 알고리즘
+    * 퀵 정령(Quick sort) - 가장 빠름
+    * 거품 정렬(Bubble sort) - 가장 느림
+
+> 코딩테스트의 경우 시간복잡도가 공간복잡도보다 중요하다.
+
+### 자료구조 == RAM에 저장하는 방법 == RAM에 데이터를 효율적으로 저장하는 방법
+* **공간복잡도 ==> RAM에 저장된 데이터의 형태**  
+
+* 선형구조 (저장되는 데이터가 직선형태)
+    * 스택
+    * 큐
+    * 배열 / 리스트
+        * 단순 연결 리스트
+        * 이중 연결 리스트
+        * 원형 연결 리스트
+
+* 비선형구조 (저장되는 데이터가 직선형태 X)
+    * 그래프
+    * 트리
+        * 일반 트리
+        * 이진 트린
+
+
+
+
 
 
 
@@ -2496,6 +2558,255 @@ unalias lsa : lsa라는 alias를 해제
 
 
 
+<hr>
+
+# 기타 웹, 백엔드, CS 지식 정리
+
+## 각종 개발환경 및 프로그램 초기 환경 셋팅 
+
+### 공통적으로 체크해야 하는 부분
+1. 프로그램을 설치할 때 특정 사용자만 vs 모든 사용자 고르는 부분 모든 사용자 고르기(보편적으로)
+2. 한글을 써야 할 일이 있는 프로그램을 사용중이라면 UTF-8 인코딩 설정을 확인하기
+3. 
+
+### VSCode  
+1. 인터넷에 Visual Studio Code검색해서 설치하면 됨.
+2. 각종기능을 플러그인을 통해 설치 가능 (자바 개발 환경, live server, open default browser 등)
+3. snippet 플러그인 설치 추천 (html을 검색하면 바로 확인 가능)
+4. 웹서버 역할을 해주는 live server 설치 추천
+5. 백엔드 개발이 필요하기 때문에 java 패키지 설치 추천.
+6. 그냥 작업 폴더를 열어서 개발하면 되기 때문에 접근성이 좋음.
+7. 파일을 만들 떄는 원하는 파일 유형을 파일이름 마지막에 붙여주면 생성 완료 (.html, .css, .js)
+
+### JAVA 환경설정(window 기준)
+1. 필요한 버전의 JDK 설치
+2. 파일탐색기 - 내 pc 우클릭 - 속성 - 고급 시스템 설정 - 고급 탭 - 환경변수 
+3. 시스템변수 - 새로 만들기 - 변수이름 JAVA_HOME / 값 - C:\Program Files\Java\jdk1.8.0_361\bin (일반적인 경로)
+4. eclipse, STS 등 설치 후 JAVA 개발
+5. 가끔 IDE로 만든 JAVA 프로젝트와 JDK 버전이 맞지 않는 경우,   
+project 탭 혹은 프로젝트 우클릭 - properties - proeject facets - java 버전 맞추기  
+혼자 공부용으로 JDK 버전은 1.8버전을 사용함.
+6. window - preferences - general - show heap status 체크 (IDE 최하단에 heap 영역 사용량 표시)
+7. window - preferences - general - workspace - other : UTF-8 선택 (한글 인코딩용)
+8. help - eclipse marketplace에서 각종 편의성을 위한 플러그인 인스톨 가능, snippet, 시력 보호 프로그램 등
+
+### mySQL 설치
+1. https://dev.mysql.com/downloads/mysql/
+2. 8.0.34 - go to download page - Windows (x86, 32-bit), MSI Installer	8.0.34 다운로드(아래꺼)
+3. No thanks, just start my download.클릭
+4. 인스톨러 실행 
+5. server only
+6. execute
+7. 전부 next
+8. 비밀번호만 1234 비밀번호 확인도 1234
+
+### DBeaver 설치
+1. https://dbeaver.io/download/
+2. windows(installer) 다운
+3. For anyone who use this computer 만 체크후 쭈욱 완료
+4. 자동으로 켜지는 창에서 mySQL 선택 후 id root 와 함께 mySQL 비밀번호 입력 후 필요한 거 다운로드 
+5. 오류 발생하면 Driver properties 탭에 allowPublicKeyRetrieval의 Value를 true로 바꾸기 
+6. Test connection 클릭 
+7. 그럼 다운로드 드라이버가 오류 안발생함 
+8. 이게 데이터베이스를 연결하는 방식, 새 데이터베이스를 열려면 탭에 코드+ 모양 누르면 됨.
+9. 비밀 번호 등이 바뀌면 localhost 등을 우클릭 - Edit connection을 통해 연결 정보를 바꿔줄 수 있다.
+
+### StarUML 설치
+1. https://staruml.io/download/ ==> 여기서 윈도우 다운, 실행시키면 거의 바로 켜지는 작고 귀여운 프로그램. 
+2. 들어가면 evaluate를 클릭해서 창 끄고 진행.
+3. tools 탭 - extension manger - java 검색 - reload - StarUML 재부팅
+4. 이제 Spring이나 eclipse에서 원하는 자바 class에 접근해서 우클릭 - refactor - extract interface - interface 이름 자유생성 - select all - 하면 해당 이름으로 interface이름, 메서드, 메서드 파라미터만 가진 불완전한 메서드(추상 메서드 생성)
+5. 다시 StarUML에서 tools - java - reversecode - UML을 그리고 싶은 파일이 잇는 위치 지정 - interface로 지정된걸 가져오면서 다른 파일을 가져오면 자동으로 그림을 그려주는걸 볼 수 있음  
+interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그릴 때 dao interface와 dao 전부 가져와서 써야 함
+
+### Tomcat 설치
+1. Tomcat검색해서 Apache Tomcat에서 Tomcat 8.5.95 Released 다운로드 폴더로 가기. 페이지가 수시로 바뀜(현재 7월)
+2. winodw는 32-bit/64-bit Windows Service Installer 다운 받기, mac은 brew 버전으로 받음
+3. 다 next 하다가 configuration 화면에서 server shutdown port = 7777, HTTP/1,1 Connetor port = 8888로 설정하고 넘어감
+4. 작업표시줄 오른쪽에 초록색화살표를 가진 동영상 재생버튼이 생기면 WAS가 잘 설치되었다는 뜻
+5. 윈도우 검색 - 서비스(작업표시줄 고정 권장) - Apche Tomcat 서비스 더블클릭하면 실행 중지 자동설정 가능
+6. eclipse 실행 - window 탭 - preferences - server - Runtime Envrionment - add - 서버 종류 폴더 나열(Apache) - 8.5버전 선택 - Browse - c드라이브 program files 밑에 Apache foundation - Tomcat 8.5 폴더 클릭해서 선택 - JRE 버전 맞추고 finish
+7. eclipse 오른쪽 위 java EE = java Enterprise Edition , 이제 화면 하단에 Servers가 보이는데, 얘만 왼쪽으로 따로 떼서 쓰기, 여기서 서버 실행 종료 가능
+8. 실행한 서버 더블클릭으로 port확인 가능, Server option에서 체크리스트 1,2,3번 체크 후 저장
+9. 웹 프로그램을 만드려면 프로젝트를 만들 때 dynamic java project를 만들어서 만들기, web content를 src처럼 생각하고 그 밑에 프로그램 제작
+10. 만약 기본설정 UTF-8이 아니면 windows - prefenrences - web에서 css, html, jsp 전부 UTF-8로 바꿔주기
+11. 필요한 library는 lib 폴더에 집어넣기
+
+### Spring Tool Suite(STS)설치
+1. https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3
+2. Spring Tool Suite 3.9.14 (New and Noteworthy) - full distribution on Eclipse 4.17 -window는 1번, mac는 2번, 사진 참조 - 받음 파일 압축풀기, 반디집 권장(경로 문제), Spring의 버전은 JDK와 호환해서 결정
+3. 압축 해제 이후 - spring-tool-suite-3.9.14.RELEASE-e4.17.0-win32-x86_64\sts-bundle\sts-3.9.14.RELEASE - STS.ini를 vscode로 열고 - -Dosgi.requiredJavaVersion=1.8 를 현재 자바 버전에 맞추기. 내 경우는 1.8 - STS.exe 실행 - 기존 eclipse workspace 지정 - Spring Legacy project 생성
+4. 환경변수 설정 - eclipse 실행 - help 탭 - Eclipse marketplace - Spring tools 3 add-on 뭐시기 설치
+5. eclipse 오른쪽 위에서 spring 개발 화면으로 전환 - 없으면 open perspective 살펴보기 - Spring leagcy project - mvc project 이후 com.multi.mongo 등으로 package까지 지정 - 만든 프로젝트 선택하고 alt + enter - 이 과정을 spring 프로젝트 만들 때마다 해야 함
+6. project facets - java 버전 1.8로 설정 - runtimes - Apache tomcat 체크 - 기존에 tomcat 미리 깔아서 사용하고 있었으면 tomcat 재시작해서 새로 만든 spring project 속의 파일도 돌아갈 수 있도록 시작. tomcat 서버 더블 클릭 이후 port 번호 바꾸기
+7. Spring도 eclipse 처럼 workpspace를 따로 지정해야 하는데, eclipse가 사용중인 workspace를 spring도 동시에 키는 것은 불가능 하다. 따로 키기는 가능 
+
+### MongoDB 설치
+1. MongoDB community server - selelct package - 5.0.23버전 다운로드
+2. msi로 받아서 실행 - 중간에 complete 클릭 - Install MongoDB compass 체크굄(MongoDB 다루는 프로그램) - 쭉 진행 후 install
+3. 이후 설치가 완료되면 mySQL과 DBeaver가 같이 설치된 것처럼 생각하면 됨
+4. 이후 기본 port가 27017로 되어있고, connect - 오른쪽 아래 화살표 열면 터미널이 열려서 명령어 입력 가능
+
+### weka 설치
+1. https://sourceforge.net/projects/weka/files/weka-3-9/3.9.3/ - weka-3-9-3-x64.exe - 윈도우 / weka-3-9-3-corretto-jvm.dmg - 맥 다운로드, 3.9안되면 3.8로 받기
+2. 맥은 압축풀고 실행 윈도우는 실행파일 실행시키면 설치 됨. 바로 끝. explorer 기능만 사용할 예정
+
+## 웹 페이지가 동작하는 방식
+1. 클라이언트에서 브라우저 실행  
+2. 브라우저에서 HTTP방식으로 요청  
+3. 웹서버(컴퓨터)에서 요청 내용 판단 ==> 웹서버에서 찾을 수 있는 요청사항(HTML)인 경우 7번 / DB등의 데이터를 추가로 요청하는(HTML이 아닌) 경우 4번  
+4. WAS에서 요청을 JAVA로 처리하고(DAO, VO, DTO사용) 원하는 데이터를 요청하거나 수정하는 SQL문을 DB에 전송, 결과 처리  
+5. DB에서 SQL문으로 처리 후 받아올 데이터가 있는 경우 resultset클래스를 이용해서 데이터를 받아옴.  
+6. WAS에서 DAO, VO등을 이용해서 웹 서버에 요청 데이터 전달.  
+7. 웹 서버에서 브라우저의 요청에 대해 응답  
+8. 응답시 jsp등에서 요청한 데이터를 프론트엔드 언어로 변환하는 프로그램으로 응답. - 브라우저가 프론트엔드 3총사를 해석해서 표시
+<br><br>
+
+## 웹 개발 3단계(3tier)의 이해
+<img src="img/web.png" alt="웹의 구조를 3구역으로 나눈 모습">
+<img src="img/web2.png" >
+클라이언트 측(UI 측) / 웹서버측(웹서버 + WAS = JAVA 측) / DB 측<br>
+웹 개발은 위 사진처럼 3부분으로 나뉘어서 이루어지게 된다.  
+웹서버의 경우 단순 html 요청인지, DB가 필요한 요청인지 판단해서 WAS로 넘기는 역할도 있기 때문에 웹서버측이라는 WAS를 포함하는 말로 부르는 것이 좋다고 배웠다.  
+
+### 클라이언트가 서버에 주소로 요청하는 방법
+1. 브라우저에 주소 입력 + 엔터 == get 방식 
+2. form을 이용해 action이 '요청주소'로 가게 하는 방식 == method로 get/post 선택 가능
+3. a태그를 이용해서 href="주소" 로 요청 == get 방식
+4. js로 location.href="주소" == get 방식
+
+### 클라이언트의 요청(웹서버까지)
+클라이언트가 데이터를 전달하는 등 HTTP 방식을 통해 URI(주소)를 요청하면 웹서버가 요청을 판단한다.  
+이 때 요청이 html, css, js, img, text 등에 관한 것이라면 대부분 웹서버 단계에서 요청에 응답하게 된다.  
+웹서버 밑에는 웹페이지에 필요한 데이터가 미리 들어있어야 한다. 이 데이터로 클라이언트 요청에 따라 페이지에 데이터를 표시하거나 다른 페이지로 연결하게 된다.
+
+### 클라이언트의 요청(DB까지)
+클라이언트의 요청 중 DB가 필요한 일부 요청은 웹서버 단계에서 반환할 수 없다.<br>
+이런 요청은 웹서버에서 요청을 판단 후 JSP문법으로 JAVA를 통한 WAS처리로 DB에 SQL문을 전달한다.<br>
+DB는 SQL문대로 데이터를 Resultset이라는 방법으로 반환하고, WAS는 이 데이터를 JSP 등을 통해 웹서버로 전달한다. <br>
+이후 웹서버는 클라이언트의 요청을 반환한다.   
+기존 요청이 복잡했기에 좀 더 단순화 해서 요청하는 방법이 생겼다.(Restful api)  
+
+### 정적 웹 vs 동적 웹   
+<h>html, css, js로 이루어진 웹이 클라이언트에 대해 어떻게 반응하는가?</h>
+정적 웹 ==> 외부 환경에 관계 없이 클라이언트에게 동일한 페이지를 보여줌  
+동적 웹 ==> 외부환경이 달라짐에 따라(클라이언트의 로그인 등) 달라지는 페이지를 보여줌  
+DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.    
+또한 동기통신 vs 비동기통신의 구분과 헷갈리지 않아야 한다.  
+
+### 웹개발에서 프론트엔드와 백엔드의 구분
+웹개발을 프론트엔드와 백엔드로 나누려 하면, 프론트엔드 - 클라이언트, 웹서버 일부 / 백엔드 - 나머지 로 나눌 수 있다. 하지만 어느 한쪽을 모르고 웹 개발을 안다고 말할 수 없다고 배웠기 때문에 웹 개발을 목표로 한다면 어쩔 수 없이 풀스택적인 면모를 가지게 될 것이라고 생각한다.  
+
+## 타입 결정
+1. 정적 타이핑은 compile시에 결정되고, 동적 타이핑은 run할 때 결정된다.  
+즉 타입 오류가 발생한다면 정적 타이핑 언어는 compile, 동적 타이핑은 run시에 발생한다.  
+
+### 정적 타입 결정(정적 타이핑)
+1. C++, JAVA 등, static language
+2. 변수에 들어갈 '데이터의 타입'을 선언 시(compile)결정한다.    
+또한 컴파일 시간에 데이터 타입 결정, 검사와 오류 확인을 실시한다.   
+
+
+### 동적 타입 결정(동적 타이핑)
+1. JavaScript, python 등, dynamic language
+2. 변수에 들어갈 데이터 타입을 실행 시(run)에 결정한다.  
+3. 컴파일과 실행을 동시에 진행하며, 실행 도중 데이터 타입 결정과 검사가 이루어진다. 
+
+## 타입 추론
+1. 타입 추론과 타입 결정은 구분할 수 있어야 한다.  
+타입 추론 ==> 초기 타입 추론 vs 변경된 타입 추론     
+타입 결정 ==> compile vs run
+2. inx x; ==> 변수에 들어갈 데이터 타입이 결정된다. (데이터 타입이 변수와 동시에 선언됨)
+3. 이 순간부터 x는 무조건 int타입에 해당하는 변수만 들어갈 수 있다. 다른 데이터 타입은 오류가 생기게 된다.
+4. 변수 선언은 기본적으로 js의 let과 동일하게 변수에 데이터 재할당은 가능하지만 변수 재선언은 불가능하다.  
+즉 int x = 100; 은 js에선 let x = 100; 과 같다(?)
+5. 변수에 어떤 값이 들어갔느냐에 따라 데이터 타입이 다르게 결정된다.
+6. var y; ==> 데이터 할당 없이 변수 선언만 한 경우. (var - 변수 재선언, 업데이트 가능 / let - 변수 재선언 불가능)
+7. y = 100; ==> 데이터 타입 int로 자동 설정(타입 추론)
+8. y = "100", y = "감사합니다" ==> 데이터 타입 string으로 선언 혹은 변경
+
+### 초기 타입 추론 
+예를 들어 JS의 경우  
+**x = 100 ==> 초기 타입 추론(정수)**
+
+### 변경된 타입 추론
+JS에서 이미 변수 x = 100이 할당 된 경우  
+**x = "string" ==> 변경된 타입 추론(문자열)**
+
+## 이항연산자와 삼항연산자 
+1. 이항연산자  
+두 개의 피연산자를 가지고 작동하는 연산자로, 연산을 수행하기 위해 두 개의 값이 필요한 연산자.  
+산술, 비교, 논리, 대입 전부 여기에 해당하다.  
+2. 삼항연산자  
+연산을 수행하기 위해 세 개의 값이 필요한 연산자.  
+일반식으로 조건식을 평가하고, 결과에 따라 표현식을 결정한다.  
+```condtion ? x : y``` 의 형태를 취한다.  
+condtion이 참이면 표현식 x, 거짓이면 표현식 y를 반환한다.  
+
+## JAVA SE8이 가지는 구성
+<img src = "img/java_se8.png">
+
+## git에 이미 추가된 파일을 추적 제거하는 방법 
+1. .gitignore에 해당 파일의 디렉토리 혹은 파일 명 추가
+2. git rm --cached path/to/target/directory
+3. git commit -m "~~모시깽저시꺵"
+4. git push origin main  # 또는 해당하는 브랜치 이름
+
+## TDD 방법론
+
+
+
+
+
+
+##
+##
+##
+##
+##
+
+맨밑
+
+
+
+
+
+
+
+# 알아두면 무조건 좋은 것들 
+* https://www.w3schools.com/html/html_colors.asp 여기서 HTML,CSS등 참고   
+w3schools는 주로 웹 개발에 필요한 프로그래밍 언어로 만든 오브젝트를 가져다 쓸 수 있도록 만든 사이트
+* camelCase란 띄어쓰기를 표현하기 위한 방법으로, 클래스 이름은 대문자로 시작하고, 나머지는 소문자로 시작한다. 
+* 이 과정에서 가장 집중해야 할 곳은 웹서버와 데이터베이스 부분
+* 백엔드를 주로 공부했어도 프론트엔드어세도 JS와 jQuery까지 알아두면 좋다.   
+여러 클라이언트가 동시에 이용해야 될 수도 있는 웹서버가 많은 부하를 받게 되면 결국 속도가 느려질 수 밖에 없다. 이 때 브라우저의 JS가 부담을 줄여줄 수 있는데, jQuery뿐만아니라 jstl, ajax등까지 이용하면 더 좋은 결과를 낼 수도 있다.
+* 내 저장소의 경로를 확인하는 방법  
+저장된 파일이나 폴더 등의 위치를 브라우저에 찍어본다. 제대로 표시되거나 경로가 잡히면 올바른 경로, 파일에 엑세스할 수 없음이나 기타 등등이면 올바르지 못한 경로
+* 아주 간단한 코드가 아니라면 만들어진 기능에 주석을 쓰는 버릇을 들여야 한다. 일을 하게 되면 여러 사람들과 협업해야 할 일이 생길텐데, 복잡한 프로그램을 만들게 되면 같이 협업하는 사람들도 쉽게 이해하고 일을 진행할 수 있게 주석을 달아두어야 한다. 
+* 브라우저는 html문서와 css, js 프론트엔드 3총사만 인식할 수 있기 때문에 이 언어들로만 웹 페이지를 구성할 수 있게 만들어야 한다.    
+JS를 이용한 간단한 
+* 웹 페이지를 만드는 프로젝트를 할 때, 레포지토리를 이용하게 된다. 웹 사이트 1개를 만드는 프로젝트는 레포지토리 1개를 통으로 사용하게 된다.  
+* 깃허브 커밋은 하루를 마무리하는 용도로 진행한게 된다. 프로젝트를 진행하는 경우 브랜치와 함께 이용할 수 있다.
+* 레포지토리의 브랜치를 만들 때 기능 단위로 만들어서 진행할 수 있다.  
+* ```<!DOCTYPE html>``` ==> 이 문서가 html문서임을 알려주는 html문서 시작문구
+* 컴퓨터의 전신은 앨런 튜링 머신 
+* 서버 ==> 서브해주는 컴퓨터, 클라이언트에 보내주는 역할. 클라이언트는 서버로 받아서 표현하는 컴퓨터를 의미한다.
+* jdk를 컴퓨터에 처음 설치하고 java가 제대로 깔렸는지 확인하는 방법으로 cmd창에 javac를 입력하는 방법이 있다. 자바 컴파일러가 제대로 설치되어있는지 확인하는 것.
+* 브라우저의 개발자 도구는 디버깅을 위해 가장 많이 이용한다. 오류 말고도 어떤 파일로 사이트가 구성이 되어있는지, 네트워크 연결을 어떻게 이루어지고 있는지 등도 확인할 수 있다.
+* www는 word wide web
+* 인터넷이 생기던 초기엔 운영체제의 힘으로 인터넷 익스플로러가 많은 이용자를 확보했었는데, 시간이 지날수록 성능차이로 인해 크롬이 득세하게 되어 현재 가장 많은 이용자를 확보한 브라우저는 크롬이 되게 되었다.
+* mvc웹프로젝트로 만든 spring 프로젝트는 경로에 띄어쓰기가 들어가면 안된다. 앵간하면 모든 프로그래밍에선 띄어쓰기 대신 _ 나 다른 방식 등으로 표시하는 것이 좋을 것 같다.
+* 어떤 언어이든 "버튼 하나당 함수 하나", 이렇게 작성해야 헷갈리지 않는다.
+* 구글차트라고해서 부트스트랩처럼 구글이 제공하는 각종 형태의 그래프를 가져다 쓸 수 있다.  
+https://developers.google.com/chart?hl=ko
+* 유효성 검증 ==> 이메일이 형식을 갖춰서 입력되었는지, 비밀번호 확인이 일치하는지 등
+* JS와 JAVA모두 입력장치를 통해 들어온 입력 값은 문자열 취급을 받는다.
+* 윈도우에는 리눅스가 비활성화 된 상태로 들어있다.
+* JAVA니까 '변수 값 할당' ==> '변수 초기화' 로 쓰도록 하자.
+* eclipse 메모리 늘리기 - 원래 메모리 제한이 걸려 있는데, 임의로 제한을 푸는 방법   
+<img src ="img/eclipse_limit.png">
+* java의 프로젝트에서 사용할 일이 많은 classpath란 src/main/resources아래를 말함  
+* 종속적으로 자동생성되는 빌드 환경에 따른 결과물 target의 파일은 커밋 x, 제외설정
 
 
 
@@ -2513,23 +2824,7 @@ unalias lsa : lsa라는 alias를 해제
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+----- 여기부턴 정보처리기사 준비 -----
 # 1과목 소프트웨어 설계
 ## 요구사항 확인
 ### 소프트웨어 생명 주기
@@ -2853,25 +3148,7 @@ unalias lsa : lsa라는 alias를 해제
 * 설계 순서(기출)
     * 요구 조건 분석
     * 개념적 설계(E-R 모델) - 트랜잭션 모델링
-    * 논리적 설계(목표 DBMS에 맞게) - 트랜잭션의 인터페이스 설계
-    * 물리적 설계
-    * 구현
-    
-* 데이터 모델의 개념(기출) - 정보를 컴퓨터에 표현하기 위해 단순화, 추상화를 거친 모형
-    * 데이터 모델에 표시할 요소
-        * 구조
-        * 연산(sql문 등으로 데이터를 처리하는 과정)
-        * 재약 조건 (constraint)
-    * 개념적 데이터 모델 - 인간의 이해를 돕기 위한 추상적 개념, E-R 모델
-    * 논리적 데이터 모델 - 개념적 구조를 컴퓨터가 이해할 수 있게 바꾸는 과정, DBMS를 위함
-    
-
-
-  
-
-
-
-## 기출인데 정리에 없는 것
+    * ## 기출인데 정리에 없는 것
 * Data Dictionary(지료 사전)
     * '=' - 정의(자료는 = 이거다)
     * '+' - 구성, 연결(자료의 연결)
@@ -3284,291 +3561,14 @@ unalias lsa : lsa라는 alias를 해제
 * Omisson Error - 입력 생략 오류
 * Transcription Error - 필사 오류
 * Addction Error - 한 자리 추가로 입력
-* Transpostion Eroor - 좌우 바꾸어 입력
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<hr>
-
-# 기타 웹, 백엔드, CS 지식 정리
-
-## 각종 개발환경 및 프로그램 초기 환경 셋팅 
-
-### 공통적으로 체크해야 하는 부분
-1. 프로그램을 설치할 때 특정 사용자만 vs 모든 사용자 고르는 부분 모든 사용자 고르기(보편적으로)
-2. 한글을 써야 할 일이 있는 프로그램을 사용중이라면 UTF-8 인코딩 설정을 확인하기
-3. 
-
-### VSCode  
-1. 인터넷에 Visual Studio Code검색해서 설치하면 됨.
-2. 각종기능을 플러그인을 통해 설치 가능 (자바 개발 환경, live server, open default browser 등)
-3. snippet 플러그인 설치 추천 (html을 검색하면 바로 확인 가능)
-4. 웹서버 역할을 해주는 live server 설치 추천
-5. 백엔드 개발이 필요하기 때문에 java 패키지 설치 추천.
-6. 그냥 작업 폴더를 열어서 개발하면 되기 때문에 접근성이 좋음.
-7. 파일을 만들 떄는 원하는 파일 유형을 파일이름 마지막에 붙여주면 생성 완료 (.html, .css, .js)
-
-### JAVA 환경설정(window 기준)
-1. 필요한 버전의 JDK 설치
-2. 파일탐색기 - 내 pc 우클릭 - 속성 - 고급 시스템 설정 - 고급 탭 - 환경변수 
-3. 시스템변수 - 새로 만들기 - 변수이름 JAVA_HOME / 값 - C:\Program Files\Java\jdk1.8.0_361\bin (일반적인 경로)
-4. eclipse, STS 등 설치 후 JAVA 개발
-5. 가끔 IDE로 만든 JAVA 프로젝트와 JDK 버전이 맞지 않는 경우,   
-project 탭 혹은 프로젝트 우클릭 - properties - proeject facets - java 버전 맞추기  
-혼자 공부용으로 JDK 버전은 1.8버전을 사용함.
-6. window - preferences - general - show heap status 체크 (IDE 최하단에 heap 영역 사용량 표시)
-7. window - preferences - general - workspace - other : UTF-8 선택 (한글 인코딩용)
-8. help - eclipse marketplace에서 각종 편의성을 위한 플러그인 인스톨 가능, snippet, 시력 보호 프로그램 등
-
-### mySQL 설치
-1. https://dev.mysql.com/downloads/mysql/
-2. 8.0.34 - go to download page - Windows (x86, 32-bit), MSI Installer	8.0.34 다운로드(아래꺼)
-3. No thanks, just start my download.클릭
-4. 인스톨러 실행 
-5. server only
-6. execute
-7. 전부 next
-8. 비밀번호만 1234 비밀번호 확인도 1234
-
-### DBeaver 설치
-1. https://dbeaver.io/download/
-2. windows(installer) 다운
-3. For anyone who use this computer 만 체크후 쭈욱 완료
-4. 자동으로 켜지는 창에서 mySQL 선택 후 id root 와 함께 mySQL 비밀번호 입력 후 필요한 거 다운로드 
-5. 오류 발생하면 Driver properties 탭에 allowPublicKeyRetrieval의 Value를 true로 바꾸기 
-6. Test connection 클릭 
-7. 그럼 다운로드 드라이버가 오류 안발생함 
-8. 이게 데이터베이스를 연결하는 방식, 새 데이터베이스를 열려면 탭에 코드+ 모양 누르면 됨.
-9. 비밀 번호 등이 바뀌면 localhost 등을 우클릭 - Edit connection을 통해 연결 정보를 바꿔줄 수 있다.
-
-### StarUML 설치
-1. https://staruml.io/download/ ==> 여기서 윈도우 다운, 실행시키면 거의 바로 켜지는 작고 귀여운 프로그램. 
-2. 들어가면 evaluate를 클릭해서 창 끄고 진행.
-3. tools 탭 - extension manger - java 검색 - reload - StarUML 재부팅
-4. 이제 Spring이나 eclipse에서 원하는 자바 class에 접근해서 우클릭 - refactor - extract interface - interface 이름 자유생성 - select all - 하면 해당 이름으로 interface이름, 메서드, 메서드 파라미터만 가진 불완전한 메서드(추상 메서드 생성)
-5. 다시 StarUML에서 tools - java - reversecode - UML을 그리고 싶은 파일이 잇는 위치 지정 - interface로 지정된걸 가져오면서 다른 파일을 가져오면 자동으로 그림을 그려주는걸 볼 수 있음  
-interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그릴 때 dao interface와 dao 전부 가져와서 써야 함
-
-### Tomcat 설치
-1. Tomcat검색해서 Apache Tomcat에서 Tomcat 8.5.95 Released 다운로드 폴더로 가기. 페이지가 수시로 바뀜(현재 7월)
-2. winodw는 32-bit/64-bit Windows Service Installer 다운 받기, mac은 brew 버전으로 받음
-3. 다 next 하다가 configuration 화면에서 server shutdown port = 7777, HTTP/1,1 Connetor port = 8888로 설정하고 넘어감
-4. 작업표시줄 오른쪽에 초록색화살표를 가진 동영상 재생버튼이 생기면 WAS가 잘 설치되었다는 뜻
-5. 윈도우 검색 - 서비스(작업표시줄 고정 권장) - Apche Tomcat 서비스 더블클릭하면 실행 중지 자동설정 가능
-6. eclipse 실행 - window 탭 - preferences - server - Runtime Envrionment - add - 서버 종류 폴더 나열(Apache) - 8.5버전 선택 - Browse - c드라이브 program files 밑에 Apache foundation - Tomcat 8.5 폴더 클릭해서 선택 - JRE 버전 맞추고 finish
-7. eclipse 오른쪽 위 java EE = java Enterprise Edition , 이제 화면 하단에 Servers가 보이는데, 얘만 왼쪽으로 따로 떼서 쓰기, 여기서 서버 실행 종료 가능
-8. 실행한 서버 더블클릭으로 port확인 가능, Server option에서 체크리스트 1,2,3번 체크 후 저장
-9. 웹 프로그램을 만드려면 프로젝트를 만들 때 dynamic java project를 만들어서 만들기, web content를 src처럼 생각하고 그 밑에 프로그램 제작
-10. 만약 기본설정 UTF-8이 아니면 windows - prefenrences - web에서 css, html, jsp 전부 UTF-8로 바꿔주기
-11. 필요한 library는 lib 폴더에 집어넣기
-
-### Spring Tool Suite(STS)설치
-1. https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3
-2. Spring Tool Suite 3.9.14 (New and Noteworthy) - full distribution on Eclipse 4.17 -window는 1번, mac는 2번, 사진 참조 - 받음 파일 압축풀기, 반디집 권장(경로 문제), Spring의 버전은 JDK와 호환해서 결정
-3. 압축 해제 이후 - spring-tool-suite-3.9.14.RELEASE-e4.17.0-win32-x86_64\sts-bundle\sts-3.9.14.RELEASE - STS.ini를 vscode로 열고 - -Dosgi.requiredJavaVersion=1.8 를 현재 자바 버전에 맞추기. 내 경우는 1.8 - STS.exe 실행 - 기존 eclipse workspace 지정 - Spring Legacy project 생성
-4. 환경변수 설정 - eclipse 실행 - help 탭 - Eclipse marketplace - Spring tools 3 add-on 뭐시기 설치
-5. eclipse 오른쪽 위에서 spring 개발 화면으로 전환 - 없으면 open perspective 살펴보기 - Spring leagcy project - mvc project 이후 com.multi.mongo 등으로 package까지 지정 - 만든 프로젝트 선택하고 alt + enter - 이 과정을 spring 프로젝트 만들 때마다 해야 함
-6. project facets - java 버전 1.8로 설정 - runtimes - Apache tomcat 체크 - 기존에 tomcat 미리 깔아서 사용하고 있었으면 tomcat 재시작해서 새로 만든 spring project 속의 파일도 돌아갈 수 있도록 시작. tomcat 서버 더블 클릭 이후 port 번호 바꾸기
-7. Spring도 eclipse 처럼 workpspace를 따로 지정해야 하는데, eclipse가 사용중인 workspace를 spring도 동시에 키는 것은 불가능 하다. 따로 키기는 가능 
-
-### MongoDB 설치
-1. MongoDB community server - selelct package - 5.0.23버전 다운로드
-2. msi로 받아서 실행 - 중간에 complete 클릭 - Install MongoDB compass 체크굄(MongoDB 다루는 프로그램) - 쭉 진행 후 install
-3. 이후 설치가 완료되면 mySQL과 DBeaver가 같이 설치된 것처럼 생각하면 됨
-4. 이후 기본 port가 27017로 되어있고, connect - 오른쪽 아래 화살표 열면 터미널이 열려서 명령어 입력 가능
-
-### weka 설치
-1. https://sourceforge.net/projects/weka/files/weka-3-9/3.9.3/ - weka-3-9-3-x64.exe - 윈도우 / weka-3-9-3-corretto-jvm.dmg - 맥 다운로드, 3.9안되면 3.8로 받기
-2. 맥은 압축풀고 실행 윈도우는 실행파일 실행시키면 설치 됨. 바로 끝. explorer 기능만 사용할 예정
-
-## 웹 페이지가 동작하는 방식
-1. 클라이언트에서 브라우저 실행  
-2. 브라우저에서 HTTP방식으로 요청  
-3. 웹서버(컴퓨터)에서 요청 내용 판단 ==> 웹서버에서 찾을 수 있는 요청사항(HTML)인 경우 7번 / DB등의 데이터를 추가로 요청하는(HTML이 아닌) 경우 4번  
-4. WAS에서 요청을 JAVA로 처리하고(DAO, VO, DTO사용) 원하는 데이터를 요청하거나 수정하는 SQL문을 DB에 전송, 결과 처리  
-5. DB에서 SQL문으로 처리 후 받아올 데이터가 있는 경우 resultset클래스를 이용해서 데이터를 받아옴.  
-6. WAS에서 DAO, VO등을 이용해서 웹 서버에 요청 데이터 전달.  
-7. 웹 서버에서 브라우저의 요청에 대해 응답  
-8. 응답시 jsp등에서 요청한 데이터를 프론트엔드 언어로 변환하는 프로그램으로 응답. - 브라우저가 프론트엔드 3총사를 해석해서 표시
-<br><br>
-
-## 웹 개발 3단계(3tier)의 이해
-<img src="img/web.png" alt="웹의 구조를 3구역으로 나눈 모습">
-<img src="img/web2.png" >
-클라이언트 측(UI 측) / 웹서버측(웹서버 + WAS = JAVA 측) / DB 측<br>
-웹 개발은 위 사진처럼 3부분으로 나뉘어서 이루어지게 된다.  
-웹서버의 경우 단순 html 요청인지, DB가 필요한 요청인지 판단해서 WAS로 넘기는 역할도 있기 때문에 웹서버측이라는 WAS를 포함하는 말로 부르는 것이 좋다고 배웠다.  
-
-### 클라이언트가 서버에 주소로 요청하는 방법
-1. 브라우저에 주소 입력 + 엔터 == get 방식 
-2. form을 이용해 action이 '요청주소'로 가게 하는 방식 == method로 get/post 선택 가능
-3. a태그를 이용해서 href="주소" 로 요청 == get 방식
-4. js로 location.href="주소" == get 방식
-
-### 클라이언트의 요청(웹서버까지)
-클라이언트가 데이터를 전달하는 등 HTTP 방식을 통해 URI(주소)를 요청하면 웹서버가 요청을 판단한다.  
-이 때 요청이 html, css, js, img, text 등에 관한 것이라면 대부분 웹서버 단계에서 요청에 응답하게 된다.  
-웹서버 밑에는 웹페이지에 필요한 데이터가 미리 들어있어야 한다. 이 데이터로 클라이언트 요청에 따라 페이지에 데이터를 표시하거나 다른 페이지로 연결하게 된다.
-
-### 클라이언트의 요청(DB까지)
-클라이언트의 요청 중 DB가 필요한 일부 요청은 웹서버 단계에서 반환할 수 없다.<br>
-이런 요청은 웹서버에서 요청을 판단 후 JSP문법으로 JAVA를 통한 WAS처리로 DB에 SQL문을 전달한다.<br>
-DB는 SQL문대로 데이터를 Resultset이라는 방법으로 반환하고, WAS는 이 데이터를 JSP 등을 통해 웹서버로 전달한다. <br>
-이후 웹서버는 클라이언트의 요청을 반환한다.   
-기존 요청이 복잡했기에 좀 더 단순화 해서 요청하는 방법이 생겼다.(Restful api)  
-
-### 정적 웹 vs 동적 웹   
-<h>html, css, js로 이루어진 웹이 클라이언트에 대해 어떻게 반응하는가?</h>
-정적 웹 ==> 외부 환경에 관계 없이 클라이언트에게 동일한 페이지를 보여줌  
-동적 웹 ==> 외부환경이 달라짐에 따라(클라이언트의 로그인 등) 달라지는 페이지를 보여줌  
-DB를 이용한다고 전부 동적 웹이 되는 것은 아니다.    
-또한 동기통신 vs 비동기통신의 구분과 헷갈리지 않아야 한다.  
-
-### 웹개발에서 프론트엔드와 백엔드의 구분
-웹개발을 프론트엔드와 백엔드로 나누려 하면, 프론트엔드 - 클라이언트, 웹서버 일부 / 백엔드 - 나머지 로 나눌 수 있다. 하지만 어느 한쪽을 모르고 웹 개발을 안다고 말할 수 없다고 배웠기 때문에 웹 개발을 목표로 한다면 어쩔 수 없이 풀스택적인 면모를 가지게 될 것이라고 생각한다.  
-
-## 타입 결정
-1. 정적 타이핑은 compile시에 결정되고, 동적 타이핑은 run할 때 결정된다.  
-즉 타입 오류가 발생한다면 정적 타이핑 언어는 compile, 동적 타이핑은 run시에 발생한다.  
-
-### 정적 타입 결정(정적 타이핑)
-1. C++, JAVA 등, static language
-2. 변수에 들어갈 '데이터의 타입'을 선언 시(compile)결정한다.    
-또한 컴파일 시간에 데이터 타입 결정, 검사와 오류 확인을 실시한다.   
-
-
-### 동적 타입 결정(동적 타이핑)
-1. JavaScript, python 등, dynamic language
-2. 변수에 들어갈 데이터 타입을 실행 시(run)에 결정한다.  
-3. 컴파일과 실행을 동시에 진행하며, 실행 도중 데이터 타입 결정과 검사가 이루어진다. 
-
-## 타입 추론
-1. 타입 추론과 타입 결정은 구분할 수 있어야 한다.  
-타입 추론 ==> 초기 타입 추론 vs 변경된 타입 추론     
-타입 결정 ==> compile vs run
-2. inx x; ==> 변수에 들어갈 데이터 타입이 결정된다. (데이터 타입이 변수와 동시에 선언됨)
-3. 이 순간부터 x는 무조건 int타입에 해당하는 변수만 들어갈 수 있다. 다른 데이터 타입은 오류가 생기게 된다.
-4. 변수 선언은 기본적으로 js의 let과 동일하게 변수에 데이터 재할당은 가능하지만 변수 재선언은 불가능하다.  
-즉 int x = 100; 은 js에선 let x = 100; 과 같다(?)
-5. 변수에 어떤 값이 들어갔느냐에 따라 데이터 타입이 다르게 결정된다.
-6. var y; ==> 데이터 할당 없이 변수 선언만 한 경우. (var - 변수 재선언, 업데이트 가능 / let - 변수 재선언 불가능)
-7. y = 100; ==> 데이터 타입 int로 자동 설정(타입 추론)
-8. y = "100", y = "감사합니다" ==> 데이터 타입 string으로 선언 혹은 변경
-
-### 초기 타입 추론 
-예를 들어 JS의 경우  
-**x = 100 ==> 초기 타입 추론(정수)**
-
-### 변경된 타입 추론
-JS에서 이미 변수 x = 100이 할당 된 경우  
-**x = "string" ==> 변경된 타입 추론(문자열)**
-
-## 이항연산자와 삼항연산자 
-1. 이항연산자  
-두 개의 피연산자를 가지고 작동하는 연산자로, 연산을 수행하기 위해 두 개의 값이 필요한 연산자.  
-산술, 비교, 논리, 대입 전부 여기에 해당하다.  
-2. 삼항연산자  
-연산을 수행하기 위해 세 개의 값이 필요한 연산자.  
-일반식으로 조건식을 평가하고, 결과에 따라 표현식을 결정한다.  
-```condtion ? x : y``` 의 형태를 취한다.  
-condtion이 참이면 표현식 x, 거짓이면 표현식 y를 반환한다.  
-
-## JAVA SE8이 가지는 구성
-<img src = "img/java_se8.png">
-
-## git에 이미 추가된 파일을 추적 제거하는 방법 
-1. .gitignore에 해당 파일의 디렉토리 혹은 파일 명 추가
-2. git rm --cached path/to/target/directory
-3. git commit -m "~~모시깽저시꺵"
-4. git push origin main  # 또는 해당하는 브랜치 이름
-
-## 자료구조 = 공간복잡도?
-
-## 알고리즘 = 시간복잡도?
-
-## TDD 방법론
-
-
-
-
-
-
-##
-##
-##
-##
-##
-
-맨밑
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 알아두면 무조건 좋은 것들 
-* https://www.w3schools.com/html/html_colors.asp 여기서 HTML,CSS등 참고   
-w3schools는 주로 웹 개발에 필요한 프로그래밍 언어로 만든 오브젝트를 가져다 쓸 수 있도록 만든 사이트
-* camelCase란 띄어쓰기를 표현하기 위한 방법으로, 클래스 이름은 대문자로 시작하고, 나머지는 소문자로 시작한다. 
-* 이 과정에서 가장 집중해야 할 곳은 웹서버와 데이터베이스 부분
-* 백엔드를 주로 공부했어도 프론트엔드어세도 JS와 jQuery까지 알아두면 좋다.   
-여러 클라이언트가 동시에 이용해야 될 수도 있는 웹서버가 많은 부하를 받게 되면 결국 속도가 느려질 수 밖에 없다. 이 때 브라우저의 JS가 부담을 줄여줄 수 있는데, jQuery뿐만아니라 jstl, ajax등까지 이용하면 더 좋은 결과를 낼 수도 있다.
-* 내 저장소의 경로를 확인하는 방법  
-저장된 파일이나 폴더 등의 위치를 브라우저에 찍어본다. 제대로 표시되거나 경로가 잡히면 올바른 경로, 파일에 엑세스할 수 없음이나 기타 등등이면 올바르지 못한 경로
-* 아주 간단한 코드가 아니라면 만들어진 기능에 주석을 쓰는 버릇을 들여야 한다. 일을 하게 되면 여러 사람들과 협업해야 할 일이 생길텐데, 복잡한 프로그램을 만들게 되면 같이 협업하는 사람들도 쉽게 이해하고 일을 진행할 수 있게 주석을 달아두어야 한다. 
-* 브라우저는 html문서와 css, js 프론트엔드 3총사만 인식할 수 있기 때문에 이 언어들로만 웹 페이지를 구성할 수 있게 만들어야 한다.    
-JS를 이용한 간단한 
-* 웹 페이지를 만드는 프로젝트를 할 때, 레포지토리를 이용하게 된다. 웹 사이트 1개를 만드는 프로젝트는 레포지토리 1개를 통으로 사용하게 된다.  
-* 깃허브 커밋은 하루를 마무리하는 용도로 진행한게 된다. 프로젝트를 진행하는 경우 브랜치와 함께 이용할 수 있다.
-* 레포지토리의 브랜치를 만들 때 기능 단위로 만들어서 진행할 수 있다.  
-* ```<!DOCTYPE html>``` ==> 이 문서가 html문서임을 알려주는 html문서 시작문구
-* 컴퓨터의 전신은 앨런 튜링 머신 
-* 서버 ==> 서브해주는 컴퓨터, 클라이언트에 보내주는 역할. 클라이언트는 서버로 받아서 표현하는 컴퓨터를 의미한다.
-* jdk를 컴퓨터에 처음 설치하고 java가 제대로 깔렸는지 확인하는 방법으로 cmd창에 javac를 입력하는 방법이 있다. 자바 컴파일러가 제대로 설치되어있는지 확인하는 것.
-* 브라우저의 개발자 도구는 디버깅을 위해 가장 많이 이용한다. 오류 말고도 어떤 파일로 사이트가 구성이 되어있는지, 네트워크 연결을 어떻게 이루어지고 있는지 등도 확인할 수 있다.
-* www는 word wide web
-* 인터넷이 생기던 초기엔 운영체제의 힘으로 인터넷 익스플로러가 많은 이용자를 확보했었는데, 시간이 지날수록 성능차이로 인해 크롬이 득세하게 되어 현재 가장 많은 이용자를 확보한 브라우저는 크롬이 되게 되었다.
-* mvc웹프로젝트로 만든 spring 프로젝트는 경로에 띄어쓰기가 들어가면 안된다. 앵간하면 모든 프로그래밍에선 띄어쓰기 대신 _ 나 다른 방식 등으로 표시하는 것이 좋을 것 같다.
-* 어떤 언어이든 "버튼 하나당 함수 하나", 이렇게 작성해야 헷갈리지 않는다.
-* 구글차트라고해서 부트스트랩처럼 구글이 제공하는 각종 형태의 그래프를 가져다 쓸 수 있다.  
-https://developers.google.com/chart?hl=ko
-* 유효성 검증 ==> 이메일이 형식을 갖춰서 입력되었는지, 비밀번호 확인이 일치하는지 등
-* JS와 JAVA모두 입력장치를 통해 들어온 입력 값은 문자열 취급을 받는다.
-* 윈도우에는 리눅스가 비활성화 된 상태로 들어있다.
-* JAVA니까 '변수 값 할당' ==> '변수 초기화' 로 쓰도록 하자.
-* eclipse 메모리 늘리기 - 원래 메모리 제한이 걸려 있는데, 임의로 제한을 푸는 방법   
-<img src ="img/eclipse_limit.png">
-* java의 프로젝트에서 사용할 일이 많은 classpath란 src/main/resources아래를 말함  
-* 종속적으로 자동생성되는 빌드 환경에 따른 결과물 target의 파일은 커밋 x, 제외설정
+* Transpostion Eroor - 좌우 바꾸어 입력논리적 설계(목표 DBMS에 맞게) - 트랜잭션의 인터페이스 설계
+    * 물리적 설계
+    * 구현
+    
+* 데이터 모델의 개념(기출) - 정보를 컴퓨터에 표현하기 위해 단순화, 추상화를 거친 모형
+    * 데이터 모델에 표시할 요소
+        * 구조
+        * 연산(sql문 등으로 데이터를 처리하는 과정)
+        * 재약 조건 (constraint)
+    * 개념적 데이터 모델 - 인간의 이해를 돕기 위한 추상적 개념, E-R 모델
+    * 논리적 데이터 모델 - 개념적 구조를 컴퓨터가 이해할 수 있게 바꾸는 과정, DBMS를 위함
