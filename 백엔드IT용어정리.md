@@ -505,7 +505,7 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 .pow(x, y) - x를 y제곱한 실수(dobuble)를 반환하는 메서드    
 .round(x) - 실수 x를 반올림 한 정수를 반환하는 메서드  
 .floor(x) - 실수 x를 내림 한 정수를 반환하는 메서드  
-.ceil(x) - 실수 x를 올림 한 정수를 반환하는 메서드  
+.ceil(x) - 실수 x를 올림 한 실수(표기상 정수, 5.0 같은)를 반환하는 메서드  
 .max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드
 
 8. ```java.time.LocalDate``` ==> JAVA 8 버전 이후 시간을 가져오는 클래스  
@@ -612,7 +612,8 @@ s주소는 8바이트의 크기를 차지하고, 배열의 요소는 4+4+4+4 + 4
 ```Arrays.copyOfRange(배열, 시작 indxe, 마지막 index);``` ==> 특정 index부터 배열을 복사하는 방법  
 11. ```System.arraycopy(원본배열, 원본시작index, 만들배열이름, 원본 마지막 index, 만들배열길이(원본 길이 이하만 가능))``` - 배열 복사
 12. ```Arrays.stream()``` ==> 배열을 스트림으로 변환, 이후 .sum, .mapToInt 등 다양한 메서드 사둉 가능, JAVA8 이후
-13. ```배열.toArray(data type);``` ==> list를 배열로 전환, data type을 작성하지 않으면 object로 선언  
+13. ```배열.toArray(data type(wrapper));``` ==> list를 배열로 전환, data type을 작성하지 않으면 object로 선언  
+14. ```Arrays.asList{1, 2, 3, 4, 5(or 배열)}``` ==> 배열을 list로 바꾸는 메서드  
 
 ### JAVA 8이후의 문법
 * .repeat(); ==> 파라메터의 값 만큼 변수나 배열 등을 반복
