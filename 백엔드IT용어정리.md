@@ -60,7 +60,7 @@
 [get방식과 post방식](#get-방식과-post-방식)<br>
 [Linux](#linux-리눅스)<br>
 [알고리즘과 자료구조](#알고리즘과-자료구조)<br>   
-[코딩의 볍칙](#내가-배운-코딩의-법칙java-웹)<br>
+[코딩의 볍칙](#코딩의-법칙java-웹)<br>
 [오류의 법칙](#오류의-법칙)<br>
 
 
@@ -615,7 +615,8 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 .round(x) - 실수 x를 반올림 한 정수를 반환하는 메서드  
 .floor(x) - 실수 x를 내림 한 정수를 반환하는 메서드  
 .ceil(x) - 실수 x를 올림 한 실수(표기상 정수, 5.0 같은)를 반환하는 메서드  
-.max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드
+.max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드  
+.mim(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 작은  정수를 반환하는 메서드
 
 8. ```java.time.LocalDate``` ==> JAVA 8 버전 이후 시간을 가져오는 클래스  
 ```LocalDate today = LocalDate.now();``` - 현재 날짜를 가져오는 메서드  
@@ -2718,6 +2719,50 @@ num/2 이후 num의 약수가 될 수 있는 수는 num 밖에 없기 때문에,
 ### 문자열이 아닌 정수나 실수 등을 문자열로 바꾸는 방법   
 * ""를 정수에 더하면 문자열로 바뀐다.   
 * 래퍼클래스를 활용해 문자열로 바꾼다.  
+
+### 여러 제곱값의 계산을 위한 재귀함수 
+```java 
+class Solution { // 재귀함수를 통해 제곱값을 계산하는 방식 
+    public int solution(int a, int b, int c) {
+        int answer = 1;
+
+        int count = 1;
+        if(a == b || a == c || b == c) {
+            count++;
+        }
+
+        if(a == b && b == c) {
+            count++;
+        }
+
+        for(int i = 1; i <= count; i++) {
+            answer *= (pow(a,i)+pow(b,i)+pow(c,i));
+        }
+
+        return answer;
+    }
+
+    private int pow(int a, int b) {
+        if(b == 0) return 1;
+        return a * pow(a, b-1);
+    }
+}
+```
+
+### 등차수열을 구하기 위한 공식   
+```java
+public long solution(int a, int b) { // 대소 관계 구분
+		return sumAtoB(Math.min(a, b), Math.max(b, a));
+    }  
+
+private long sumAtoB(long a, long b) { // 등차수열 구하기 공식  
+	    return (b - a + 1) * (a + b) / 2;
+    }
+```
+
+### 정수나 실수의 대소관계를 구하기 위한 공식(메서드)
+* Math..max(x, y)와 Math..mim(x, y) 을 함께 사용하면 대소관계를 구하기 편하다.
+
 
 ## 오류의 법칙  
 
