@@ -2285,24 +2285,38 @@ View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver�
 
 * Spring MVC의 동작 흐름
     * 요청 수신:
-        * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.
-        * 요청은 DispatcherServlet으로 전달됩니다. DispatcherServlet은 Spring MVC의 프론트 컨트롤러 역할을 합니다.
-        * 요청이 들어오는 웹 페이지와 정적컨텐츠, 프론트엔드 컨텐츠의 위치는 다음과 같다.    project_name\src\main\webapp\index.jsp 에 위치한다.     
+        * webapp 폴더 아래의 클라이언트 페이지에서 요청    
+        요청이 들어오는 웹 페이지와 정적컨텐츠, 프론트엔드 컨텐츠의 위치는 다음과 같다.    **project_name\src\main\webapp\index.jsp**
+
+        * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.    
+        get, post 혹은 ajax의 url 방식을 통해 요청 가능  
+
+        * 요청은 DispatcherServlet으로 전달됩니다.   
+        DispatcherServlet은 Spring MVC의 프론트 컨트롤러 역할을 합니다.  
         웹페이지의 경우 활용성을 높이기 위해 jsp 파일로 작성한다.  
 
     * 요청 처리:
         * DispatcherServlet은 요청을 처리할 적절한 컨트롤러를 찾습니다.
+
         * 컨트롤러는 요청을 처리하고, 필요한 데이터를 model에 담아 view 이름을 반환합니다.  
-        * 이 떄 model은 애플리케이션의 비즈니스 로직에 의해 db나 기타 처리 등을 하게 된다.  
-        * 컨트롤러를 포함하는 백엔드 리소스의 위치는 다음과 같다.   project_name\src\main\java\com\multi\mvc02\HomeController.java
+        
+        * 이 떄 model은 애플리케이션의 비즈니스 로직에 의해 db나 기타 처리 등을 하게 된다.   
+        model은 DAO, DTO등을 포함한 비즈니스 로직을 처리할 수 있는데,   
+        DAO의 경우 요청 하나당 함수 하나 == 관리가 용이하도록 다른 요청과 분리    
+
+        * 컨트롤러를 포함하는 백엔드 리소스의 위치는 다음과 같다.   **project_name\src\main\java\com\multi\mvc02\HomeController.java**
 
     * 뷰 선택:
-        * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰 이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.
+        * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰(controller를 통해 지정 가능)   
+         이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.    
+         Controller와 DAO 같은 클래스들은 MVC 방법론에 맞게 프로그램을 구현하기 위해 만들어 사용.  
+
         * 실제 뷰 가 존재하는 위치는 다음과 같다.  
-        project_name\src\main\webapp\WEB-INF\views\home.jsp
+        **project_name\src\main\webapp\WEB-INF\views\home.jsp**
 
     * 응답 생성:
         * 찾은 뷰(JSP 페이지)가 모델 데이터를 사용하여 HTML을 생성합니다.
+
         * 최종적으로 HTML 응답이 클라이언트에게 전송됩니다.
 
 ### spring의 팩토리(factory) 기법  
