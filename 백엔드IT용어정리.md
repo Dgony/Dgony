@@ -616,7 +616,8 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 .floor(x) - 실수 x를 내림 한 정수를 반환하는 메서드  
 .ceil(x) - 실수 x를 올림 한 실수(표기상 정수, 5.0 같은)를 반환하는 메서드  
 .max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드  
-.mim(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 작은  정수를 반환하는 메서드
+.mim(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 작은  정수를 반환하는 메서드   
+.sqrt(x) - 실수 x의 제곱근을 실수로 반환하는 메서드  
 
 8. ```java.time.LocalDate``` ==> JAVA 8 버전 이후 시간을 가져오는 클래스  
 ```LocalDate today = LocalDate.now();``` - 현재 날짜를 가져오는 메서드  
@@ -2318,6 +2319,10 @@ View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver�
         * 찾은 뷰(JSP 페이지)가 모델 데이터를 사용하여 HTML을 생성합니다.
 
         * 최종적으로 HTML 응답이 클라이언트에게 전송됩니다.
+
+* Spring MVC의 동작 흐름(조작해야하는 매개 변수, form 등 기록)  
+<img src = "img/mvc2_flow.png">   
+<img src = "img/mvc2_flow2.png">   
 
 ### spring의 팩토리(factory) 기법  
 * 팩토리 기법 - GOF 디자인 패턴 중 생성 패턴의 일종
