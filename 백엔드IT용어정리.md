@@ -617,7 +617,7 @@ Scanner의 메서드는 이 임시 저장된 데이터를 읽어 들인다. 이 
 .ceil(x) - 실수 x를 올림 한 실수(표기상 정수, 5.0 같은)를 반환하는 메서드  
 .max(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 큰 정수를 반환하는 메서드  
 .mim(x, y) - 실수 x, y 혹은 정수 x, y를 비교해 더 작은  정수를 반환하는 메서드   
-.sqrt(x) - 실수 x의 제곱근을 실수로 반환하는 메서드  
+.sqrt(x) - 실수 x의 제곱근을 실수로 반환하는 메서드     
 
 8. ```java.time.LocalDate``` ==> JAVA 8 버전 이후 시간을 가져오는 클래스  
 ```LocalDate today = LocalDate.now();``` - 현재 날짜를 가져오는 메서드  
@@ -2134,7 +2134,12 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 * **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
 <u>어떤 정해진 흐름을 가진 개발의 기본이 되는 틀을 제공해 개발자의 능률을 향상시켜주는 방법 의 JAVA 버전</u>
 <br>  
-스프링을 사용하려면 이클립스 ee버전에 스프링 플러그인을 설치하거나 직접 STS를 설치해서 사용해야 한다.   
+스프링을 사용하려면 이클립스 ee버전에 스프링 플러그인을 설치하거나 직접 STS를 설치해서 사용해야 한다.     
+
+* **Spring framework를 이용하는 웹 프로그램 생성 과정 간단하게 나의 언어로 설명**  
+spring mvc2를 프레임워크로 하는 앱 프로그램을 만들기 위해선 sts - new projecy - spring legacy project - mvc project 이후 project facets를 통한 웹서버 프로그램 선택과 java 버전 선택,
+이후 pom.xml의 의존성 주입과 mvc 흐륾에 따르는 Controller나 DAO 클래스 위치 지정 및 mapper 파일 생성 후 연결  
+기본 설정 완료 후 클라이언트 요구에 따른 비즈니스 로직 설정 및 웹 페이지 설계
 
 * 현재 사용하는 버전 - 5.0.1
  
@@ -2530,6 +2535,48 @@ public class BookController {
     * 컨트롤러 (서블릿을 포함하는 백엔드)
     * myBatis를 주입한 DAO 객체 사용
     * views 화면으로 연결
+
+### myBatis 설정 이후(mvc2와 겹침)   
+* Spring MVC의 동작 흐름
+    * 요청 수신:
+        * webapp 폴더 아래의 클라이언트 페이지에서 요청    
+        요청이 들어오는 웹 페이지와 정적컨텐츠, 프론트엔드 컨텐츠의 위치는 다음과 같다.    **project_name\src\main\webapp\index.jsp**
+
+        * 사용자의 HTTP 요청이 서블릿 컨테이너(예: Tomcat)에 도착합니다.    
+        get, post 혹은 ajax의 url 방식을 통해 요청 가능  
+
+        * 요청은 DispatcherServlet으로 전달됩니다.   
+        DispatcherServlet은 Spring MVC의 프론트 컨트롤러 역할을 합니다.  
+        웹페이지의 경우 활용성을 높이기 위해 jsp 파일로 작성한다.  
+
+    * 요청 처리:
+        * DispatcherServlet은 요청을 처리할 적절한 컨트롤러를 찾습니다.
+
+        * 컨트롤러는 요청을 처리하고, 필요한 데이터를 model에 담아 view 이름을 반환합니다.  
+        
+        * 이 떄 model은 애플리케이션의 비즈니스 로직에 의해 db나 기타 처리 등을 하게 된다.   
+        model은 DAO, DTO등을 포함한 비즈니스 로직을 처리할 수 있는데,   
+        DAO의 경우 요청 하나당 함수 하나 == 관리가 용이하도록 다른 요청과 분리    
+
+        * 컨트롤러를 포함하는 백엔드 리소스의 위치는 다음과 같다.   **project_name\src\main\java\com\multi\mvc02\HomeController.java**
+
+    * 뷰 선택:
+        * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰(controller를 통해 지정 가능)   
+         이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.    
+         Controller와 DAO 같은 클래스들은 MVC 방법론에 맞게 프로그램을 구현하기 위해 만들어 사용.  
+
+        * 실제 뷰 가 존재하는 위치는 다음과 같다.  
+        **project_name\src\main\webapp\WEB-INF\views\home.jsp**
+
+    * 응답 생성:
+        * 찾은 뷰(JSP 페이지)가 모델 데이터를 사용하여 HTML을 생성합니다.
+
+        * 최종적으로 HTML 응답이 클라이언트에게 전송됩니다.
+
+* Spring MVC의 동작 흐름(조작해야하는 매개 변수, form 등 기록)  
+<img src = "img/mvc2_flow.png">   
+<img src = "img/mvc2_flow2.png">   
+
 
 ## GET 방식과 POST 방식
 * **네트워크의 요청 방식 차이**<br>
