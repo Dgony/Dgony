@@ -57,6 +57,7 @@
 [DBCP](#dbcp)<br>
 [spring framework](#spring-framework)<br>
 [myBatis](#mybatis)<br>
+[spring mvc2 이용과정 순차적 서술](#spring-mvc2-이용과정-순차적-서술)<br>
 [get방식과 post방식](#get-방식과-post-방식)<br>
 [Linux](#linux-리눅스)<br>
 [알고리즘과 자료구조](#알고리즘과-자료구조)<br>   
@@ -1885,7 +1886,8 @@ DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터
 1. SQL은 ISO 및 ANSI 표준에 의해 정의되어 있어 대부분의 RDBMS에서 유사한 형태로 사용된다.
 2. 비교적 읽고 쓰기 쉬운 구문을 가져서 접근성이 높다.  
 3. 복잡한 쿼리를 통해 다양한 데이터를 관리할 수 있다. 
-4. 정형 데이터베이스의 일종인 mySQL, Oracle 같은 RDBMS를 이용해 연습, 웹 애플리케이션에는 mySQl
+4. 정형 데이터베이스의 일종인 mySQL, Oracle 같은 RDBMS를 이용해 연습, 웹 애플리케이션에는 mySQl   
+5. JDBC, DBCP등으로 웹서버에서 db의 url을 지정해놓은 이후 ORM인 mapper를 통해 sql문을 db에 보내 ORM을 이룰 수 있다. 
 
 ### SQL의 분류
 ### DDL
@@ -2044,7 +2046,7 @@ Left Outer Join의 반대로 실행된다고 볼 수 있다.
 <u> JAVA 애플리케이션과 DB를 연결하기 위한 프로그래밍 방식</u>
 <br> 
 JAVA SE 에서 제공하는 java.sql 패키지를 사용하는 DB 기능 처리 객체   
-**1~2 단계를 합치고 DB와 연결하면 DBCP, 1~3 단계를 합치고 DB와 연결하면 myBatis**
+**1~2 단계를 간소화하면 DBCP, 3, 4단계는 MyBatis가 담당하며 SQL 실행과 결과 매핑을 처리한다.**
 
 * JDBC 프로그래밍 4단계   
 기본적으로 1 ~ 4번을 프로그래머가 직접 할 수 있지만,    
@@ -2128,7 +2130,17 @@ JDBC 실행 이후 사용했던 모든 객체를 메모리에서 해제해야 �
 
 여기서 java.util 패키지의 vector 클래스는 크기가 자동으로 조절되는 동적 배열을 여러개 제공하는데,   
 여러 스레드가 동시에 접근해도 안전하게 사용 가능하다.     
-==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.     
+==> 즉 데이터베이스 연결을 안전하게 관리하기 위한 방법으로 적합하다.        
+
+* spring framework에서 DBCP는 아래의 경로에 해당하는 root-context.xml 파일과  
+C:\eclipseworkspace\spring02\src\main\webapp\WEB-INF\spring\root-context.xml  
+또한 아래의 경로에 해당하는 dp.properties를 통해 db와 연결할 수 있다.  
+C:\eclipseworkspace\spring02\src\main\resources\db.properties    
+여기까기자 JDBC 2단계 까지 담당이다.  
+
+* 이후 @Autowired SqlSessionTemplate 객체이름;
+SQL.xml 파일을 통해 원하는 SQL문을 작성하고 myBatis-config.xml의 별명 설정 및 SQL문 정의 파일목록 지정을 통해  
+JDBC 3, 4단계를 해결한다.  
 
 ## Spring Framework
 * **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
@@ -2368,6 +2380,8 @@ public class BookController {
 == 복잡한 SQL 쿼리 작업을 쉽게 수행 가능</u>
 <br>
 
+* JDBC의 1, 2단계를 DBCP가 간소화해주었다면, 3, 4단계는 myBatis가 간소화해줄 수 있다.  
+
 * resultset이 안보여요! == 주요 목표가 SQL과 JAVA 객체 간의 매핑을 간편하게 만들기 위한 것   
 ==> SQL문이 실행되면 myBatis를 JDBC에서 반환된 resultset을 자동을 받아옴. 이후 결과를 JAVA 객체로 매핑
 
@@ -2375,7 +2389,7 @@ public class BookController {
 1. spring mvc 프로젝트 생성
         * eclipse spring 플러그인이나 STS에서 spring legacy 프로젝트 생성 - spring mvc 프로젝트로 설정  
         * 프로젝트를 처음 만들 때 com.multi.spring의 형태로 패키지 분류를 정하고 시작
-2. project facet 설정 
+2. project facet 설정(프로젝트의 특정 기능이나 설정 조정) 
     * project - properties - project facets 
     * JAVA 버전은 1.8
     * Runtime - 미리 설치한 Apache Tomcat 8.5로 설정, 서블릿 컨테이너로써 웹 애플리케이션 서버 설정을 위함   
@@ -2575,7 +2589,31 @@ public class BookController {
 
 * Spring MVC의 동작 흐름(조작해야하는 매개 변수, form 등 기록)  
 <img src = "img/mvc2_flow.png">   
-<img src = "img/mvc2_flow2.png">   
+<img src = "img/mvc2_flow2.png">      
+
+## spring mvc2 이용과정 순차적 서술   
+
+### 기본 설정 단계  
+* tomcat 설치 및 기본 설정  
+* JDK 설치 및 개발환경 설정 후 STS(Spring Tool Suite)를 통해 spring legacy project - mvc2 생성  
+* projcet의 properties - projcet facets - java 1.8버전(필요에 따라) - Runtimes(웹서버 프로그램) tomcat 설정
+* 프로젝트 바로 및 pom.xml 에 dependecy 주입   
+==> java와 sql간 ORM, JDBC, myBatis, DBCP 설정을 위한 의존성 주입  
+* db.properties 파일 작성 - DBCP에 사용되는 db로의 드라이버 주소 작성   
+* mapper 패키지 밑에 원하는 SQL.xml 작성    
+* mybatis-config.xml을 통해 ORM으로 연결하는 별명 구분 및 SQL문 목록 연결   
+* root-context.xml을 통해 db.properties 확보 및 mybatis-config.xml의 sql문 연결 목록 확보    
+* 이후 Controller 혹은 service나 DAO 파일에서 @Autowired SqlSessionTemplate my; 등을 통해 db에 전달   
+* **기본 설정 파일 ==> pom.xml, db.properties, mybatis-config.xml, SQL.xml, root-context.xml**     
+* 웹 페이지 응답 오류 500은 대부분 위 파일 구문 오류에서 비롯된다.   
+* 이후에 SQL.xml이나 mybatis-config 파일은 필요한 기능에 따라 바뀔 수 있고, pom.xml의 의존성 또한 같다.    
+
+### 프론트엔드 쪽 작성 방법  
+* C:\eclipseworkspace\spring02\src\main\webapp 아래의 파일을 의미  
+* 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래   
+* 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지   
+* 웹 페이지의 동적 컨텐츠 생성, JAVA 기반 프로그래밍 작성, 서버 측 처리 등을 위해 jsp 파일로 작성한다.  
+
 
 
 ## GET 방식과 POST 방식
