@@ -2595,6 +2595,7 @@ public class BookController {
 
 ### 기본 설정 단계  
 * tomcat 설치 및 기본 설정  
+* mySQL 설치 및 DBeaver 설치를 통해 DB 활용  
 * JDK 설치 및 개발환경 설정 후 STS(Spring Tool Suite)를 통해 spring legacy project - mvc2 생성  
 * projcet의 properties - projcet facets - java 1.8버전(필요에 따라) - Runtimes(웹서버 프로그램) tomcat 설정
 * 프로젝트 바로 및 pom.xml 에 dependecy 주입   
@@ -2608,7 +2609,7 @@ public class BookController {
 * 웹 페이지 응답 오류 500은 대부분 위 파일 구문 오류에서 비롯된다.   
 * 이후에 SQL.xml이나 mybatis-config 파일은 필요한 기능에 따라 바뀔 수 있고, pom.xml의 의존성 또한 같다.    
 
-### 프론트엔드 쪽 작성 방법  
+### 프론트엔드 쪽 view 작성 방법  
 * C:\eclipseworkspace\spring02\src\main\webapp 아래의 파일을 의미  
 * 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래   
 * 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지   
