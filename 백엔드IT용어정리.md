@@ -68,7 +68,8 @@
 
 
 
-[기타 꿀팁 정리](#기타-웹-백엔드-cs-지식-정리)
+[기타 꿀팁 정리](#기타-웹-백엔드-cs-지식-정리)  
+[각종 개발환경 및 프로그램 초기 환경 셋팅 ](#각종-개발환경-및-프로그램-초기-환경-셋팅)  
 
 [정보처리기사 실기](#정보처리기사-실기)  
 
@@ -1858,9 +1859,12 @@ db는 기본적으로 DBMS지만, 요즘은 RDBMS를 많이 사용하는 추세
 * **Relational DataBase Management System**<br>
 <u>관계형 DB에 관련된 작업을 할 수 있는 프로그램. RDB - 여러 테이블이 서로 관련되어 있음</u>
 <br>  
-수업에 배운 db는 mySQL, db 클라이언트 프로그램은 자바로 만들어진 DBeaver   
-DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크에도 좋고 변경사항을 db에 반영시키면서 진행해야 함    
-DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터 모델을 사용하기 때문에 테이블 형태로 데이터 저장  
+* 수업에 배운 db는 mySQL,  db 클라이언트 프로그램은 자바로 만들어진 DBeaver        
+* DB는 MySQL로 설치하고, DBeaver를 통해 가시성 있게 DB를 쉽게 다룰 수 있다.    
+DBeaver 같은 클라이언트 프로그램을 사용하지 않는다면 터미널 프로그램 혹은 명령 프롬프트로 sql 명령어를 입력해서 DB를 다루어야 한다.      
+DBeaver를 통해 DML이나 DDL를 시행하고 저장할 때 sql 명령어를 포함하는 명령 프롬프트 화면을 볼 수 있다.   
+* DBeaver를 이용할 땐 항상 저장하는 버릇을 들이기. 오류 체크에도 좋고 변경사항을 db에 반영시키면서 진행해야 함    
+* DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터 모델을 사용하기 때문에 테이블 형태로 데이터 저장   
 1. entity - db에 저장할 데이터의 종류 혹은 카테고리(로그인에 필요한 개인정보, 한 사람의 시험 점수 등)  
 2. table - entity를 저장하는 곳
 3. table의 행 - column (로그인이라 치면, id, 비밀번호, 이메일 등의 데이터 구분 용)
@@ -1879,10 +1883,22 @@ DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터
 11. mySQL, Oracle - RDBMS의 일종으로, 각각 기본 port 번호 3306, 1521을 가진다.
 <img src = "img/ERD.png">
 
+### DBeaver를 통해 DB 다루기   
+* 마우스틀 통해 명령어 없이 다루는 방식 vs script를 통해 SQL 명령어를 입력해 다루는 방식     
+
+* SQL 명령어에 익숙해진 상태가 아니라면 script를 이용하는 것이 권장된다.   
+결국 웹프로그램에서 java를 통해 웹서버와 DB를 연결할 때, SQL이 필요하기 때문에 script를 통해 연습해야 함   
+
+* 후술할 SQL에서 DDL, DML, DCL 명령어 연습  
+
+
 ## SQL
 * **Structured Query Language**<br>
 <u>데이터베이스를 관리 및 조작하기 위해 설계된 특수 목적의 프로그래밍 언어, RDBMS를 다루기 위함</u>
 <br>  
+
+* **MySQL기준**  
+
 1. SQL은 ISO 및 ANSI 표준에 의해 정의되어 있어 대부분의 RDBMS에서 유사한 형태로 사용된다.
 2. 비교적 읽고 쓰기 쉬운 구문을 가져서 접근성이 높다.  
 3. 복잡한 쿼리를 통해 다양한 데이터를 관리할 수 있다. 
@@ -1892,7 +1908,7 @@ DBMS는 다양한 데이터 모델을 사용하고, RDBMS는 관계형 데이터
 ### SQL의 분류
 ### DDL
 **Data Definition Language** - 데이터 정의, Schema Design   
-use db_name ==> 해당 db를 선택하기  
+**use db_name ==> 해당 db를 선택하기**  
 **다음 DDL, DML, DCL 등의 명령어는 db를 지정한 상태에서 이루어진다는 것을 가정한다**    
 **만약 지정하지 않았다면, db_name.table_name 이런식으로 따로 지정해야 한다.**   
 
@@ -1918,6 +1934,19 @@ alter table table_name
 add constraint pk_name  
 foreign key(column_name)  /* fk를 설정하는 방법, 여기 잘 보기 */ 
 references table_name(column_name); /* 참조할 다른 테이블의 key를 가져오는 모습 */
+
+alter table table_name /* colum_name을 지정해 기타 속성 설정   */  
+modify column_name data_type /* data_type 설정 */   
+modify column_name data_type NOT NULL || NULL /* NULL 설정, 기타 속성 설정은 데이터 타입을 포함해야 함 */  
+modify column_name data_type default x /* default 설정 */    
+modify column_name data_type first /* column 위치를 바꾸는 명령어 1 */  
+modify column_name data_type after colum_name /* column 위치를 바꾸는 명령어 2 */  
+
+alter table table_name 
+change existing_column_name altered_column_name data_type
+/* change는 꼭 이전 column 이름, 바뀔 column 이름(같은 이름이더라도), 데이터 타입을 포함해야 작성 가능 */  
+change existing_column_name altered_column_name data_type not null || null  
+/* 마찬가지로 change를 통해 기타 속성을 변경하려면 전 후 column이름, 데이터 타입을 포함해야 함 */
 ```
 
 3. DROP - DB 객체 삭제
