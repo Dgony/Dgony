@@ -1930,6 +1930,11 @@ alter table table_name  /* pk를 설정하는 등 제약 조건을 추가하는 
 add constraint pk_name(새로 써야함) 
 primary key(column_name);
 
+alter table table_name  /* 이미 생성된 table의 이름을 바꾸는 명령어 */
+rename to new_table_name;
+
+rename table table_name to new_table_name; /* 위와 같은 명령어 */
+
 alter table table_name 
 add constraint pk_name  
 foreign key(column_name)  /* fk를 설정하는 방법, 여기 잘 보기 */ 
@@ -2638,11 +2643,15 @@ public class BookController {
 * 웹 페이지 응답 오류 500은 대부분 위 파일 구문 오류에서 비롯된다.   
 * 이후에 SQL.xml이나 mybatis-config 파일은 필요한 기능에 따라 바뀔 수 있고, pom.xml의 의존성 또한 같다.    
 
-### 프론트엔드 쪽 view 작성 방법  
+### view 작성 방법  
 * C:\eclipseworkspace\spring02\src\main\webapp 아래의 파일을 의미  
 * 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래   
 * 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지   
 * 웹 페이지의 동적 컨텐츠 생성, JAVA 기반 프로그래밍 작성, 서버 측 처리 등을 위해 jsp 파일로 작성한다.  
+* 입력 form의 submit 혹은 ajax를 통한 url 지정 등으로 controller로 전달 가능  
+* 
+
+### Controller 부터 시작하는 model, control 작성 방법 등 
 
 
 
