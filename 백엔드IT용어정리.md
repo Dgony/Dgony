@@ -1019,18 +1019,30 @@ Interface와 연계해서 생각할 수 있는 개념
 클래스가 추상 메서드를 하나라도 가지고 있으면 무조건 추상 클래스이다.  
 추상 메서드, 추상 클래스 모두 다른 클래스가 이를 받아서 무조건 정의하도로 하는 것에 의미가 있다.  
 
-### JAVA의 @ - annotation (어노테이션)
+### JAVA의 @ - annotation (어노테이션)  
+* **어노테이션(annotation)** 은 메타데이터를 코드에 추가하는 데 사용되는 특별한 형태의 문법     
+어노테이션은 코드에 설명을 추가하거나 컴파일러 및 런타임 환경에 특정 동작을 알려주는 데 사용  
+@ 기호로 시작하며, 클래스, 메서드, 변수, 매개변수 등에 적용   
 
-### JAVA로 웹페이지 만들기
-* 준비물
-1. jdk
-2. 이클립스 기업용
-3. 웹서버, 웹 애플리케이션 서버 - 현재는 tomcat
-4. db 프로그램 - 현재는 mySQL
+* **어노테이션은 클래스나 코드의 목적을 명확히 알리고, 제약을 설정하거나 편의 기능을 제공하기 위해 사용하는 도구**
 
-
-
-
+* 어노테이션의 종류는 굉장히 많지만, 제공 주체에 따라 분류하면  
+    1. 빌트인 어노테이션 == JAVA 표준 제공    
+        * @Override: 메서드가 부모 클래스의 메서드를 재정의했음을 알림.
+        * @Deprecated: 해당 요소가 더 이상 사용되지 않음을 표시.
+        * @SuppressWarnings: 컴파일러 경고를 억제.
+        * @FunctionalInterface: 함수형 인터페이스임을 명시.
+    2. 라이브러리 및 프레임워크 제공 어노테이션   
+        * Spring  
+            * @Controller - 클라이언트 요청과 응답에만 집중   
+            * @Service - 비즈니스 로직만 담당하며, 재사용성과 유지보수성 향상  
+            * @Repository 
+                스프링 컨테이너에 빈(Bean)으로 등록
+                예외 변환(AOP 기반)
+                DAO 역할 수행
+            * @Autowired: 의존성 주입을 자동화, 스프링 컨테이너가 객체 관리하며 필요한 곳에 의존성 자동 주입  
+            * @RequestMapping: sql문이 작성된 xml 문서에 연결  
+            * @Transactional: 트랜잭션 관리.
 
 
 
@@ -2648,10 +2660,18 @@ public class BookController {
 * 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래   
 * 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지   
 * 웹 페이지의 동적 컨텐츠 생성, JAVA 기반 프로그래밍 작성, 서버 측 처리 등을 위해 jsp 파일로 작성한다.  
-* 입력 form의 submit 혹은 ajax를 통한 url 지정 등으로 controller로 전달 가능  
-* 
+* 버튼, 입력 form의 submit 혹은 ajax를 통한 url 지정 등으로 웹서버의 controller로 전달 가능  
+지정된 url을 통해 DB 삽입, 삭제, 갱신, 조회 등 가능    
+* 웹서버에 전달할 필요가 있는 데이터는 id 혹은 class 등으로 지정해 전송 가능  
 
 ### Controller 부터 시작하는 model, control 작성 방법 등 
+* 미리 필요한 DB와 연결하기 위한 DTO, DAO 생성   
+* DTO의 경우 DB와 데이터 타입을 맞춰 getter setter 설정
+* DAO의 경우 @Repository로 설정해야 스프링 컨테이너가 관리하며 AOP의 기능을 수행하는 DAO 역할 가능  
+또한 @Autowired SqlSessionTemplate my; 를 통해 CRUD에 필요한 SQL문에 연결 가능  
+* 
+* Controller는 main이 필요 없고, DAO나 기타 서비스 등을 잇기 위해 어노테이션 (@Controller)를 클래스 앞에 붙임  
+* Controller 밑에 
 
 
 
