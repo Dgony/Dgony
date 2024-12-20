@@ -1035,7 +1035,7 @@ Interface와 연계해서 생각할 수 있는 개념
     2. 라이브러리 및 프레임워크 제공 어노테이션   
         * Spring  
             * @Controller - 클라이언트 요청과 응답에만 집중   
-            * @Service - 비즈니스 로직만 담당하며, 재사용성과 유지보수성 향상  
+            * @Service - 비즈니스 로직만 메서드 형태로 모아두었으며, 재사용성과 유지보수성 향상  
             * @Repository 
                 스프링 컨테이너에 빈(Bean)으로 등록
                 예외 변환(AOP 기반)
@@ -2184,9 +2184,11 @@ C:\eclipseworkspace\spring02\src\main\webapp\WEB-INF\spring\root-context.xml
 C:\eclipseworkspace\spring02\src\main\resources\db.properties    
 여기까기자 JDBC 2단계 까지 담당이다.  
 
-* 이후 @Autowired SqlSessionTemplate 객체이름;
-SQL.xml 파일을 통해 원하는 SQL문을 작성하고 myBatis-config.xml의 별명 설정 및 SQL문 정의 파일목록 지정을 통해  
-JDBC 3, 4단계를 해결한다.  
+* 이후 @Autowired SqlSessionTemplate 객체이름;   
+Spring과 MyBatis를 통합하여 사용하는 환경에서 MyBatis의 SQL 실행, 매핑, 트랜잭션 관리를 편리하게 하기 위한 클래스
+Sqlsessiontemplate은 MyBatis를 통해 JDBC 3,4단계를 간접적으로 처리한다.  
+insert, update, delete, selectList, selectOne 등의 String과 Object를 매개변수로 가지는 메서드들을 지녔으며,  
+String은 Sql문을 전달하는 xml 파일의 id를 지정하기 위함, Object는 DTO를 paramytertype으로 지정하기 위함이다.  
 
 ## Spring Framework
 * **JAVA 플랫폼을 위한 포괄적인 애플리케이션 프레임워크**<br>
@@ -2374,6 +2376,11 @@ View Resolver: 컨트롤러가 반환한 모델과 뷰 정보는 View Resolver�
         * DispatcherServlet은 View Resolver를 사용하여 반환된 뷰(controller를 통해 지정 가능)   
          이름에 해당하는 실제 뷰(JSP 페이지)를 찾습니다.    
          Controller와 DAO 같은 클래스들은 MVC 방법론에 맞게 프로그램을 구현하기 위해 만들어 사용.  
+
+        * view를 찾아가는 방식   
+	        1. @RequestMapping은 요청 URL일 뿐만 아니라 반환될 view 이름이기도 함, 
+	           이 경우 view resolver가 자동으로 찾아줌  
+	        2. String 반환형으로 클래스를 직접 명시하는 경우 
 
         * 실제 뷰 가 존재하는 위치는 다음과 같다.  
         **project_name\src\main\webapp\WEB-INF\views\home.jsp**
@@ -2643,35 +2650,46 @@ public class BookController {
 * tomcat 설치 및 기본 설정  
 * mySQL 설치 및 DBeaver 설치를 통해 DB 활용  
 * JDK 설치 및 개발환경 설정 후 STS(Spring Tool Suite)를 통해 spring legacy project - mvc2 생성  
-* projcet의 properties - projcet facets - java 1.8버전(필요에 따라) - Runtimes(웹서버 프로그램) tomcat 설정
+* projcet의 properties - projcet facets - java 1.8버전(필요에 따라) - Runtimes(웹서버 프로그램) tomcat 설정  
 * 프로젝트 바로 및 pom.xml 에 dependecy 주입   
 ==> java와 sql간 ORM, JDBC, myBatis, DBCP 설정을 위한 의존성 주입  
-* db.properties 파일 작성 - DBCP에 사용되는 db로의 드라이버 주소 작성   
-* mapper 패키지 밑에 원하는 SQL.xml 작성    
-* mybatis-config.xml을 통해 ORM으로 연결하는 별명 구분 및 SQL문 목록 연결   
-* root-context.xml을 통해 db.properties 확보 및 mybatis-config.xml의 sql문 연결 목록 확보    
-* 이후 Controller 혹은 service나 DAO 파일에서 @Autowired SqlSessionTemplate my; 등을 통해 db에 전달   
-* **기본 설정 파일 ==> pom.xml, db.properties, mybatis-config.xml, SQL.xml, root-context.xml**     
-* 웹 페이지 응답 오류 500은 대부분 위 파일 구문 오류에서 비롯된다.   
-* 이후에 SQL.xml이나 mybatis-config 파일은 필요한 기능에 따라 바뀔 수 있고, pom.xml의 의존성 또한 같다.    
+
+* db.properties 파일 작성 - DBCP에 사용되는 db로의 드라이버 주소 작성    
+* mapper 패키지 밑에 원하는 SQL.xml 작성      
+* mybatis-config.xml을 통해 ORM으로 연결하는 별명 구분 및 SQL문 목록 연결     
+* root-context.xml을 통해 db.properties 확보 및 mybatis-config.xml의 sql문 연결 목록 확보      
+* 이후 Controller 혹은 service나 DAO 파일에서 @Autowired SqlSessionTemplate my; 등을 통해 db에 전달     
+* **기본 설정 파일 ==> pom.xml, db.properties, mybatis-config.xml, SQL.xml, root-context.xml**       
+* 웹 페이지 응답 오류 500은 대부분 위 파일 구문 오류에서 비롯된다.     
+* 이후에 SQL.xml이나 mybatis-config 파일은 필요한 기능에 따라 바뀔 수 있고, pom.xml의 의존성 또한 같다.      
 
 ### view 작성 방법  
-* C:\eclipseworkspace\spring02\src\main\webapp 아래의 파일을 의미  
-* 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래   
-* 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지   
-* 웹 페이지의 동적 컨텐츠 생성, JAVA 기반 프로그래밍 작성, 서버 측 처리 등을 위해 jsp 파일로 작성한다.  
-* 버튼, 입력 form의 submit 혹은 ajax를 통한 url 지정 등으로 웹서버의 controller로 전달 가능  
-지정된 url을 통해 DB 삽입, 삭제, 갱신, 조회 등 가능    
-* 웹서버에 전달할 필요가 있는 데이터는 id 혹은 class 등으로 지정해 전송 가능  
+* C:\eclipseworkspace\spring02\src\main\webapp 아래의 파일을 의미    
+
+* 클라이언트에게 보여주는 기본 페이지 ==> webapp 바로 아래     
+* 클라이언트의 UX에 따른 결과를 보여주는 페이지 ==> webapp\WEB-INF\views 아래 페이지    
+* 웹 페이지의 동적 컨텐츠 생성, JAVA 기반 프로그래밍 작성, 서버 측 처리 등을 위해 jsp 파일로 작성한다.    
+* 버튼, 입력 form의 submit 혹은 ajax를 통한 url 지정 등으로 웹서버의 controller로 전달 가능    
+지정된 url을 통해 DB 삽입, 삭제, 갱신, 조회 등 가능     
+* 웹서버에 전달할 필요가 있는 데이터는 id 혹은 class 등으로 지정해 전송 가능    
 
 ### Controller 부터 시작하는 model, control 작성 방법 등 
 * 미리 필요한 DB와 연결하기 위한 DTO, DAO 생성   
+
 * DTO의 경우 DB와 데이터 타입을 맞춰 getter setter 설정
 * DAO의 경우 @Repository로 설정해야 스프링 컨테이너가 관리하며 AOP의 기능을 수행하는 DAO 역할 가능  
-또한 @Autowired SqlSessionTemplate my; 를 통해 CRUD에 필요한 SQL문에 연결 가능  
-* 
-* Controller는 main이 필요 없고, DAO나 기타 서비스 등을 잇기 위해 어노테이션 (@Controller)를 클래스 앞에 붙임  
-* Controller 밑에 
+또한 @Autowired SqlSessionTemplate my; 를 통해 CRUD에 필요한 SQL문에 연결 가능   
+* Sqlsessiontemplate은 MyBatis를 통해 JDBC 3,4단계를 간접적으로 처리한다.  
+insert, update, delete, selectList, selectOne 등의 String과 Object를 매개변수로 가지는 메서드들을 지녔으며,  
+String은 Sql문을 전달하는 xml 파일의 id를 지정하기 위함, Object는 DTO를 paramytertype으로 지정하기 위함이다.  
+* xml에선 paramytertype과 resulttype, id나 sql문 작성을 조심, 컴파일 오류가 가장 많이 생기는 부분  
+* mybatis_config.xml에서 별명 지정 및 xml 파일 지정   
+* 필요한 sql문 작성 및 namespace(DAO에서 xml파일 지정 위함), id, ParameterType 및 ResultType 지정      
+ParameterType == config 파일에서 지정한 별명을 통해 VO 전달   
+ResultType == DB SQL문 처리 후 결과물을 반환하는 클래스, 보통 한 종류의 DTO를 주고 받음  
+* Service - DAO는 비즈니스 로직의 일종이기 때문에 Service에 포함시키게 됨, @Service를 통해 지정   
+* Controller - 클라이언트의 요청 응답만을 처리하기 위한 클래스. @Controller 를 통해 지정    
+@RequestMapping을 사용한다면 기본적으로 응답할 jsp의 이름은 그와 같기 떄문에 별도의 조정 x, 대신 sql문에서 select 등을 이용한다면 model.addAttribute 메서드등을 통해 데이터 전달 가능  
 
 
 
