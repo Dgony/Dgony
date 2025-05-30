@@ -44,12 +44,10 @@
 [Regular Expression](#regular-expression)<br>
 [UML](#uml)<br>
 [Thread](#thread)<br>
-[네트워크 용어](#네트워크-용어)<br>
+[Network](#Network)<br>
 [DBMS](#dbms)<br>
 [RDBMS](#rdbms)<br>
-[SQL](#sql)<br>
-[TCP](#tcp)<br>
-[UDP](#udp)<br>
+[SQL](#sql)<br>  
 [Socket](#socket)<br>
 [CSV](#csv)<br>
 [JDBC](#jdbc)<br>
@@ -1846,19 +1844,91 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 4. main이 스레드의 자리를 차지하기 떄문에 스레드를 사용할 때 항상 main이 스레드 + 1 을 해주고 있다고 생각해야 한다.
 
 
-## 네트워크 용어
+## Network 
+**네트워크란?  
+두 대 이상의 컴퓨터 혹은 장치들이 데이터를 주고받을 수 있도록 통신 기술을 이용하여 연결된 연결망을 이르는 말**  
+
+### Router(라우터, 공유기)  
+* **여러 네트워크(가정용 네트워크, 인터넷 등)를 연결해주는 장치로, 데이터를 올바른 목적지로 전달하는 역할**  
+    * 네트워크 연결 - 서로 다른 네트워크 연결  
+    * 패킷 전송 - 데이터를 목적지로 전달  
+    * IP 주소 분석 - 목적지 주소를 읽고 경로 설정 
+    * ex) 가정용 네트워크를 사용하는 컴퓨터가 데이터를 요청할 때(유튜브, 게임 등) 해당 데이터를 인터넷에서 랜선을 통해 컴퓨터까지 오도록 안내하는 역할  
+
+### 네트워크 연결 방식 
+1. TCP
+* **Transmisson Control Protocol**<br>
+<u>네트워크 연결 방식, 신뢰성 있는 통신을 위해 '연결을 먼저 설정'하고 그 통로로 데이터를 주고 받는 방식</u>  
+<br> 
+한 경로로만 패킷에 주소를 붙여 전송되며 수신측에서 패킷을 받으면 송신측에 같은 경로로 잘 받았음을 회신한다.
+<img src = "img/TCP.png">
+
+2. UDP
+* **User Datagram Protocol**<br>
+<u>네트워크 연결 방식, 전송할 데이터를 다이어그램 이라고 불리는 고정 길이의 패킷으로 분할해서 전송하는 방식</u>  
+<br>  
+패킷에 주소를 붙여 전송되며 여러 경로를 거치게 된다. 패킷이 분실될 수 있다.
+<img src = "img/UDP.png">
+
+### 네트워크 관련 CMD 명령어  
+* ipconfig  
+내 ip 주소 확인  
+
+ping과 후술할 tracert는 네트워크 프로토콜 스택(protocol layers)이 정상적으로 작동하는지 확인을 위함  
+* ping   
+상대와 연결 확인을 위한 명령어        
+    * tracert와의 차이점  
+        * ICMP(에코 요청) 활용   
+        * 응답시간  
+        * 성공 / 실패 여부  
+        * 목적지까지 도달하는지만 확인  
+        * 도메인 주소 대신 DNS 주소 권장 - 일부 서버가 ping 차단을 해놓은 경우도 있기 때문  
+    * ping 8.8.8.8   
+        * 구글 DNS 주소(8.8.8.8)와 통신 테스트를 위한 명령어
+        * cloudflare의 경우 1.1.1.1    
+    * ping 192.168.0.1(내 공유기 주소)    
+        * 대부분 가정용 공유기에서 사용하는 내부 네트워크 IP(사설 IP)  
+        * 내 컴퓨터와 공유기 사이의 연결이 정상인지 테스트  
+    * **ping 127.0.0.1(Loopback Address, 루프백 주소)**  
+        * 로컬호스트라고 불리는 내 컴퓨터 자기 자신에게 보내는 신호  
+        * 네트워크 이상진단  
+        * 서버 프로그램에서 내 PC 동작 확인 
+        * 보안 설정 확인 (외부 접근 x, 로컬 호스트만 접근 같은 경우)
+
+* tracert  
+패킷의 경로 추적을 위한 명령어   
+    * ping과의 차이점  
+        * ICMP + TTL 활용  
+        * 각 경유지의 IP, 응답 시간  
+        * 목적지까지 거치는 모든 네트워크 장비 확인   
+        * 도메인 주소, DNS 주소 전부 사용 가능   
+        도메인 주소를 사용하는 경우 내부적으로 IP 주소로 변환해 추적
+    * tracert 8.8.8.8(=www.google.com)   
+    * tracert 192.168.0.1(내 공유기 주소)
+    * tracert 127.0.0.1  
+        * 의미 거의 x, 경유지 없이 바로 도달하거나 1단계에서 종료  
+        
+      
+
+### 기타 네트워크 용어  
 1. Client - 서버에게 서비를 요청해서 사용하는 컴퓨터
 2. Server - 사용자들에게 서비스를 제공하는 컴퓨터
 3. IP(Internet Protocol) 주소 - 인터넷 상에서 컴퓨터의 주소
 4. Protocol - 통신을 하기 위한 약속
 5. port - 가상적인 통신 선로 / 컴퓨터 내부의 서비스를 구분하기 위한 별도의 번호
-6. DNS(Domian Name System) - 숫자 대신 사용하는 인터넷 상의 문자 주소
-7. DNS 서버 - 문자 주소를 숫자 주소로 변환해주는 서버
+6. Domain - 컴퓨터가 사용하는 주소(IP) 대신 사람이 읽고 기억하기 위해 설계된 문자 주소   
+7. DNS(Domain Name System) 서버 - 도메인 문자 주소를 숫자 주소로 변환해주는 서버     
+이 서버는 구글, 네이버 등 회사 스스로 운영하거나 ISP(인터넷 제공자)가 제공하거나 공공기관이 제공함   
 8. URL(Uniform Resource  Locator) - 인터넷 상의 자원을 나타내는 약속    
 데이터베이스 같은 곳에 자원의 주소를 지정하는 방법 
-9. TCP(Transmisson Control Protocol) - 네트워크 연결 방식 중 하나, 후술
+9. TCP(Transmisson Control Protocol) - 네트워크 연결 방식 중 하나, 후술  
 10. UDP(User Diagram Protocol) - 네트워크 연결 방식 중 하나, 후술
-11. QueryString(질의 문자열) - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미, 서버 등으로 이 문자열을 전달하면 문자열이 포함하고 있는 정보를 통해 서버의 어떤 서비스나 모델 등이 문자열의 리소스로 안내하게 된다.  
+11. ICMP(Internet Control Message Protocol)   
+IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못할 때 정보 제공   
+네트워크에서 오류를 알려주고 상태를 보고하는 용도로 쓰이는 보조 프로토콜   
+
+
+20. QueryString(질의 문자열) - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미, 서버 등으로 이 문자열을 전달하면 문자열이 포함하고 있는 정보를 통해 서버의 어떤 서비스나 모델 등이 문자열의 리소스로 안내하게 된다.  
 "http://ip:port/site/호출하는파일명?파라메터이름=값&파라메터이름2=값2"  의 형태로 전달한다.   
 "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%84%A0%EB%AC%BC"    
 네이버에서 '선물'을 검색했을 때 해당 검색 페이지를 요청하는 쿼리스트링   
@@ -1867,6 +1937,8 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
     * 영문자,숫자,특수문자 일부 그대로 전달됨.
     * 한글 등은 %기호와 같이 16진수로 전달
     * 공백은 +기호로 변환되어 전달
+
+
 
 ## DBMS
 * **DataBase Management System**<br>
@@ -2072,20 +2144,6 @@ left outer join right_table_name right on left.column_name = right.column_name
 Left Outer Join의 반대로 실행된다고 볼 수 있다.
 
 4. Full Outer Join - 테이블을 모두 합쳐 출력
-
-## TCP
-* **Transmisson Control Protocol**<br>
-<u>네트워크 연결 방식, 신뢰성 있는 통신을 위해 '연결을 먼저 설정'하고 그 통로로 데이터를 주고 받는 방식</u>  
-<br> 
-한 경로로만 패킷에 주소를 붙여 전송되며 수신측에서 패킷을 받으면 송신측에 같은 경로로 잘 받았음을 회신한다.
-<img src = "img/TCP.png">
-
-## UDP
-* **User Datagram Protocol**<br>
-<u>네트워크 연결 방식, 전송할 데이터를 다이어그램 이라고 불리는 고정 길이의 패킷으로 분할해서 전송하는 방식</u>  
-<br>  
-패킷에 주소를 붙여 전송되며 여러 경로를 거치게 된다. 패킷이 분실될 수 있다.
-<img src = "img/UDP.png">
 
 ## Socket
 * **네트워크 상의 응용 프로그램끼리 통신을 위한 연결 끝점(end poinrt)**<br>
