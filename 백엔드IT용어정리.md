@@ -1848,9 +1848,12 @@ main에서 스레드 클래스를 사용할 때는 run 메서드가 아닌 ```st
 * **네트워크란?  
 두 대 이상의 컴퓨터 혹은 장치들이 데이터를 주고받을 수 있도록 통신 기술을 이용하여 연결된 연결망을 이르는 말** 
 
-* 또는 같은 말로 Node와 Link로 연결되어어 같은 리소스를 공유하는 집합을 의미  
+### Network Topology  
+* 네트워크를 구성하는 장비들(노드) 간의 물리적 또는 논리적 연결구조  
+Node와 Link는 연결 관계를 가지는 모든 구조에 적용할 수 있는 추상적인 개념  
     * Node - 서버, 라우터, 스위치 등 
     * Link - 유선 혹은 무선  
+<img src = "img/Node_Link.png"> 
 
 ### Packet(패킷) 
 * **네트워크를 통해 전달할 수 있는 데이터의 작은 조각**   
@@ -1870,6 +1873,12 @@ ex)웹페이지 방문 시, 웹페이지 쪽 장치가 데이터(텍스트, 이�
 2. 패킷 전송 - 패킷(데이터)을 목적지로 전달  
 3. IP 주소 분석 - 목적지 주소를 읽고 **패킷의 경로 설정**  
 4. ex) 가정용 네트워크를 사용하는 컴퓨터가 데이터를 요청할 때(유튜브, 게임 등) 해당 데이터를 인터넷에서 랜선을 통해 컴퓨터까지 오도록 안내하는 역할  
+5. CLI(Command Line Interface)를 통한 라우터 장비 설정     
+SSH나 CMD는 컴퓨터에 명령을 내리는 터미널 역할을 하는데, 라우터 CLI는 같은 역할을 할 수 있다.  
+    * 명령어 텍스트 입력을 통해 사용 
+    * 콘솔 케이블, Telenet/SSH 접속 상태로 이용
+    * 장비 설정, 제어, 상태 확인
+    * IP 설정, VLAN 설정, 라우팅 등  
 
 ### Protocol - 네트워크를 연결하기 위한 각종 방식   
 * **프로토콜 - 통신을 위한 약속 및 패킷을 전달할 때 지켜야 할 규칙으로, TCP, IP 등등**  
@@ -2027,6 +2036,14 @@ ex)웹페이지를 방문할 때, 보내는 쪽 장치가 웹페이지의 데이
 13. ICMP(Internet Control Message Protocol)   
 IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못할 때 정보 제공   
 네트워크에서 오류를 알려주고 상태를 보고하는 용도로 쓰이는 보조 프로토콜   
+14. Throughput(처리량) - 단위 bps(bits per second), 얼마큼의 트래픽을 처리했는지 표시    
+트래픽이 많아졌다 == 흐르는 데이터가 많아졌다   
+처리량이 많아졌다 == 처리되는 트래픽이 많아졌다   
+15. 대역폭 - 통신이나 신호 처리에서 특정 기능을 수행할 수 있는 주파수 범위, 즉 신호가 흐트러지지 않고 전송될 수 있는 최대 주파수 범위 
+16. Latency(지연시간) - 요청이 처리되는 시간 = 어떤 메시지가 두 장치를 왕복하는데 걸린 시간  
+어떤 요청시, 가는 시간 400ms + 오는 시간 600ms ==> Latency 1000ms    
+매체 타입(유, 무선), 패킷 크기, 라우터의 패킷 처리 시간 등에 영향받음  
+17. 
 
 
 20. QueryString(질의 문자열) - 쿼리(요청) 하는 내용을 가지는 String 이라는 의미, 서버 등으로 이 문자열을 전달하면 문자열이 포함하고 있는 정보를 통해 서버의 어떤 서비스나 모델 등이 문자열의 리소스로 안내하게 된다.  
@@ -2042,10 +2059,7 @@ IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못�
 ### Cisco Packet Tracer  
 * **Cisco에서 제공하는 가상 네트워크 시뮬레이션 도구로, 네트워크 동작 실습 및 분석을 위한 교육용 툴**  
 
-* 가상의 네트워크 장비 구성
-    * 라우터
-    * 스위치
-    * PC 
+* 강의를 통한 자기주도 학습 가능  
 
 * 실습 가능 항목  
     * 라우터, 스위치, PC, 서버 등의 가상 장비 배치
@@ -2055,6 +2069,130 @@ IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못�
     * 패킷 캡처 및 분석 (시뮬레이션 모드)
     * Cisco IOS 명령어(CLI) 연습
     * 장비 장애 시나리오 테스트
+
+* 주 기능  
+    * 네트워크 장치 추가
+    * 케이블 연결, 무선 연결    
+    * 네트워크 구성 요소 설정  
+        * 선택
+        * 삭제
+        * 검사 
+        * 레이블 지정 및 그룹화
+    * 네트워크 관리  
+        * 기존/샘플 네트워크 열기  
+        * 네트워크 저장 
+        * 사용자 프로필 설정, 기본 설정  
+
+* **미니 네트워크 만들기**     
+Cisco Packet Tracer의 좌측 하단부에는 네트워크 구성요소를 추가할 수 있는 탭 존재  
+
+* 경험할 수 있었던 것  
+    * 가상의 네트워크 장비 추가  
+    * 네트워크 장비의 유, 무선 연결 추가  
+    * 네트워크 토폴로지의 간접 경험  
+
+    1. Network Devices - Wireless Devices 추가  
+    이 때 그냥 Router는 기업용이기 때문에 가정용 Router를 찾기 위해 Wireless Device 선택, HomeRouter 선택
+
+    2. End Devices(단말기, 종단 장치) - End Devices 추가  
+    Pc, Laptop(노트북), TV 등   
+
+    3. End Devices - Home 카테고리 장치 추가  
+    스프링클러, 현관문, 차고 문 등  
+
+    4. Connections를 통한 Device 연결  
+    다양한 연결 형태 선택 가능, 이번엔 Automatically Choose Connection Type으로 설정    
+    Home Router와 PC연결  
+
+    5. LapTop의 전원을 끄고, 기본 제공되는 유선 연결 Module 제거    
+    이후 무선 연결 Module인 WPC300N 추가
+
+    6. 이제 LabTop의 전원을 키면, Home Router에 자동 연결   
+    무선 연결은 이전에도 가능했지만, Module 변경으로 인해 노트북에 Router에 자동을 연결 가능하게 됨   
+
+* **간단한 네트워크 만들기**  
+Packet Tracer의 Logical(논리적) 작업공간에서 이루어지는 간단한 네트워크 구성  
+
+    * 경험할 수 있었던 것 
+        * PC, Laptop과 같은 단말기에서 DHCP를 통한 IP 할당 경험  
+        * 단말기 - Router - Cable Modem - Internet - 서버(혹은 DNS)로 이어지는 네트워크 흐름 간접 경험  
+        또한 단말기부터 서버까지의 연결 구조를 통해 기본적인 네트워크 토폴로지 개념을 간접적으로 이해  
+        * 이미지로 보는 것 뿐만이 아닌 가상의 PC, Laptop의 command prompt를 활용한 ping cisco.srv 명령어의 결과로 보여지는 응답 확인  
+    
+    1. .pka 폴더의 packet tracer create a simple network 파일 오픈  
+    기본구성으로 Wirless Router, Internet, cisco.srv  
+
+    2. PC, Laptop, Cable modem 추가 및 추가된 Devices 이름 변경   
+        * End Devices - End Devices - PC  
+        * End Devices - End Devices - Laptop  
+        * Network Devices - WAN Emulation - Cable Modem  
+
+    3. 장치 간 연결 설정   
+        * Copper Straight Through(구리 다이렉트 케이블) ==> PC FastEthernet0 + Wireless Router Ethernet1
+        * Copper Straight Through ==> Wireless Router Internet + Cable Modem Port1
+        * Coaxial(동축 케이블) ==> Cable Modem Port0 + Internet Coaxial7  
+
+    4. PC 연결 확인  
+        * PC - config 에서 IPv4(현재는 IPv6를 대신 사용)의 IP 확인, 할당되어 있지 않다면 DHCP 체크   
+        DHCP(Dynamic Host Configuration Protocol) - 장치에 IP 동적 할당   
+        * PC 아이콘 - Desktop - Command Prompt - ipconfig로 확인   
+        * IP 할당 이후 같은 Prompt에서 ping cisco.srv 명령어를 통해 Packet Tracer 경로 확인   
+
+    5. Laptop 연결 확인  
+        * Laptop 아이콘 클릭 - 기존 모듈 제거, WPC300N 모듈 장착  
+        * Desktop 탭 - PC wireless  
+        * Connection - Home Network 연결  
+        * Desktop - Web Browser  
+        * Web Browser에서 cisco.srv로 이동  
+
+* **소규모 기업, 사무실 네트워크 구축**  
+    * 
+
+
+* Miscellaneous(여러 가지 잡다한)
+    * File - Open Sample ==> 각종 샘플 연결 찾아보기  
+    * PTTA(Packet Tracer Tutored Activity)  
+    Packet의 이동 경로 추적을 위한 예제   
+
+        * 목표  
+            * 배선실 Device 조사  
+            * End Devices(Pc, Labtop, Phone 등)를 Networkgin Devices에 연결  
+            * 백업 Router 설치  
+            * 호스트 이름 설정   
+
+        * 이 예제를 통해 경험 가능했던 점  
+            * 서로 다른 지역의 데이터 센터와 웹서버 등의 해저 케이블 연결 확인  
+            * 네트워크 장비와 통신 배선실, 데이터 센터 등을 포함하는 네트워크 토폴로지 구성 확인   
+            * 가상의 PC, Router, switch간 cable(Console, Copper Straight Through) 연결 경험   
+            * 네트워크 관리자는 컴퓨터를 사용해 장치 콘솔에 액세스해 장치 구성을 생성하거나 수정 가능   
+            컴퓨터의 터미널 소프트웨어를 사용해 Console port를 통해 라우터에 접근, 
+            enable 명령어로 관리자 권한 획득 및 Hostname 설정 
+
+    * PTMO(Packet Tracer Media Object)   
+    .pkt 혹은 .pka사용, 퀴즈, 모듈 시험, 기타 채점 평가    
+
+    * PTSA(Packet Tracer Skill Assessment)  
+    패킷 트레이서 학습 기술 총괄 평가   
+
+    * 파일 유형
+
+        * .pka   
+            * 패킷 추적 활동 파일, 'a' == "acitivty"
+            * 지침, 과제, 활동 등 포함
+
+        * .pkt 
+            * 패킷 트레이서 시뮬레이션 네트워크 저장시  
+            * 그래픽 배경 이미지 포함 가능  
+            * 지침 창, 활동 점수 X
+
+        * .pksz 
+            * PTTA 특화  
+            * .pka 파일
+            * 미디어 자료 
+            * 힌트 시스템  
+
+        * .pkz - 이제 지원 X   
+
 
 
 
@@ -3299,11 +3437,12 @@ interface가 보통 dao를 쓰는 듯. dao를 interface로 만들고도 uml그�
 1. https://sourceforge.net/projects/weka/files/weka-3-9/3.9.3/ - weka-3-9-3-x64.exe - 윈도우 / weka-3-9-3-corretto-jvm.dmg - 맥 다운로드, 3.9안되면 3.8로 받기
 2. 맥은 압축풀고 실행 윈도우는 실행파일 실행시키면 설치 됨. 바로 끝. explorer 기능만 사용할 예정
 
-##
-##
-##
-##
-##
+### Cisco Packet Tracer 설치  
+1. https://www.netacad.com/resources/lab-downloads?courseLang=en-US   
+2. 자신에 맞는 버전을  다운로드, 나의 경우는 windows 
+3. 설치 후 폴더지정 및 바로가기 지정하고 완료, 지정 안할 시 디폴트 위치에 지정  
+4. Launch 후 Skills for All 클릭, Cisco Academy 아이디 인증 후 사용  
+5. Preferences의 Always Show Port Labels in Logical Workspace 선택  
 
 맨밑
 
