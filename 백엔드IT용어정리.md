@@ -45,9 +45,10 @@
 [UML](#uml)<br>
 [Thread](#thread)<br>
 [Network](#Network)<br>
+[Cisco Packet Tracer](#cisco-packet-tracer)<br>
 [DBMS](#dbms)<br>
 [RDBMS](#rdbms)<br>
-[SQL](#sql)<br>  
+[SQL](#sql)<br>
 [Socket](#socket)<br>
 [CSV](#csv)<br>
 [JDBC](#jdbc)<br>
@@ -1974,7 +1975,18 @@ SSH나 CMD는 컴퓨터에 명령을 내리는 터미널 역할을 하는데, �
     * OSI 5~7계층  
     * HTTP, DNS, FTP
 
+### ISP  
+* **Internet Service Provider**  
 
+* 인터넷 서비스 제공자로, SKT, LG, KT 등   
+
+* 공인 IP 주소를 가지고 고객에게 할당, 이 IP는 전세계 인터넷과 통신 가능  
+
+* 네트워크를 중계해주는 허브 역할 가능   
+
+* DNS 서버 운영 가능, ex) www.naver.com → 223.130.195.200
+
+* 인터넷 망 관리 및 보안 유지 등  
 
 ### 네트워크 관련 CMD 명령어  
 * ipconfig  
@@ -2056,7 +2068,7 @@ IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못�
     * 한글 등은 %기호와 같이 16진수로 전달
     * 공백은 +기호로 변환되어 전달
 
-### Cisco Packet Tracer  
+## Cisco Packet Tracer  
 * **Cisco에서 제공하는 가상 네트워크 시뮬레이션 도구로, 네트워크 동작 실습 및 분석을 위한 교육용 툴**  
 
 * 강의를 통한 자기주도 학습 가능  
@@ -2083,7 +2095,7 @@ IP 프로토콜과 함께 작동하며, IP 패킷이 제대로 전달되지 못�
         * 네트워크 저장 
         * 사용자 프로필 설정, 기본 설정  
 
-* **미니 네트워크 만들기**     
+### 미니 네트워크 만들기     
 Cisco Packet Tracer의 좌측 하단부에는 네트워크 구성요소를 추가할 수 있는 탭 존재  
 
 * 경험할 수 있었던 것  
@@ -2110,88 +2122,287 @@ Cisco Packet Tracer의 좌측 하단부에는 네트워크 구성요소를 추�
     6. 이제 LabTop의 전원을 키면, Home Router에 자동 연결   
     무선 연결은 이전에도 가능했지만, Module 변경으로 인해 노트북에 Router에 자동을 연결 가능하게 됨   
 
-* **간단한 네트워크 만들기**  
+### 간단한 네트워크 만들기  
 Packet Tracer의 Logical(논리적) 작업공간에서 이루어지는 간단한 네트워크 구성  
 
-    * 경험할 수 있었던 것 
-        * PC, Laptop과 같은 단말기에서 DHCP를 통한 IP 할당 경험  
-        * 단말기 - Router - Cable Modem - Internet - 서버(혹은 DNS)로 이어지는 네트워크 흐름 간접 경험  
-        또한 단말기부터 서버까지의 연결 구조를 통해 기본적인 네트워크 토폴로지 개념을 간접적으로 이해  
-        * 이미지로 보는 것 뿐만이 아닌 가상의 PC, Laptop의 command prompt를 활용한 ping cisco.srv 명령어의 결과로 보여지는 응답 확인  
+* 경험할 수 있었던 것 
+    * PC, Laptop과 같은 단말기에서 DHCP를 통한 IP 할당 경험  
+    * 단말기 - Router - Cable Modem - Internet - 서버(혹은 DNS)로 이어지는 네트워크 흐름 간접 경험  
+    또한 단말기부터 서버까지의 연결 구조를 통해 기본적인 네트워크 토폴로지 개념을 간접적으로 이해  
+    * 이미지로 보는 것 뿐만이 아닌 가상의 PC, Laptop의 command prompt를 활용한 ping cisco.srv 명령어의 결과로 보여지는 응답 확인  
     
-    1. .pka 폴더의 packet tracer create a simple network 파일 오픈  
-    기본구성으로 Wirless Router, Internet, cisco.srv  
+1. .pka 폴더의 packet tracer create a simple network 파일 오픈  
+기본구성으로 Wirless Router, Internet, cisco.srv  
 
-    2. PC, Laptop, Cable modem 추가 및 추가된 Devices 이름 변경   
-        * End Devices - End Devices - PC  
-        * End Devices - End Devices - Laptop  
-        * Network Devices - WAN Emulation - Cable Modem  
+2. PC, Laptop, Cable modem 추가 및 추가된 Devices 이름 변경   
+    * End Devices - End Devices - PC  
+    * End Devices - End Devices - Laptop  
+    * Network Devices - WAN Emulation - Cable Modem  
 
-    3. 장치 간 연결 설정   
-        * Copper Straight Through(구리 다이렉트 케이블) ==> PC FastEthernet0 + Wireless Router Ethernet1
-        * Copper Straight Through ==> Wireless Router Internet + Cable Modem Port1
-        * Coaxial(동축 케이블) ==> Cable Modem Port0 + Internet Coaxial7  
+3. 장치 간 연결 설정   
+    * Copper Straight Through(구리 다이렉트 케이블) ==> PC FastEthernet0 + Wireless Router Ethernet1
+    * Copper Straight Through ==> Wireless Router Internet + Cable Modem Port1
+    * Coaxial(동축 케이블) ==> Cable Modem Port0 + Internet Coaxial7  
 
-    4. PC 연결 확인  
-        * PC - config 에서 IPv4(현재는 IPv6를 대신 사용)의 IP 확인, 할당되어 있지 않다면 DHCP 체크   
-        DHCP(Dynamic Host Configuration Protocol) - 장치에 IP 동적 할당   
-        * PC 아이콘 - Desktop - Command Prompt - ipconfig로 확인   
-        * IP 할당 이후 같은 Prompt에서 ping cisco.srv 명령어를 통해 Packet Tracer 경로 확인   
+4. PC 연결 확인  
+    * PC - config 에서 IPv4(현재는 IPv6를 대신 사용)의 IP 확인, 할당되어 있지 않다면 DHCP 체크   
+    DHCP(Dynamic Host Configuration Protocol) - 장치에 IP 동적 할당   
+    * PC 아이콘 - Desktop - Command Prompt - ipconfig로 확인   
+    * IP 할당 이후 같은 Prompt에서 ping cisco.srv 명령어를 통해 Packet Tracer 경로 확인   
 
-    5. Laptop 연결 확인  
-        * Laptop 아이콘 클릭 - 기존 모듈 제거, WPC300N 모듈 장착  
-        * Desktop 탭 - PC wireless  
-        * Connection - Home Network 연결  
-        * Desktop - Web Browser  
-        * Web Browser에서 cisco.srv로 이동  
+5. Laptop 연결 확인  
+    * Laptop 아이콘 클릭 - 기존 모듈 제거, WPC300N 모듈 장착  
+    * Desktop 탭 - PC wireless  
+    * Connection - Home Network 연결  
+    * Desktop - Web Browser  
+    * Web Browser에서 cisco.srv로 이동  
 
-* **소규모 기업, 사무실 네트워크 구축**  
+### 소규모 기업, 사무실 네트워크 구축  
     * 
 
 
-* Miscellaneous(여러 가지 잡다한)
-    * File - Open Sample ==> 각종 샘플 연결 찾아보기  
-    * PTTA(Packet Tracer Tutored Activity)  
-    Packet의 이동 경로 추적을 위한 예제   
+### Miscellaneous(여러 가지 잡다한)
 
-        * 목표  
-            * 배선실 Device 조사  
-            * End Devices(Pc, Labtop, Phone 등)를 Networkgin Devices에 연결  
-            * 백업 Router 설치  
-            * 호스트 이름 설정   
+* File - Open Sample ==> 각종 샘플 연결 찾아보기  
 
-        * 이 예제를 통해 경험 가능했던 점  
-            * 서로 다른 지역의 데이터 센터와 웹서버 등의 해저 케이블 연결 확인  
-            * 네트워크 장비와 통신 배선실, 데이터 센터 등을 포함하는 네트워크 토폴로지 구성 확인   
-            * 가상의 PC, Router, switch간 cable(Console, Copper Straight Through) 연결 경험   
-            * 네트워크 관리자는 컴퓨터를 사용해 장치 콘솔에 액세스해 장치 구성을 생성하거나 수정 가능   
-            컴퓨터의 터미널 소프트웨어를 사용해 Console port를 통해 라우터에 접근, 
-            enable 명령어로 관리자 권한 획득 및 Hostname 설정 
+* PTTA(Packet Tracer Tutored Activity)  
+Packet의 이동 경로 추적을 위한 예제   
 
-    * PTMO(Packet Tracer Media Object)   
-    .pkt 혹은 .pka사용, 퀴즈, 모듈 시험, 기타 채점 평가    
+* PTMO(Packet Tracer Media Object)   
+.pkt 혹은 .pka사용, 퀴즈, 모듈 시험, 기타 채점 평가    
 
-    * PTSA(Packet Tracer Skill Assessment)  
-    패킷 트레이서 학습 기술 총괄 평가   
+* PTSA(Packet Tracer Skill Assessment)  
+패킷 트레이서 학습 기술 총괄 평가   
 
-    * 파일 유형
+* 파일 유형
 
-        * .pka   
-            * 패킷 추적 활동 파일, 'a' == "acitivty"
-            * 지침, 과제, 활동 등 포함
+    * .pkz - 이제 지원 X   
 
-        * .pkt 
-            * 패킷 트레이서 시뮬레이션 네트워크 저장시  
-            * 그래픽 배경 이미지 포함 가능  
-            * 지침 창, 활동 점수 X
+    * .pkt 
+        * 네트워크 시뮬레이션만 저장  
+        * 패킷 트레이서 시뮬레이션 네트워크 저장시  
+        * 그래픽 배경 이미지 포함 가능  
+        * 지침 창, 활동 점수 X
 
-        * .pksz 
-            * PTTA 특화  
-            * .pka 파일
-            * 미디어 자료 
-            * 힌트 시스템  
 
-        * .pkz - 이제 지원 X   
+    * .pka   
+        * 패킷 추적 활동 파일, 'a' == "acitivty"
+        * 지침, 과제, 활동 등 포함
+
+        * 1.1.4packet-tracer-create-realistic-structured-cablinginthe-physical-workspaceand-cabling-devices-ina-rack 예제 
+            * 목표
+                * Wiring closet(배선실-작은규모, 통신실, 네트워크실)에 Patch Panel 설치  
+                * 사무실 벽면에 Wall Mount(여기서는 통신용 배선함)를 설치    
+                mount는 중간 허브 역할로, admin 컴퓨터 혹은 프린터 등과 연결  
+                * 추가 Wall Mount 설치 및 케이블 연결  
+            * 예제를 통한 경험 
+                * 사무실과 네트워크실의 중간 허브 역할인 mount 설치 및 경험  
+                * 허브인 mount를 통해 admin 혹은 user, 프린터와 연결할 때 cable의 Bend point 설정을 통해 깔끔하게 정리가능  
+
+        * 1.1.6packet-tracer-connect-devicesusing-wireless-technologies 예제  
+            * 목표  
+                * Laptop을 사무실 WLAN에 연결  
+                * Bluetooth 기술을 사용한 장치 연결  
+                * 스마트폰의 Cellular Network를 사용한 Laptop과의 테더링   
+            * 예제를 통한 경험  
+                * 태블릿 - 스피커 / 스마트폰 - 노트북의 Bluetooth를 통한 무선 연결  
+                * 네트워크에 연결되지 않은 노트북을 스마트폰의 셀룰러 데이터와 연결해 네트워크 접속  
+                * 페어링과 테더링 경험  
+
+        * 1.1.8packettracerexploredeviceconfigurationusingthecli(console) 예제 
+            * 목표 
+                * Console 방식(CLI)을 통한 장치 연결  
+                * Configuration(구성) 정보를 장치에 복사  
+                * 업데이트된 Configuration 정보를 장치에 저장   
+            * 예제를 통한 경험  
+                * 네트워크에 연결되어 있지 않아도 Console Cable을을 통해 Laptop에서 switch 접근  
+                이후 terminal을 default 설정으로 접근한 뒤 'Press RETURN to get started!' 문구 기다림  
+                이후 Enter
+                * Switch> ?     ==>    User EXEC 모드의 명령어 출력 가능   
+                * Switch>enable    ==>    EXEC 모드 활성화, 이후 'Swtich>#' 출력  
+                * Switch># show running config   ==>   config 출력으로, 새 제품이므로 기본 구성 출력    
+                config 정보에서 다시 Switch># 으로 가기 위해 ctrl + c 입력  
+                * Switch># configure terminal   ==>   터미널의 기본 cofig를 설정하기 위한 모드   
+                * Switch?#  ==>  여기에 아래의 명령어 마우스 우클릭 - paste로 붙여넣기  
+                hostname Office-SW2  ==>  host 이름 Office로 변경  
+                line con 0  ==>  콘솔 포트 0 번으로 접속 == 이후 명령어는 콘솔 접속 방식에 적용  
+                password Cisco123  
+                login  ==> 위 명령어와 세트로, 비밀번호는 Cisco123, 접속 시 반드시 비밀번호를 요구하도록 변경  
+                end  ==>  위 명령어와 관계 x, config mode 종료 후 EXEC 모드로 귀환   
+                * 이제 enter 후 exit를 통해 나가면 User Access Verification, Password: 출력, config 적용 확인  
+                * 비밀번호 입력후, Office-SW2> enable 을 통해 EXEC 모드 집입   
+                * copy running-config startup-config  ==>  현재 config를 장치가 로드될 때 시작 구성에 저장  
+                * 대상 파일 이름[startup-config]?  ==>   Enter 입력하면되 좌측의 기본 파일 이름 적용   
+                * [OK] 이후 Office-SW2># reload  ==>  장치 재부팅을 통해 config가 저장되었는지 확인  
+                영구메모리에 할당하지 않으면 재부팅 시 변경 사항 손실
+                * 이후 같은 비밀번호로 로그인 가능하면 완료  
+                  
+        * 2.0.3packettracerexaminepacketsinesmalloffice 에제  
+            * 목표  
+                * 시뮬레이션 모드에서 간단한 PDU(Protocol Data Unit, 각 계층에서 주고받는 단위) 만들기   
+                * PDU 내용 보기  
+                * 복잡한 PDU 만들기  
+            * 예제를 통한 경험  
+                * Packet Tracer의 오르쪽 하단 simulation 클릭 - 실시간 전송 정지 후 시뮬레이션 모드 진입 
+                * 상단 도구 모음의 닫힌 편지지 아이콘을 통해 간단한 PDU 보내기 설정 가능     
+                Office 네트워크의 Ofiice admin에서 printer로 보내는 설정  
+                * simulation panel 하단의 화살표 모양 재생버튼 + ㅣ 모양 클릭으로 트래팩 이동 관찰 가능  
+                * Bufer full 메세지 등장까지 반복, 이전 이벤트 보기 선택시 panel에 기록 저장됨  
+                * event list의 type 항목의 ICMP 등을 클릭   
+                해당 device가 OSI model의 어떤 layer에서 pdu를 활용했는지, protocol header 세부 정보등 표시  
+                * Packet Tracer 우측 최하단 delete를 통해 단순 PDU 삭제   
+                * 상단 도구 모음의 열린 편지지 아이콘을 통해 '복잡한' PDU 보내기 설정 가능    
+                마찬가지로 Office admin 클릭 - PDU 창 열린 상태로 printer0 클릭  
+                * 열린 창으로 다양한 사용자 설정 가능, Sequence number 1234 설정, interval 5초 설정   
+                * 이후 재생을 누르면 Packet의 이동 확인 가능, 5초 마다 새 PDU 생성    
+                재생버튼 하단 슬라이드를 통해 재생 속도 조절 가능   
+        
+        * 2.0.7packetrtacer-edittoplogies 에제  
+            * 목표  
+                * 사무실 Rack에 Switch 추가  
+                * PC를 Office network에 추가  
+                * 클러스터 작업  
+                * 네트워크에 두 번째 클러스터 추가   
+            * 예제를 통한 경험
+                * shelf의 예비 switch인 Office-SW2를 Rack에 추가  
+                * cooper straight 케이블을 sw2의 fatEthernet0/1 과 patch panel jack 1 연결  
+                * 같은 케이블로 sw2의 GigabitEthernet 0/1 과 sw1 의 switchport GigabitEthernet1/1/1  연결
+                * office로 돌아가 같은 케이블로 office-user의 fastethernet과 wall mount1의 jack1 연결 
+                * 같은 케이블로 mount1의 punchdown1과 장비 캐비넷의 rack의 patch panel의 punchdown1과 연결  
+                * config로 ip 확인, 명령 프롬프트로 ping 192.168.20.5 입력(admin 주소)  
+                office 네트워크에 연결되었다면 office admin에 ping 전달 가능   
+                * logical 모드에서 library cluster를 드래그로 포함시키고 delete - uncluster  
+                * 이후 uncluster되어있는 library의 장치들을 전부 드래그로 포함하고   
+                우측 상단의 구름모양(==shift + u) 으로 다시 클러스터 생성, library로 변경  
+                * PC0, cable modem, home gateway 추가  
+                * cooper staright fiber 선택, FastEthernet0 포트를 Home Gateway1 의 ethernet1 과 연결  
+                * 같은 케이블로 gateway의 internet과 cable modem의 port1 연결  
+                * 이후 이 3개의 장치를 second home으로 클러스터링  
+                * coaxial 케이블로 second home의 modem port0 과 ISP의 cloud0 장치의 coaxail9와 연결 
+                * 상단 도구 모음의 note를 사용해 second home에 추가된 devices를 주석으로 표시  
+            
+        * 2.1.3packettracermonitoryournetworkusinganetworkcontroller 예제  
+            * 목표  
+                * GUI를 통해 네트워크 장치 관리, 모니터링, 구상 
+                * 네트워크 컨트롤러 구현
+                * 네트워크 모니터링  
+            * 예제를 통한 경험  
+                * shelf의 network controller를 rack에 이동  
+                * cooper straight 케이블로 controller 후면의 GigabitEthernet0 를 Office-SW1의 Office-SW1의 GigabitEthernet 1/0/19 와 연결  
+                * network controller에는 ip 주소로 192.168.20.5가 미리 할당되어 있음  
+                * office로 나가서 admin의 ip 확인 - 192.168.20.x,  x는 10 ~ 20번대 주소 할당  
+                * 192.168.20.5에 ping을 보내면 정상적으로 연결되어있는지 확인 가능   
+                * 안되면 케이블 연결, controller 전원 확인  
+                * office admin에서 웹 브라우저로 192.168.20.5 접근 - GUI 화면 오픈, admin, Cisco123  
+                * 이후 왼쪽 dashboard - provisioning - network devices
+                * Pakcet Tracer 상단의 note 기능을 이용해 나열된 네트워크 장치들을 office 벽면에 기록  
+                * tablet과 smartphone 을 config - wireless0의 port on 으로 무선 연결, ip 할당 확인  
+                * dashboard - provisioning - discovery - office LAN 선택 - start   
+                검색이 완료되면 tablet과 smartphone 표시됨  
+        
+        * 2.1.5-packet-tracer-manage-and-configure-your-network-using-a-network-controller 예제  
+            * 목표  
+                * 네트워크 컨트롤러 배포  
+                * 장치 검색
+                * office에 네트워크 장치 추가  
+            * 예제를 통한 경험  
+                * Rack에 network controller 설치  
+                * config의 global settion ipv4 설정  
+                default - 192.168.20.1 / DNS - 192.168.20.126  
+                * 같은 config의 GigabitEthernet0 탭의 static 설정,    
+                ipv4 - 192.168.20.5 / 서브넷 마스크 - 255.255.255.128 
+                * Copper Straight로 컨트롤러의 GigabitEthernet0와 Office-SW1 의 GigabitEthernet 1/0/19 연결
+                * 스위치와 연결된 노트북 명령 프롬프트에서 ping 192.168.20.5 실행  
+                * 정상 실행되면 웹 브라우저를 통해 GUi로 192.168.20.5 접근, admin 정보 register 
+                * 로그인 후 dashboard - provisioning - credentials - +credentials 클릭   
+                이 자격증명 창에서 student - StudentPass - Cisco123 - Student Profile 입력  
+                * dashboard - provisioning - discovery - +discover  
+                type CDP 설정 ==> name - Office - LAN / ip adress - 0.0.0.0 / crdential list - student profile  
+                * discovery 에서 office lan 추가 이후 여러 장치들이 연결되어 있는 것을 볼 수 있음  
+                * laptop 창만 열어두고 구리 케이블로 Office-SW2 의 GigabitEthernet 0/1 와 GigabitEthernet 1/0/5 연결   
+                * 켜 둔 laptop의 terminal 창을 이용해 미리 console 케이블로 연결된 sW2에 CLI로 접근  
+                * 터미널 창이 켜지면 enter 입력 후 다음 명령어 붙여넣기  
+                * GUI 기반 네트워크 컨트롤러에서 자격 증명을 등록 후 디스커버리 기능으로 새로 탐색된 회선을 "office LAN" 이라는 이름으로 네트워크로 온보딩 함  
+                ```
+                enable
+
+                configure terminal
+
+                hostname Office-SW2
+
+                interface vlan 20
+
+                ip address 192.168.20.7 255.255.255.128
+
+                no shut
+
+                enable secret Cisco123
+
+                username student privilege 1 password StudentPass
+
+                line vty 0 4
+
+                login local
+
+                interface range g0/1-2
+
+                switchport mode trunk
+
+                switchport trunk native vlan 20
+
+                interface range f0/1-24
+
+                switchport mode access
+
+                switchport access vlan 2
+
+                vlan 2
+
+                name UserNetwork
+
+                vlan 20
+
+                name Management
+
+                end
+
+                copy run start
+                ```
+                * 컨트롤러 GUI 접근으로 돌아가 discovery의 Office-LAN에 Office-SW2 가 없는지 확인   
+                * start를 눌러 검색했을 때 SW2가 추가되었는지 확인  
+
+    * .pksz 
+        * PTTA 특화  
+        * .pka 파일
+        * 미디어 자료 
+        * 힌트 시스템  
+
+        * 1.1.6-packet-tracer-tutored-activitys-logical-and-physical-mode-exploration 에제  
+            * 목표  
+                * 배선실 Device 조사  
+                * End Devices(Pc, Labtop, Phone 등)를 Networkgin Devices에 연결  
+                * 백업 Router 설치  
+                * 호스트 이름 설정   
+            * 예제를 통한 경험  
+                * 서로 다른 지역의 데이터 센터와 웹서버 등의 해저 케이블 연결 확인  
+                * 네트워크 장비와 통신 배선실, 데이터 센터 등을 포함하는 네트워크 토폴로지 구성 확인   
+                * 가상의 PC, Router, switch간 cable(Console, Copper Straight Through) 연결 경험   
+                * 네트워크 관리자는 컴퓨터를 사용해 장치 콘솔에 액세스해 장치 구성을 생성하거나 수정 가능   
+                컴퓨터의 터미널 소프트웨어를 사용해 Console port를 통해 라우터에 접근, 
+                enable 명령어로 관리자 권한 획득 및 Hostname 설정 
+        
+        * 2.2.1-packet-tracer-tutored-activity---troubleshoot-a-wireless-connection 예제  
+            * 목표 
+                * 무선 연결 네트워크에서 트러블슈팅하기  
+                * 무선 연결 인식이 잘못 이루어진 기기 수정  
+            * 예제를 통한 경험  
+                * 어떤 도서관에서, 컴퓨터와 노트북들은 DHCP IP 주소를 통해 연결되어 있는데, 도서관 회원 중 www.cisco.pka 를 이용하려면 사람이 연결되지 않는다고 컴플레인을 걸어왔다. 이를 해결해야 함  
+                * 각 단말기의 웹 브라우저나 명령 프롬프트를 통해 www.cisco.pka 에 접근함으로써 특정 단말기의 문제인지 더 상위 네트워크 장비의 문제인지 판단  
+                * 이미 연결된 PC에서 tracert로 중간 라우터를 찾아 wireless의 보안 방식과 key 획득  
+                해당 key로 노트북을 무선 연결  
+
+
+
 
 
 
