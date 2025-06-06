@@ -1880,6 +1880,20 @@ SSH나 CMD는 컴퓨터에 명령을 내리는 터미널 역할을 하는데, �
     * 콘솔 케이블, Telenet/SSH 접속 상태로 이용
     * 장비 설정, 제어, 상태 확인
     * IP 설정, VLAN 설정, 라우팅 등  
+6 라우터 ACL(Access Control List 설정)  
+    * 라우터 터미널을 통해 CLI 접근  
+    * enable(EXEC 진입) 
+    * configure terminal 
+    * access-list extended 리스트이름 ip host 000.000.000.000 any ==> 변형 가능  
+    * EXEC에서 show access-list  
+    * interface x ==> ip access-group 리스트이름 in(or out)  ==> in, out으로 들어오는 규칙 설정
+    * no ip access-group [ACL 이름 or 번호] in(or out) ==> 규칙 해제 
+    * no ip access-list [ACL 이름 or 번호] ==> ACL 삭제  
+    * no ip access-list [ACL 이름 or 번호] [삭제하고 싶은 acl 설정 줄] ==> ACL 특정 줄만 삭제 
+    * show running-config ==> 실행중인 전체 설정 보기  
+    * show running-config interface [인터페이스] ==> 특정 인터페이스에서 ACL 확인	
+    * show ip interface (인터페이스 번호) ==> 인터페이스의 설정 확인  
+    * 삭제하려면 configure terminal 모드에서 no access-list 리스트이름
 
 ### Protocol - 네트워크를 연결하기 위한 각종 방식   
 * **프로토콜 - 통신을 위한 약속 및 패킷을 전달할 때 지켜야 할 규칙으로, TCP, IP 등등**  
@@ -2290,7 +2304,11 @@ Switch(config-if-range)# switchport access vlan 30
 Switch(config-if-range)# exit
 ```
 cisco packet tracer는 기존 방화벽과 완벽히 같은 방식으로 동작하지 않지만, 흉내내기는 가능  
- ASA Firewall 장비가 없기 때문에, 대부분 **라우터에 ACL(Access Control List)** 설정 
+ ASA Firewall 장비가 없기 때문에, 대부분 **라우터에 ACL(Access Control List)** 설정   
+방화벽 설정을 통해 익명의 IP가 회사에 접근하는 것을 차단 - 얘가 문제인 이유  
+현재 회사는 클라우드와 ISP를 통해 연결되어 있는데 ISP의 모든 신호를 차단하면 안되기 때문에 클라우드 측에서 오는 특정 신호만 선별할 수 있게 만들어야 함  
+
+
 
 
 
